@@ -234,25 +234,31 @@ Want a game we don't have? Message us on WhatsApp and we’ll try to install it 
 
 <script>
 function sendToWhatsApp(){
-var name = document.getElementById("name").value;
-var phone = document.getElementById("phone").value;
-var date = document.getElementById("date").value;
-var console = document.getElementById("console").value;
+    var name = document.getElementById("name").value;
+    var phone = document.getElementById("phone").value;
+    var date = document.getElementById("date").value;
+    var consoleType = document.getElementById("console").value;
+    var requestedGame = document.getElementById("requestedGame").value;
 
-if(name=="" || phone=="" || date==""){
-alert("Please fill all details first!");
-return;
-}
+    if(name=="" || phone=="" || date==""){
+        alert("Please fill all details first!");
+        return;
+    }
 
-var url = "https://wa.me/919303088645?text="
-+ "*Royal Games Booking*%0a"
-+ "Name: " + name + "%0a"
-+ "Phone: " + phone + "%0a"
-+ "Console: " + console + "%0a"
-+ "Date: " + date;
+    var url = "https://wa.me/919303088645?text="
+        + "*Royal Games Booking*%0a"
+        + "Name: " + name + "%0a"
+        + "Phone: " + phone + "%0a"
+        + "Console: " + consoleType + "%0a";
 
-window.open(url, '_blank');
-}
+    if(requestedGame != ""){
+        url += "Requested Game: " + requestedGame + "%0a";
+    }
+
+    url += "Date: " + date;
+
+    window.open(url,
+                
 </script>
 
 </body>
