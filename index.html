@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 <head>
 <title>Royal Games Neemuch | PS5 & Xbox Rent in Neemuch Madhya Pradesh</title>
@@ -86,7 +85,6 @@ body{
     text-align:center;
 }
 
-/* BOOKING FORM STYLE */
 .booking input, .booking select{
     width:95%;
     padding:12px;
@@ -118,7 +116,6 @@ body{
 </style>
 
 </head>
-
 <body>
 
 <div class="header">
@@ -128,34 +125,27 @@ body{
 
 <div class="section">
 
-```
 <div class="card">
     <h2>PlayStation 5</h2>
     <img src="images.jpeg">
     <div class="price">₹500 / 1 Day</div>
     <div class="price">₹800 / 2 Days</div>
+
     <!-- PS5 Game List -->
-
-<div style="margin-top:15px; background:#111827; padding:15px; border-radius:12px;">
-    <h3 style="color:#38bdf8;">Available PS5 Games 🎮</h3>
-
-```
-<p>• GTA V & GTA Online</p>
-<p>• Black Myth Wukong</p>
-<p>• Ghost of Yotei</p>
-<p>• Ghost of Tsushima</p>
-<p>• Roblox</p>
-<p>• Spider-Man Remastered</p>
-<p>• The Last of Us Part II</p>
-<p>• God of War Ragnarök</p>
-
-<p style="margin-top:10px; color:#22c55e;">
-Want a game we don't have? Message us on WhatsApp and we’ll try to install it before your visit!
-</p>
-```
-
-</div>
-    
+    <div style="margin-top:15px; background:#111827; padding:15px; border-radius:12px;">
+        <h3 style="color:#38bdf8;">Available PS5 Games 🎮</h3>
+        <p>• GTA V & GTA Online</p>
+        <p>• Black Myth Wukong</p>
+        <p>• Ghost of Yotei</p>
+        <p>• Ghost of Tsushima</p>
+        <p>• Roblox</p>
+        <p>• Spider-Man Remastered</p>
+        <p>• The Last of Us Part II</p>
+        <p>• God of War Ragnarök</p>
+        <p style="margin-top:10px; color:#22c55e;">
+        Want a game we don't have? Message us in the booking form below and we’ll try to install it for you!
+        </p>
+    </div>
 </div>
 
 <div class="card">
@@ -163,30 +153,24 @@ Want a game we don't have? Message us on WhatsApp and we’ll try to install it 
     <img src="images (1).jpeg">
     <div class="price">₹400 / 1 Day</div>
     <div class="price">₹700 / 2 Days</div>
+
     <!-- Xbox Games List -->
-<div style="margin-top:15px; background:#111827; padding:15px; border-radius:12px;">
-    <h3 style="color:#38bdf8;">Available Xbox Games 🕹️</h3>
-
-    <p>• GTA V & GTA Online</p>
-    <p>• Forza Horizon 5</p>
-    <p>• Minecraft</p>
-    <p>• Call of Duty: Modern Warfare 2</p>
-    <p>• Among Us</p>
-    <p>• Mortal Kombat 11</p>
-    <p>• F1 2024</p>
-    <p>• FIFA 25</p>
-
-    <p style="margin-top:10px; color:#22c55e;">
-    We also have a steering wheel for racing games! 🏎️
-    </p>
-
-    <p style="margin-top:10px; color:#cbd5e1;">
-    Want a game we don't have? Use the "Request Game" field in the booking form above and we’ll try to install it before your booking!
-    </p>
+    <div style="margin-top:15px; background:#111827; padding:15px; border-radius:12px;">
+        <h3 style="color:#38bdf8;">Available Xbox Games 🕹️</h3>
+        <p>• GTA V & GTA Online</p>
+        <p>• Forza Horizon 5</p>
+        <p>• Minecraft</p>
+        <p>• Call of Duty: Modern Warfare 2</p>
+        <p>• Among Us</p>
+        <p>• Mortal Kombat 11</p>
+        <p>• F1 2024</p>
+        <p>• FIFA 25</p>
+        <p style="margin-top:10px; color:#22c55e;">We also have a steering wheel for racing games! 🏎️</p>
+        <p style="margin-top:10px; color:#cbd5e1;">
+        Want a game we don't have? Use the "Request Game" field in the booking form below and we’ll install it for you!
+        </p>
+    </div>
 </div>
-    
-</div>
-```
 
 </div>
 
@@ -211,23 +195,16 @@ Want a game we don't have? Message us on WhatsApp and we’ll try to install it 
 <div class="section">
     <div class="card booking">
         <h2>🎮 Book Your Console</h2>
-
-```
-    <input type="text" id="name" placeholder="Your Name">
-    <input type="tel" id="phone" placeholder="Mobile Number">
-    <input type="date" id="date">
-
-    <select id="console">
-        <option>PS5</option>
-        <option>Xbox One</option>
-    </select>
+        <input type="text" id="name" placeholder="Your Name">
+        <input type="tel" id="phone" placeholder="Mobile Number">
+        <input type="date" id="date">
+        <select id="console">
+            <option>PS5</option>
+            <option>Xbox One</option>
+        </select>
         <input type="text" id="requestedGame" placeholder="Request a game (optional)" style="width:95%;padding:12px;margin-top:10px;border-radius:10px;border:none;">
-        
-
-    <button onclick="sendToWhatsApp()">Book on WhatsApp</button>
-</div>
-```
-
+        <button onclick="sendToWhatsApp()">Book on WhatsApp</button>
+    </div>
 </div>
 
 <div class="footer">
@@ -259,10 +236,10 @@ function sendToWhatsApp(){
 
     url += "Date: " + date;
 
-    window.open(url,
-                
+    window.open(url, '_blank');
+}
 </script>
 
 </body>
-</html>
-
+    </html>
+    
