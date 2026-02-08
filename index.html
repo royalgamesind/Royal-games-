@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
 <head>
 <title>Royal Games Neemuch | PS5 & Xbox Rent in Neemuch Madhya Pradesh</title>
@@ -8,13 +9,8 @@
 <meta name="keywords" content="PS5 rent Neemuch, Xbox rent Neemuch, PlayStation rental Neemuch, gaming console rent Neemuch, Royal Games Neemuch">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Royal Games | PS5 & Xbox Rentals Neemuch</title>
 
 <style>
-
 body{
     margin:0;
     font-family: Arial, Helvetica, sans-serif;
@@ -22,7 +18,6 @@ body{
     color:white;
 }
 
-/* HEADER */
 .header{
     background:black;
     padding:18px;
@@ -42,7 +37,6 @@ body{
     margin-top:5px;
 }
 
-/* SECTION */
 .section{
     padding:20px 15px;
 }
@@ -61,7 +55,6 @@ body{
     border-radius:12px;
 }
 
-/* PRICE */
 .price{
     font-size:20px;
     color:#22c55e;
@@ -69,20 +62,17 @@ body{
     margin-top:10px;
 }
 
-/* RULES */
 .rules{
     text-align:left;
     line-height:28px;
     font-size:15px;
 }
 
-/* CONTACT */
 .contact{
     line-height:28px;
     font-size:17px;
 }
 
-/* BUTTON */
 .btn{
     display:block;
     margin-top:15px;
@@ -93,9 +83,31 @@ body{
     border-radius:12px;
     font-weight:bold;
     font-size:18px;
+    text-align:center;
 }
 
-/* FOOTER */
+/* BOOKING FORM STYLE */
+.booking input, .booking select{
+    width:95%;
+    padding:12px;
+    margin-top:10px;
+    border-radius:10px;
+    border:none;
+    font-size:15px;
+}
+
+.booking button{
+    width:100%;
+    padding:14px;
+    background:#25D366;
+    color:white;
+    border:none;
+    border-radius:12px;
+    font-size:17px;
+    margin-top:12px;
+    font-weight:bold;
+}
+
 .footer{
     background:black;
     padding:18px;
@@ -103,8 +115,8 @@ body{
     margin-top:25px;
     color:#9ca3af;
 }
-
 </style>
+
 </head>
 
 <body>
@@ -116,19 +128,21 @@ body{
 
 <div class="section">
 
-    <div class="card">
-        <h2>PlayStation 5</h2>
-        <img src="images.jpeg">
-        <div class="price">₹500 / 1 Day</div>
-        <div class="price">₹800 / 2 Days</div>
-    </div>
+```
+<div class="card">
+    <h2>PlayStation 5</h2>
+    <img src="images.jpeg">
+    <div class="price">₹500 / 1 Day</div>
+    <div class="price">₹800 / 2 Days</div>
+</div>
 
-    <div class="card">
-        <h2>Xbox one</h2>
-        <img src="images (1).jpeg">
-        <div class="price">₹400 / 1 Day</div>
-        <div class="price">₹700 / 2 Days</div>
-    </div>
+<div class="card">
+    <h2>Xbox One</h2>
+    <img src="images (1).jpeg">
+    <div class="price">₹400 / 1 Day</div>
+    <div class="price">₹700 / 2 Days</div>
+</div>
+```
 
 </div>
 
@@ -145,33 +159,34 @@ body{
 <div class="section">
     <div class="card contact">
         <h2>Booking & Contact</h2>
-
         📍 Neemuch, Madhya Pradesh<br>
         📞 9303088645
-
-        <a class="btn" href="https://wa.me/919303088645">
-        Book on WhatsApp
-        </a>
     </div>
+</div>
+
+<div class="section">
+    <div class="card booking">
+        <h2>🎮 Book Your Console</h2>
+
+```
+    <input type="text" id="name" placeholder="Your Name">
+    <input type="tel" id="phone" placeholder="Mobile Number">
+    <input type="date" id="date">
+
+    <select id="console">
+        <option>PS5</option>
+        <option>Xbox One</option>
+    </select>
+
+    <button onclick="sendToWhatsApp()">Book on WhatsApp</button>
+</div>
+```
+
 </div>
 
 <div class="footer">
 © 2026 Royal Games — Gaming Console Rentals
 </div>
-<h2>Book Your Console</h2>
-
-<form onsubmit="sendToWhatsApp(); return false;">
-  <input type="text" id="name" placeholder="Your Name" required><br><br>
-  <input type="text" id="phone" placeholder="Mobile Number" required><br><br>
-  <input type="date" id="date" required><br><br>
-
-  <select id="console">
-    <option>PS5</option>
-    <option>Xbox</option>
-  </select><br><br>
-
-  <button type="submit">Book on WhatsApp</button>
-</form>
 
 <script>
 function sendToWhatsApp(){
@@ -180,8 +195,13 @@ var phone = document.getElementById("phone").value;
 var date = document.getElementById("date").value;
 var console = document.getElementById("console").value;
 
+if(name=="" || phone=="" || date==""){
+alert("Please fill all details first!");
+return;
+}
+
 var url = "https://wa.me/919303088645?text="
-+ "Booking Request:%0a"
++ "*Royal Games Booking*%0a"
 + "Name: " + name + "%0a"
 + "Phone: " + phone + "%0a"
 + "Console: " + console + "%0a"
@@ -190,6 +210,7 @@ var url = "https://wa.me/919303088645?text="
 window.open(url, '_blank');
 }
 </script>
-    
+
 </body>
 </html>
+
