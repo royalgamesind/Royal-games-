@@ -150,6 +150,38 @@ body{
 <div class="footer">
 © 2026 Royal Games — Gaming Console Rentals
 </div>
+<h2>Book Your Console</h2>
 
+<form onsubmit="sendToWhatsApp(); return false;">
+  <input type="text" id="name" placeholder="Your Name" required><br><br>
+  <input type="text" id="phone" placeholder="Mobile Number" required><br><br>
+  <input type="date" id="date" required><br><br>
+
+  <select id="console">
+    <option>PS5</option>
+    <option>Xbox</option>
+  </select><br><br>
+
+  <button type="submit">Book on WhatsApp</button>
+</form>
+
+<script>
+function sendToWhatsApp(){
+var name = document.getElementById("name").value;
+var phone = document.getElementById("phone").value;
+var date = document.getElementById("date").value;
+var console = document.getElementById("console").value;
+
+var url = "https://wa.me/919303088645?text="
++ "Booking Request:%0a"
++ "Name: " + name + "%0a"
++ "Phone: " + phone + "%0a"
++ "Console: " + console + "%0a"
++ "Date: " + date;
+
+window.open(url, '_blank');
+}
+</script>
+    
 </body>
 </html>
