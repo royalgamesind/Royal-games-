@@ -7,341 +7,155 @@
 <meta name="keywords" content="PS5 rent Neemuch, Xbox rent Neemuch, PlayStation rental Neemuch, gaming console rent Neemuch, Royal Games Neemuch">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto&display=swap" rel="stylesheet">
 
-    
 <style>
+body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
+.header{background:linear-gradient(90deg,#111827,#1e293b);padding:25px 15px;text-align:center;border-bottom:4px solid gold}
+.header h1{margin:0;font-family:'Orbitron',sans-serif;color:gold;font-size:36px;letter-spacing:3px}
+.tag{color:#cbd5e1;font-size:16px;margin-top:5px}
+.section{padding:30px 15px}
+.card{background:#111827;border-radius:20px;padding:20px;margin:20px auto;max-width:520px;box-shadow:0 0 20px rgba(0,255,255,.1);transition:.3s}
+.card:hover{transform:translateY(-5px);box-shadow:0 0 25px rgba(0,255,255,.3)}
+.card img{width:100%;border-radius:15px;margin-bottom:15px}
+.game-list{background:#1f2937;padding:15px;border-radius:12px;box-shadow:inset 0 0 10px rgba(255,255,255,.05);margin-top:15px}
+.game-list h3{color:#0ea5e9;margin-bottom:10px;font-family:'Orbitron',sans-serif}
+.game-list p{margin:5px 0;padding:5px;border-radius:8px;transition:.3s}
+.game-list p:hover{background:#0ea5e9;color:#0b0f1a;cursor:pointer;font-weight:bold}
+.price{font-size:20px;color:#22c55e;font-weight:bold;margin-top:10px}
+.btn,.booking button{display:block;width:100%;padding:16px;background:#25D366;color:#fff;text-decoration:none;border-radius:12px;font-weight:bold;font-size:18px;text-align:center;margin-top:12px;cursor:pointer;border:none}
+.btn:hover,.booking button:hover{background:#1ebe57}
+.booking input,.booking select,.booking textarea{width:95%;padding:14px;margin-top:10px;border-radius:12px;border:none;font-size:16px;background:#1f2937;color:#fff}
+.booking textarea{height:80px}
+.booking h2{color:#f87171;font-family:'Orbitron',sans-serif}
+.rules{line-height:28px;font-size:16px}
+.footer{background:black;padding:18px;text-align:center;margin-top:25px;color:#9ca3af}
 
-body {
-    margin:0;
-    font-family: 'Roboto', sans-serif;
-    background: #0b0f1a;
-    color: #fff;
-}
+/* Review Gallery */
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.gallery img{width:100%;border-radius:12px}
 
-/* HEADER */
-.header {
-    background: linear-gradient(90deg, #111827, #1e293b);
-    padding: 25px 15px;
-    text-align: center;
-    border-bottom: 4px solid gold;
-}
-.header h1 {
-    margin: 0;
-    font-family: 'Orbitron', sans-serif;
-    color: gold;
-    font-size: 36px;
-    letter-spacing: 3px;
-}
-.tag {
-    color: #cbd5e1;
-    font-size: 16px;
-    margin-top: 5px;
-}
-
-/* SECTION */
-.section {
-    padding: 30px 15px;
-}
-
-/* CARD */
-.card {
-    background: #111827;
-    border-radius: 20px;
-    padding: 20px;
-    margin: 20px auto;
-    max-width: 500px;
-    box-shadow: 0 0 20px rgba(0,255,255,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 25px rgba(0,255,255,0.3);
-}
-.card img {
-    width: 100%;
-    border-radius: 15px;
-    margin-bottom: 15px;
-}
-
-/* GAME LIST */
-.game-list {
-    background: #1f2937;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
-    margin-top: 15px;
-}
-.game-list h3 {
-    color: #0ea5e9;
-    margin-bottom: 10px;
-    font-family: 'Orbitron', sans-serif;
-}
-.game-list p {
-    margin: 5px 0;
-    padding: 5px;
-    border-radius: 8px;
-    transition: background 0.3s;
-}
-.game-list p:hover {
-    background: #0ea5e9;
-    color: #0b0f1a;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-/* PRICE */
-.price {
-    font-size: 20px;
-    color: #22c55e;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-/* BUTTON */
-.btn, .booking button {
-    display: block;
-    width: 100%;
-    padding: 16px;
-    background: #25D366;
-    color: white;
-    text-decoration: none;
-    border-radius: 12px;
-    font-weight: bold;
-    font-size: 18px;
-    text-align: center;
-    margin-top: 12px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.btn:hover, .booking button:hover {
-    background: #1ebe57;
-}
-
-/* FORMS */
-.booking input, .booking select, .booking textarea {
-    width: 95%;
-    padding: 14px;
-    margin-top: 10px;
-    border-radius: 12px;
-    border: none;
-    font-size: 16px;
-    background: #1f2937;
-    color: #fff;
-}
-.booking textarea {
-    height: 80px;
-}
-.booking h2 {
-    color: #f87171;
-    font-family: 'Orbitron', sans-serif;
-}
-
-/* RULES */
-.rules {
-    text-align:left;
-    line-height:28px;
-    font-size:16px;
-}
-
-/* FOOTER */
-.footer {
-    background:black;
-    padding:18px;
-    text-align:center;
-    margin-top:25px;
-    color:#9ca3af;
-} 
-   /* Floating Call Button */
-.floating-call{
-position:fixed;
-bottom:22px;
-right:20px;
-width:65px;
-height:65px;
-background:linear-gradient(135deg,#22c55e,#15803d);
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:28px;
-color:white;
-text-decoration:none;
-box-shadow:0 10px 25px rgba(0,0,0,0.5);
-z-index:9999;
-animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-0%{box-shadow:0 0 0 0 rgba(34,197,94,0.7);}
-70%{box-shadow:0 0 0 18px rgba(34,197,94,0);}
-100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}
-}
-
-.floating-call:hover{
-transform:scale(1.1);
-}
-
+/* Floating Call Button */
+.floating-call{position:fixed;bottom:22px;right:20px;width:65px;height:65px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;color:white;text-decoration:none;box-shadow:0 10px 25px rgba(0,0,0,.5);z-index:9999;animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.7)}70%{box-shadow:0 0 0 18px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+.floating-call:hover{transform:scale(1.1)}
 </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>👑 ROYAL GAMES</h1>
-    <div class="tag">PS5 & Xbox Console Rental Service — Neemuch (MP)</div>
+<h1>👑 ROYAL GAMES</h1>
+<div class="tag">PS5 & Xbox Console Rental Service — Neemuch (MP)</div>
 </div>
 
-<!-- PS5 SECTION -->
-<div class="section">
-<div class="card">
-    <h2>PlayStation 5</h2>
-    <img src="images.jpeg">
-    <div class="price">₹500 / 1 Day</div>
-    <div class="price">₹800 / 2 Days</div>
-
-    <div class="game-list">
-        <h3>Available PS5 Games 🎮</h3>
-        <p>• GTA V & GTA Online</p>
-        <p>• Black Myth Wukong</p>
-        <p>• Ghost of Yotei</p>
-        <p>• Ghost of Tsushima</p>
-        <p>• Roblox</p>
-        <p>• Spider-Man Remastered</p>
-        <p>• The Last of Us Part II</p>
-        <p>• God of War Ragnarök</p>
-        <p style="color:#facc15;font-weight:bold;">Want a game we don't have? Message us below!</p>
-    </div>
+<!-- PS5 -->
+<div class="section"><div class="card">
+<h2>PlayStation 5</h2>
+<img src="images.jpeg">
+<div class="price">₹500 / 1 Day</div>
+<div class="price">₹800 / 2 Days</div>
+<div class="game-list">
+<h3>Available PS5 Games 🎮</h3>
+<p>• GTA V & GTA Online</p>
+<p>• Black Myth Wukong</p>
+<p>• Ghost of Tsushima</p>
+<p>• Roblox</p>
+<p>• Spider-Man Remastered</p>
+<p>• The Last of Us Part II</p>
+<p>• God of War Ragnarök</p>
+<p style="color:#facc15;font-weight:bold;">Want a game we don't have? Message us below!</p>
 </div>
-</div>
+</div></div>
 
-<!-- Xbox SECTION -->
-<div class="section">
-<div class="card">
-    <h2>Xbox One</h2>
-    <img src="images (1).jpeg">
-    <div class="price">₹400 / 1 Day</div>
-    <div class="price">₹700 / 2 Days</div>
-
-    <div class="game-list">
-        <h3>Available Xbox Games 🕹️</h3>
-        <p>• GTA V & GTA Online</p>
-        <p>• Forza Horizon 5</p>
-        <p>• Minecraft</p>
-        <p>• Call of Duty: Modern Warfare 2</p>
-        <p>• Among Us</p>
-        <p>• Mortal Kombat 11</p>
-        <p>• F1 2024</p>
-        <p>• FIFA 25</p>
-        <p style="color:#facc15;font-weight:bold;">We also have a steering wheel for racing games!</p>
-        <p style="color:#facc15;font-weight:bold;">Want a game we don't have? Use the "Request Game" field in booking!</p>
-    </div>
+<!-- Xbox -->
+<div class="section"><div class="card">
+<h2>Xbox One</h2>
+<img src="images (1).jpeg">
+<div class="price">₹400 / 1 Day</div>
+<div class="price">₹700 / 2 Days</div>
+<div class="game-list">
+<h3>Available Xbox Games 🕹️</h3>
+<p>• GTA V & GTA Online</p>
+<p>• Forza Horizon 5</p>
+<p>• Minecraft</p>
+<p>• Call of Duty MW2</p>
+<p>• Mortal Kombat 11</p>
+<p>• F1 2024</p>
+<p>• FIFA 25</p>
+<p style="color:#facc15;font-weight:bold;">Steering wheel available for racing games!</p>
 </div>
-</div>
+</div></div>
 
-<!-- RULES -->
-<div class="section">
-<div class="card rules">
-<h2>Rules</h2>
+<!-- RULES / SECURITY -->
+<div class="section"><div class="card rules">
+<h2>Rules & Security</h2>
 • Valid ID proof required<br>
 • Handle controller carefully<br>
-• Late return extra charge<br>
-• Damage charges applicable
-</div>
-</div>
+• Late return = extra charge<br>
+• Damage charges applicable<br>
+• Half payment advance at delivery<br>
+• Remaining half payment after rental period finish<br>
+• Security deposit refundable after checking console<br>
+• Home delivery available in Neemuch
+</div></div>
 
 <!-- CONTACT -->
-<div class="section">
-<div class="card contact">
+<div class="section"><div class="card contact">
 <h2>Booking & Contact</h2>
 📍 Neemuch, Madhya Pradesh<br>
-📞 9303088645
+📞 9303088645<br><br>
+<a class="btn" href="https://wa.me/919303088645" target="_blank">Chat on WhatsApp</a>
+</div></div>
+
+<!-- GOOGLE MAP -->
+<div class="section"><div class="card">
+<h2>📍 Our Location</h2>
+<iframe src="https://www.google.com/maps?q=Neemuch%20Madhya%20Pradesh&output=embed" width="100%" height="300" style="border:0;border-radius:15px;" loading="lazy"></iframe>
+</div></div>
+
+<!-- CUSTOMER REVIEW PHOTOS -->
+<div class="section"><div class="card">
+<h2>⭐ Customer Review Photos</h2>
+<p>Real screenshots from customers</p>
+<div class="gallery">
+<img src="reviews/review1.jpg" alt="Customer review">
+<img src="reviews/review2.jpg" alt="Customer review">
+<img src="reviews/review3.jpg" alt="Customer review">
+<img src="reviews/review4.jpg" alt="Customer review">
 </div>
-</div>
+</div></div>
 
 <!-- BOOKING FORM -->
-<div class="section">
-<div class="card booking">
+<div class="section"><div class="card booking">
 <h2>🎮 Book Your Console</h2>
 <input type="text" id="name" placeholder="Your Name">
-<input type="tel" id="phone" placeholder="Mobile Number">
+<input type="tel" id="phone" placeholder="Mobile Number" pattern="[0-9]{10}">
 <input type="date" id="date">
-<select id="console">
-<option>PS5</option>
-<option>Xbox One</option>
-</select>
+<select id="console"><option>PS5</option><option>Xbox One</option></select>
 <input type="text" id="requestedGame" placeholder="Request a game (optional)">
 <button onclick="sendToWhatsApp()">Book on WhatsApp</button>
-</div>
-</div>
+</div></div>
 
-<!-- REVIEW FORM -->
-<div class="section">
-<div class="card booking">
-<h2 style="color:#facc15;">📝 Give a Review</h2>
-<input type="text" id="reviewName" placeholder="Your Name">
-<select id="reviewRating">
-<option value="5">⭐⭐⭐⭐⭐</option>
-<option value="4">⭐⭐⭐⭐</option>
-<option value="3">⭐⭐⭐</option>
-<option value="2">⭐⭐</option>
-<option value="1">⭐</option>
-</select>
-<textarea id="reviewMessage" placeholder="Write your review"></textarea>
-<button onclick="sendReview()">Send Review</button>
-</div>
-</div>
+<div class="footer">© 2026 Royal Games — Gaming Console Rentals</div>
 
-<!-- ASK DOUBT FORM -->
-<div class="section">
-<div class="card booking">
-<h2 style="color:#38bdf8;">❓ Ask a Doubt / Question</h2>
-<input type="text" id="doubtName" placeholder="Your Name">
-<textarea id="doubtMessage" placeholder="Type your question"></textarea>
-<button onclick="sendDoubt()">Send Question</button>
-</div>
-</div>
-
-<div class="footer">
-© 2026 Royal Games — Gaming Console Rentals
-</div>
+<!-- FLOATING CALL BUTTON -->
+<a href="tel:+919303088645" class="floating-call">📞</a>
 
 <script>
-// BOOKING
 function sendToWhatsApp(){
-var name=document.getElementById("name").value;
-var phone=document.getElementById("phone").value;
-var date=document.getElementById("date").value;
-var consoleType=document.getElementById("console").value;
-var requestedGame=document.getElementById("requestedGame").value;
-if(name=="" || phone=="" || date==""){alert("Please fill all details first!"); return;}
-var url="https://wa.me/919303088645?text="+"*Royal Games Booking*%0a"+"Name: "+name+"%0a"+"Phone: "+phone+"%0a"+"Console: "+consoleType+"%0a";
-if(requestedGame!=""){url+="Requested Game: "+requestedGame+"%0a";}
-url+="Date: "+date;
-window.open(url,'_blank');
-}
-
-// REVIEW
-function sendReview(){
-var name=document.getElementById("reviewName").value;
-var rating=document.getElementById("reviewRating").value;
-var message=document.getElementById("reviewMessage").value;
-if(name==""||message==""){alert("Please fill all fields!"); return;}
-var url="https://wa.me/919303088645?text="+"*Royal Games Review*%0a"+"Name: "+name+"%0a"+"Rating: "+rating+"%0a"+"Message: "+message;
-window.open(url,'_blank');
-}
-
-// ASK DOUBT
-function sendDoubt(){
-var name=document.getElementById("doubtName").value;
-var message=document.getElementById("doubtMessage").value;
-if(name==""||message==""){alert("Please fill all fields!"); return;}
-var url="https://wa.me/919303088645?text="+"*Royal Games Question*%0a"+"Name: "+name+"%0a"+"Question: "+message;
+var name=document.getElementById('name').value;
+var phone=document.getElementById('phone').value;
+var date=document.getElementById('date').value;
+var consoleType=document.getElementById('console').value;
+var requestedGame=document.getElementById('requestedGame').value;
+if(name==''||phone==''||date==''){alert('Please fill all details first!');return;}
+var msg='Royal Games Booking\nName: '+name+'\nPhone: '+phone+'\nConsole: '+consoleType+'\nDate: '+date;
+if(requestedGame!=''){msg+='\nRequested Game: '+requestedGame;}
+var url='https://wa.me/919303088645?text='+encodeURIComponent(msg);
 window.open(url,'_blank');
 }
 </script>
-📞
-    
+
 </body>
     </html>
     
