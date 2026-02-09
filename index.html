@@ -163,18 +163,30 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 <!-- FLOATING CALL BUTTON -->
 <a href="tel:+919303088645" class="floating-call">📞</a>
 
-<script>
+<script> 
+// BOOKING
 function sendToWhatsApp(){
-var name=document.getElementById('name').value;
-var phone=document.getElementById('phone').value;
-var date=document.getElementById('date').value;
-var consoleType=document.getElementById('console').value;
-var requestedGame=document.getElementById('requestedGame').value;
-if(name==''||phone==''||date==''){alert('Please fill all details first!');return;}
-var msg='Royal Games Booking\nName: '+name+'\nPhone: '+phone+'\nConsole: '+consoleType+'\nDate: '+date;
-if(requestedGame!=''){msg+='\nRequested Game: '+requestedGame;}
-var url='https://wa.me/919303088645?text='+encodeURIComponent(msg);
-window.open(url,'_blank');
+var name=document.getElementById("name").value;
+var phone=document.getElementById("phone").value;
+var date=document.getElementById("date").value;
+var consoleType=document.getElementById("console").value;
+var requestedGame=document.getElementById("requestedGame").value;
+
+if(name=="" || phone=="" || date==""){
+alert("Please fill all details first!");
+return;
+}
+
+var message =
+"Royal Games Booking\n"+
+"Name: "+name+"\n"+
+"Phone: "+phone+"\n"+
+"Console: "+consoleType+"\n"+
+"Requested Game: "+requestedGame+"\n"+
+"Date: "+date;
+
+var url="https://wa.me/919303088645?text="+encodeURIComponent(message);
+window.location.href=url;
 }
 
 function sendReview(){
