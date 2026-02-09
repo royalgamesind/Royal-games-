@@ -136,6 +136,29 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 <button onclick="sendToWhatsApp()">Book on WhatsApp</button>
 </div></div>
 
+<!-- REVIEW FORM -->
+<div class="section"><div class="card booking">
+<h2 style="color:#facc15;">📝 Give a Review</h2>
+<input type="text" id="reviewName" placeholder="Your Name">
+<select id="reviewRating">
+<option value="5">⭐⭐⭐⭐⭐</option>
+<option value="4">⭐⭐⭐⭐</option>
+<option value="3">⭐⭐⭐</option>
+<option value="2">⭐⭐</option>
+<option value="1">⭐</option>
+</select>
+<textarea id="reviewMessage" placeholder="Write your review"></textarea>
+<button onclick="sendReview()">Send Review</button>
+</div></div>
+
+<!-- ASK DOUBT FORM -->
+<div class="section"><div class="card booking">
+<h2 style="color:#38bdf8;">❓ Ask a Doubt / Question</h2>
+<input type="text" id="doubtName" placeholder="Your Name">
+<textarea id="doubtMessage" placeholder="Type your question"></textarea>
+<button onclick="sendDoubt()">Send Question</button>
+</div></div>
+
 <div class="footer">© 2026 Royal Games — Gaming Console Rentals</div>
 
 <!-- FLOATING CALL BUTTON -->
@@ -154,8 +177,29 @@ if(requestedGame!=''){msg+='\nRequested Game: '+requestedGame;}
 var url='https://wa.me/919303088645?text='+encodeURIComponent(msg);
 window.open(url,'_blank');
 }
+
+function sendReview(){
+var name=document.getElementById('reviewName').value;
+var rating=document.getElementById('reviewRating').value;
+var message=document.getElementById('reviewMessage').value;
+if(name==''||message==''){alert('Please fill all fields!');return;}
+var url='https://wa.me/919303088645?text='+encodeURIComponent('*Royal Games Review*
+Name: '+name+'
+Rating: '+rating+'
+Message: '+message);
+window.open(url,'_blank');
+}
+
+function sendDoubt(){
+var name=document.getElementById('doubtName').value;
+var message=document.getElementById('doubtMessage').value;
+if(name==''||message==''){alert('Please fill all fields!');return;}
+var url='https://wa.me/919303088645?text='+encodeURIComponent('*Royal Games Question*
+Name: '+name+'
+Question: '+message);
+window.open(url,'_blank');
+}
 </script>
 
 </body>
-    </html>
-    
+</html>
