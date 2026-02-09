@@ -30,115 +30,110 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 .booking h2{color:#f87171;font-family:'Orbitron',sans-serif}
 .rules{line-height:28px;font-size:16px}
 .footer{background:black;padding:18px;text-align:center;margin-top:25px;color:#9ca3af}
-
-/* Review Gallery */
 .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .gallery img{width:100%;border-radius:12px}
 
 /* Floating Call Button */
-.floating-call{position:fixed;bottom:22px;right:20px;width:65px;height:65px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;color:white;text-decoration:none;box-shadow:0 10px 25px rgba(0,0,0,.5);z-index:9999;animation:pulse 2s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.7)}70%{box-shadow:0 0 0 18px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+.floating-call{position:fixed;bottom:22px;right:20px;width:65px;height:65px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:white;text-decoration:none;box-shadow:0 10px 25px rgba(0,0,0,0.5);z-index:9999;animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.7);}70%{box-shadow:0 0 0 18px rgba(34,197,94,0);}100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}}
 .floating-call:hover{transform:scale(1.1)}
 </style>
 </head>
 <body>
 
 <div class="header">
-<h1>👑 ROYAL GAMES</h1>
-<div class="tag">PS5 & Xbox Console Rental Service — Neemuch (MP)</div>
+    <h1>👑 ROYAL GAMES</h1>
+    <div class="tag">PS5 & Xbox Console Rental Service — Neemuch (MP)</div>
 </div>
 
-<!-- PS5 -->
-<div class="section"><div class="card">
-<h2>PlayStation 5</h2>
-<img src="images.jpeg">
-<div class="price">₹500 / 1 Day</div>
-<div class="price">₹800 / 2 Days</div>
-<div class="game-list">
-<h3>Available PS5 Games 🎮</h3>
-<p>• GTA V & GTA Online</p>
-<p>• Black Myth Wukong</p>
-<p>• Ghost of Tsushima</p>
-<p>• Roblox</p>
-<p>• Spider-Man Remastered</p>
-<p>• The Last of Us Part II</p>
-<p>• God of War Ragnarök</p>
-<p style="color:#facc15;font-weight:bold;">Want a game we don't have? Message us below!</p>
-</div>
-</div></div>
+<!-- PS5 SECTION -->
+<div class="section">
+<div class="card">
+    <h2>PlayStation 5</h2>
+    <img src="images.jpeg">
+    <div class="price">₹500 / 1 Day</div>
+    <div class="price">₹800 / 2 Days</div>
 
-<!-- Xbox -->
-<div class="section"><div class="card">
-<h2>Xbox One</h2>
-<img src="images (1).jpeg">
-<div class="price">₹400 / 1 Day</div>
-<div class="price">₹700 / 2 Days</div>
-<div class="game-list">
-<h3>Available Xbox Games 🕹️</h3>
-<p>• GTA V & GTA Online</p>
-<p>• Forza Horizon 5</p>
-<p>• Minecraft</p>
-<p>• Call of Duty MW2</p>
-<p>• Mortal Kombat 11</p>
-<p>• F1 2024</p>
-<p>• FIFA 25</p>
-<p style="color:#facc15;font-weight:bold;">Steering wheel available for racing games!</p>
+    <div class="game-list">
+        <h3>Available PS5 Games 🎮</h3>
+        <p>• GTA V & GTA Online</p>
+        <p>• Black Myth Wukong</p>
+        <p>• Ghost of Yotei</p>
+        <p>• Ghost of Tsushima</p>
+        <p>• Roblox</p>
+        <p>• Spider-Man Remastered</p>
+        <p>• The Last of Us Part II</p>
+        <p>• God of War Ragnarök</p>
+        <p style="color:#facc15;font-weight:bold;">Want a game we don't have? Message us below!</p>
+    </div>
 </div>
-</div></div>
+</div>
 
-<!-- RULES / SECURITY -->
-<div class="section"><div class="card rules">
-<h2>Rules & Security</h2>
+<!-- Xbox SECTION -->
+<div class="section">
+<div class="card">
+    <h2>Xbox One</h2>
+    <img src="images (1).jpeg">
+    <div class="price">₹400 / 1 Day</div>
+    <div class="price">₹700 / 2 Days</div>
+
+    <div class="game-list">
+        <h3>Available Xbox Games 🕹️</h3>
+        <p>• GTA V & GTA Online</p>
+        <p>• Forza Horizon 5</p>
+        <p>• Minecraft</p>
+        <p>• Call of Duty: Modern Warfare 2</p>
+        <p>• Among Us</p>
+        <p>• Mortal Kombat 11</p>
+        <p>• F1 2024</p>
+        <p>• FIFA 25</p>
+        <p style="color:#facc15;font-weight:bold;">We also have a steering wheel for racing games!</p>
+        <p style="color:#facc15;font-weight:bold;">Want a game we don't have? Use the \"Request Game\" field in booking!</p>
+    </div>
+</div>
+</div>
+
+<!-- RULES -->
+<div class="section">
+<div class="card rules">
+<h2>Rules</h2>
 • Valid ID proof required<br>
 • Handle controller carefully<br>
-• Late return = extra charge<br>
-• Damage charges applicable<br>
-• Half payment advance at delivery<br>
-• Remaining half payment after rental period finish<br>
-• Security deposit refundable after checking console<br>
-• Home delivery available in Neemuch
-</div></div>
+• Late return extra charge<br>
+• Damage charges applicable
+</div>
+</div>
 
 <!-- CONTACT -->
-<div class="section"><div class="card contact">
+<div class="section">
+<div class="card contact">
 <h2>Booking & Contact</h2>
 📍 Neemuch, Madhya Pradesh<br>
-📞 9303088645<br><br>
-</div></div>
-
-<!-- GOOGLE MAP -->
-<div class="section"><div class="card">
-<h2>📍 Our Location</h2>
-<iframe src="https://www.google.com/maps?q=Neemuch%20Madhya%20Pradesh&output=embed" width="100%" height="300" style="border:0;border-radius:15px;" loading="lazy"></iframe>
-</div></div>
-
-<!-- CUSTOMER REVIEW PHOTOS -->
-<div class="section"><div class="card">
-<h2>⭐ Customer Review Photos</h2>
-<p>Real screenshots from customers</p>
-<div class="gallery">
-<img src="reviews/review1.jpg" alt="Customer review">
-<img src="reviews/review2.jpg" alt="Customer review">
-<img src="reviews/review3.jpg" alt="Customer review">
-<img src="reviews/review4.jpg" alt="Customer review">
+📞 9303088645
 </div>
-</div></div>
+</div>
 
 <!-- BOOKING FORM -->
-<div class="section"><div class="card booking">
+<div class="section">
+<div class="card booking">
 <h2>🎮 Book Your Console</h2>
-<input type="text" id="name" placeholder="Your Name">
-<input type="tel" id="phone" placeholder="Mobile Number" pattern="[0-9]{10}">
-<input type="date" id="date">
-<select id="console"><option>PS5</option><option>Xbox One</option></select>
+<input type="text" id="name" placeholder="Your Name" required>
+<input type="tel" id="phone" placeholder="Mobile Number" inputmode="numeric" pattern="[0-9]{10}" required>
+<input type="date" id="date" required>
+<select id="console" required>
+<option>PS5</option>
+<option>Xbox One</option>
+</select>
 <input type="text" id="requestedGame" placeholder="Request a game (optional)">
-<button onclick="sendToWhatsApp()">Book on WhatsApp</button>
-</div></div>
+<button type="button" onclick="sendToWhatsApp()">Book on WhatsApp</button>
+</div>
+</div>
 
 <!-- REVIEW FORM -->
-<div class="section"><div class="card booking">
+<div class="section">
+<div class="card booking">
 <h2 style="color:#facc15;">📝 Give a Review</h2>
-<input type="text" id="reviewName" placeholder="Your Name">
+<input type="text" id="reviewName" placeholder="Your Name" required>
 <select id="reviewRating">
 <option value="5">⭐⭐⭐⭐⭐</option>
 <option value="4">⭐⭐⭐⭐</option>
@@ -146,71 +141,124 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 <option value="2">⭐⭐</option>
 <option value="1">⭐</option>
 </select>
-<textarea id="reviewMessage" placeholder="Write your review"></textarea>
-<button onclick="sendReview()">Send Review</button>
-</div></div>
+<textarea id="reviewMessage" placeholder="Write your review" required></textarea>
+<button type="button" onclick="sendReview()">Send Review</button>
+</div>
+</div>
 
 <!-- ASK DOUBT FORM -->
-<div class="section"><div class="card booking">
+<div class="section">
+<div class="card booking">
 <h2 style="color:#38bdf8;">❓ Ask a Doubt / Question</h2>
-<input type="text" id="doubtName" placeholder="Your Name">
-<textarea id="doubtMessage" placeholder="Type your question"></textarea>
-<button onclick="sendDoubt()">Send Question</button>
-</div></div>
+<input type="text" id="doubtName" placeholder="Your Name" required>
+<textarea id="doubtMessage" placeholder="Type your question" required></textarea>
+<button type="button" onclick="sendDoubt()">Send Question</button>
+</div>
+</div>
 
-<div class="footer">© 2026 Royal Games — Gaming Console Rentals</div>
+<div class="footer">
+© 2026 Royal Games — Gaming Console Rentals
+</div>
 
-<!-- FLOATING CALL BUTTON -->
-<a href="tel:+919303088645" class="floating-call">📞</a>
+<a href="tel:9303088645" class="floating-call">📞</a>
 
-<script> 
+<script>
+function val(id){return (document.getElementById(id).value||'').trim();}
+function validPhone(p){return /^[0-9]{10}$/.test(p);} 
+function openWA(text){var url='https://wa.me/919303088645?text='+encodeURIComponent(text);window.location.href=url;}
+
 // BOOKING
 function sendToWhatsApp(){
-var name=document.getElementById("name").value;
-var phone=document.getElementById("phone").value;
-var date=document.getElementById("date").value;
-var consoleType=document.getElementById("console").value;
-var requestedGame=document.getElementById("requestedGame").value;
+  var name=val('name');
+  var phone=val('phone');
+  var date=val('date');
+  var consoleType=val('console');
+  var requestedGame=val('requestedGame');
 
-if(name=="" || phone=="" || date==""){
-alert("Please fill all details first!");
-return;
+  if(!name||!phone||!date){
+    alert('Please fill all required fields!');
+    return;
+  }
+  if(!validPhone(phone)){
+    alert('Enter valid 10 digit mobile number');
+    return;
+  }
+
+  var msg='*Royal Games Booking*\n'+
+          'Name: '+name+'\n'+
+          'Phone: '+phone+'\n'+
+          'Console: '+consoleType+'\n';
+  if(requestedGame){ msg+='Requested Game: '+requestedGame+'\n'; }
+  msg+='Date: '+date;
+
+  openWA(msg);
 }
 
-var message =
-"Royal Games Booking\n"+
-"Name: "+name+"\n"+
-"Phone: "+phone+"\n"+
-"Console: "+consoleType+"\n"+
-"Requested Game: "+requestedGame+"\n"+
-"Date: "+date;
-
-var url="https://wa.me/919303088645?text="+encodeURIComponent(message);
-window.location.href=url;
-}
-
+// REVIEW
 function sendReview(){
-var name=document.getElementById('reviewName').value;
-var rating=document.getElementById('reviewRating').value;
-var message=document.getElementById('reviewMessage').value;
-if(name==''||message==''){alert('Please fill all fields!');return;}
-var url='https://wa.me/919303088645?text='+encodeURIComponent('*Royal Games Review*
-Name: '+name+'
-Rating: '+rating+'
-Message: '+message);
-window.open(url,'_blank');
+  var name=val('reviewName');
+  var rating=val('reviewRating');
+  var message=val('reviewMessage');
+  if(!name||!message){
+    alert('Please fill all fields!');
+    return;
+  }
+  var msg='*Royal Games Review*\n'+
+          'Name: '+name+'\n'+
+          'Rating: '+rating+'⭐\n'+
+          'Message: '+message;
+  openWA(msg);
 }
 
+// ASK DOUBT
 function sendDoubt(){
-var name=document.getElementById('doubtName').value;
-var message=document.getElementById('doubtMessage').value;
-if(name==''||message==''){alert('Please fill all fields!');return;}
-var url='https://wa.me/919303088645?text='+encodeURIComponent('*Royal Games Question*
-Name: '+name+'
-Question: '+message);
-window.open(url,'_blank');
+  var name=val('doubtName');
+  var message=val('doubtMessage');
+  if(!name||!message){
+    alert('Please fill all fields!');
+    return;
+  }
+  var msg='*Royal Games Question*\n'+
+          'Name: '+name+'\n'+
+          'Question: '+message;
+  openWA(msg);
 }
 </script>
 
+
+
+<!-- Review Gallery Section -->
+<section id="reviews" style="padding:20px;">
+  <div class="card">
+    <h2>⭐ Customer Review Gallery</h2>
+    <p>Real WhatsApp feedback from customers</p>
+    <div class="review-gallery">
+      <img src="reviews/review1.jpg" alt="review 1">
+      <img src="reviews/review2.jpg" alt="review 2">
+      <img src="reviews/review3.jpg" alt="review 3">
+      <img src="reviews/review4.jpg" alt="review 4">
+    </div>
+  </div>
+</section>
+
+<style>
+.review-gallery{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-top:12px;
+}
+.review-gallery img{
+  width:100%;
+  border-radius:12px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.4);
+}
+@media(min-width:700px){
+  .review-gallery{grid-template-columns:repeat(4,1fr);} 
+}
+</style>
+
 </body>
 </html>
+
+
