@@ -269,12 +269,66 @@ Final Price: ₹${final}
 
 Requested Game: ${requestedGame||'N/A'}`;
 
-  window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
-}
+  <button class="book-btn" onclick="sendToWhatsApp()">Book Now on WhatsApp</button>
+    
 
 </script>
     
+<script>
+function sendToWhatsApp(){
 
+let consoleName = document.getElementById("consoleSelect").value;
+let days = document.getElementById("daySelect").value;
+let bookingDate = document.getElementById("bookingDate").value;
+let coupon = document.getElementById("couponInput").value || "No Coupon";
+
+let originalPrice = 0;
+
+// price calculation
+if(consoleName == "PS5"){
+    if(days == "1") originalPrice = 500;
+    if(days == "2") originalPrice = 800;
+}
+if(consoleName == "XBOX"){
+    if(days == "1") originalPrice = 400;
+    if(days == "2") originalPrice = 700;
+}
+
+// discount
+let discount = 0;
+if(coupon == "RG100") discount = 100;
+if(coupon == "RG60") discount = 60;
+if(coupon == "RG50") discount = 50;
+
+let finalPrice = originalPrice - discount;
+if(finalPrice < 0) finalPrice = 0;
+
+// message
+let message =
+`🎮 *Royal Games Booking*
+
+Console: ${consoleName}
+Duration: ${days} Day(s)
+Booking Date: ${bookingDate}
+
+Original Price: ₹${originalPrice}
+Coupon: ${coupon}
+Discount: ₹${discount}
+
+*Final Payable: ₹${finalPrice}*
+
+Name:
+Address:
+Landmark:
+Preferred Time:`;
+
+// encode
+let url = "https://wa.me/919303088645?text=" + encodeURIComponent(message);
+
+window.open(url, '_blank');
+}
+</script>
+    
 
 
     
