@@ -176,24 +176,33 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 <a href="tel:9303088645" class="floating-call">📞</a>
 
 <script>
-window.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('DOMContentLoaded', () => {
   const calendar = document.getElementById('calendar');
+  const monthYearLabel = document.getElementById('monthYear'); // new span showing month name
   let selectedDates = [];
 
-  const today = new Date();
-  const currentMonth = today.getMonth();
-  const currentYear = today.getFullYear();
+  let currentMonth = new Date().getMonth();
+  let currentYear = new Date().getFullYear();
 
+  // Update month-year label above calendar
+  function updateMonthYearLabel(){
+    const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    monthYearLabel.innerText = monthNames[currentMonth] + ' ' + currentYear;
+  }
+
+  // Render calendar for current month
   function renderCalendar(month=currentMonth, year=currentYear){
     calendar.innerHTML = '';
     const firstDay = new Date(year, month, 1).getDay();
     const lastDate = new Date(year, month + 1, 0).getDate();
 
+    // Empty cells for first week
     for(let i=0;i<firstDay;i++) calendar.appendChild(document.createElement('div'));
 
+    // Days
     for(let d=1; d<=lastDate; d++){
       const date = new Date(year, month, d);
-      const dateStr = date.toISOString().split('T')[0];
+      const dateStr = date.toISOString().split('T')[0]; // YYYY-MM-DD
       const dayDiv = document.createElement('div');
       dayDiv.innerText = `${d}-${month+1}-${year}`;
       dayDiv.classList.add('calendar-day');
@@ -212,8 +221,26 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Month navigation buttons
+  document.getElementById('prevMonth').addEventListener('click', ()=>{
+    currentMonth--;
+    if(currentMonth<0){ currentMonth=11; currentYear--; }
+    updateMonthYearLabel();
+    renderCalendar();
+  });
+
+  document.getElementById('nextMonth').addEventListener('click', ()=>{
+    currentMonth++;
+    if(currentMonth>11){ currentMonth=0; currentYear++; }
+    updateMonthYearLabel();
+    renderCalendar();
+  });
+
+  // Initialize
+  updateMonthYearLabel();
   renderCalendar();
 
+  // WhatsApp Booking
   window.sendToWhatsApp = function(){
     const name=document.getElementById('name').value.trim();
     const phone=document.getElementById('phone').value.trim();
@@ -228,6 +255,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const msg=`Booking Details:\nName: ${name}\nPhone: ${phone}\nConsole: ${consoleType}\nSelected Dates: ${selectedDates.join(', ')}\nRequested Game: ${requestedGame||'N/A'}`;
     window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
   }
+});
+
 
   window.sendReview = function(){
     const name = document.getElementById('reviewName').value.trim();
