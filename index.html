@@ -205,8 +205,8 @@ function calculatePrice(){
 
   // COUPONS
   let discount=0;
-  if(coupon==="RG100") discount=100;
-  if(coupon==="PS5OFF" && consoleType==="PS5") discount=150;
+  if(coupon==="RG50") discount=50;
+  if(coupon==="PS5OFF" && consoleType==="PS5") discount=50;
   if(coupon==="XBOX50" && consoleType==="Xbox One") discount=50;
 
   let final=total-discount;
