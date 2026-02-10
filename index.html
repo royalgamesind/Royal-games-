@@ -129,7 +129,12 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
     <h3>Select Booking Dates</h3>
     <input type="date" id="startDate" style="width:95%;padding:14px;border-radius:12px;margin-top:10px;background:#1f2937;color:#fff;border:none;font-size:16px;">
 
-<input type="number" id="days" min="1" max="5" placeholder="How many days? (1-5)" 
+<select id="days" style="width:95%;padding:14px;border-radius:12px;margin-top:10px;background:#1f2937;color:#fff;border:none;font-size:16px;">
+  <option value="">Select Rental Duration</option>
+  <option value="1">1 Day</option>
+  <option value="2">2 Days</option>
+</select>
+      
 style="width:95%;padding:14px;border-radius:12px;margin-top:10px;background:#1f2937;color:#fff;border:none;font-size:16px;">
 
 <small style="color:#9ca3af;">Select booking date and rental duration</small>
@@ -173,38 +178,44 @@ style="width:95%;padding:14px;border-radius:12px;margin-top:10px;background:#1f2
 © 2026 Royal Games — Gaming Console Rentals
 </div>
 <a href="tel:9303088645" class="floating-call">📞</a>
-
-
-
-  <script>
+<script>
 
 function calculatePrice(){
   const consoleType=document.getElementById('console').value;
   const startDate=document.getElementById('startDate').value;
-  const days=parseInt(document.getElementById('days').value);
+  const days=document.getElementById('days').value;
   const coupon=document.getElementById('coupon').value.trim().toUpperCase();
 
   if(!startDate || !days) return;
 
-  let pricePerDay=(consoleType==="PS5")?500:400;
-  let total=days*pricePerDay;
+  let total=0;
 
-  let discount=0;
+  // PACKAGE PRICING
+  if(consoleType==="PS5"){
+    if(days=="1") total=500;
+    if(days=="2") total=800;
+  }
+
+  if(consoleType==="Xbox One"){
+    if(days=="1") total=400;
+    if(days=="2") total=700;
+  }
 
   // COUPONS
-  if(coupon==="RG1") discount=1;
-  if(coupon==="PS5OFF" && consoleType==="PS5") discount=10;
-  if(coupon==="XBOX10" && consoleType==="Xbox One") discount=10;
+  let discount=0;
+  if(coupon==="RG100") discount=100;
+  if(coupon==="PS5OFF" && consoleType==="PS5") discount=150;
+  if(coupon==="XBOX50" && consoleType==="Xbox One") discount=50;
 
   let final=total-discount;
   if(final<0) final=0;
 
   document.getElementById("finalPrice").innerText=
-  `Days: ${days} | Original: ₹${total} | Discount: ₹${discount} | Final Price: ₹${final}`;
+  `Package Price: ₹${total} | Discount: ₹${discount} | Final Price: ₹${final}`;
 }
 
 document.getElementById("startDate").addEventListener("change",calculatePrice);
-document.getElementById("days").addEventListener("input",calculatePrice);
+document.getElementById("days").addEventListener("change",calculatePrice);
 document.getElementById("console").addEventListener("change",calculatePrice);
 document.getElementById("coupon").addEventListener("input",calculatePrice);
 
@@ -214,7 +225,7 @@ window.sendToWhatsApp = function(){
   const consoleType=document.getElementById('console').value;
   const requestedGame=document.getElementById('requestedGame').value.trim();
   const startDate=document.getElementById('startDate').value;
-  const days=parseInt(document.getElementById('days').value);
+  const days=document.getElementById('days').value;
   const coupon=document.getElementById('coupon').value.trim().toUpperCase();
 
   if(!name || !phone || !startDate || !days){
@@ -222,13 +233,22 @@ window.sendToWhatsApp = function(){
     return;
   }
 
-  let pricePerDay=(consoleType==="PS5")?500:400;
-  let total=days*pricePerDay;
+  let total=0;
+
+  if(consoleType==="PS5"){
+    if(days=="1") total=500;
+    if(days=="2") total=800;
+  }
+
+  if(consoleType==="Xbox One"){
+    if(days=="1") total=400;
+    if(days=="2") total=700;
+  }
 
   let discount=0;
-  if(coupon==="RG100") discount=100;
-  if(coupon==="PS5OFF" && consoleType==="PS5") discount=150;
-  if(coupon==="XBOX50" && consoleType==="Xbox One") discount=50;
+  if(coupon==="RG10") discount=10;
+  if(coupon==="PS5OFF" && consoleType==="PS5") discount=10;
+  if(coupon==="XBOX10" && consoleType==="Xbox One") discount=10;
 
   let final=total-discount;
   if(final<0) final=0;
@@ -238,9 +258,9 @@ Name: ${name}
 Phone: ${phone}
 Console: ${consoleType}
 Booking Date: ${startDate}
-Rental Duration: ${days} day(s)
+Duration: ${days} Day(s)
 
-Original Price: ₹${total}
+Package Price: ₹${total}
 Coupon: ${coupon||'None'}
 Discount: ₹${discount}
 Final Price: ₹${final}
@@ -250,7 +270,11 @@ Requested Game: ${requestedGame||'N/A'}`;
   window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
-                                          </script>
+</script>
+    
+
+
+
     
 
 
