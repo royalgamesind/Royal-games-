@@ -38,7 +38,6 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
   gap: 5px;
   margin-top: 10px;
 }
-
 .calendar-day {
   padding: 10px;
   text-align: center;
@@ -46,26 +45,24 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
   cursor: pointer;
   user-select: none;
 }
-
 .calendar-day.available {
-  background-color: #4caf50; /* Green for available */
+  background-color: #4caf50;
   color: white;
 }
-
 .calendar-day.booked {
-  background-color: #f44336; /* Red for booked */
+  background-color: #f44336;
   color: white;
   cursor: not-allowed;
 }
-
 .calendar-day.selected {
   border: 2px solid yellow;
 }
-    
-/* Floating Call Button */
 .floating-call{position:fixed;bottom:22px;right:20px;width:65px;height:65px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:white;text-decoration:none;box-shadow:0 10px 25px rgba(0,0,0,0.5);z-index:9999;animation:pulse 2s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.7);}70%{box-shadow:0 0 0 18px rgba(34,197,94,0);}100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}}
 .floating-call:hover{transform:scale(1.1)}
+.review-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+.review-gallery img{width:100%;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.4)}
+@media(min-width:700px){.review-gallery{grid-template-columns:repeat(4,1fr);}}
 </style>
 </head>
 <body>
@@ -117,7 +114,7 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
         <p>• F1 2024</p>
         <p>• FIFA 25</p>
         <p style="color:#facc15;font-weight:bold;">We also have a steering wheel for racing games!</p>
-        <p style="color:#facc15;font-weight:bold;">Want a game we don't have? Use the \"Request Game\" field in booking!</p>
+        <p style="color:#facc15;font-weight:bold;">Want a game we don't have? Use the "Request Game" field in booking!</p>
     </div>
 </div>
 </div>
@@ -158,7 +155,6 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
   <input type="text" id="requestedGame" placeholder="Request a game (optional)">
   <button onclick="sendToWhatsApp()">Book on WhatsApp</button>
 </div>
-    
 
 <!-- REVIEW FORM -->
 <div class="section">
@@ -190,130 +186,122 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 <div class="footer">
 © 2026 Royal Games — Gaming Console Rentals
 </div>
-
 <a href="tel:9303088645" class="floating-call">📞</a>
 
-<script>
-function val(id){return (document.getElementById(id).value||'').trim();}
-function validPhone(p){return /^[0-9]{10}$/.test(p);} 
-function openWA(text){var url='https://wa.me/919303088645?text='+encodeURIComponent(text);window.location.href=url;}
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-firestore.js";
 
-// BOOKING
-function sendToWhatsApp(){
-  var name=val('name');
-  var phone=val('phone');
-  var date=val('date');
-  var consoleType=val('console');
-  var requestedGame=val('requestedGame');
+  const firebaseConfig = {
+    apiKey: "AIzaSyBRuy9084wz4HwBJbdNuleC4suYi0zycNA",
+    authDomain: "royalgamesproject.firebaseapp.com",
+    projectId: "royalgamesproject",
+    storageBucket: "royalgamesproject.firebasestorage.app",
+    messagingSenderId: "1008609758558",
+    appId: "1:1008609758558:web:7aa12cdef2b066ad7393cf"
+  };
 
-  if(!name||!phone||!date){
-    alert('Please fill all required fields!');
-    return;
-  }
-  if(!validPhone(phone)){
-    alert('Enter valid 10 digit mobile number');
-    return;
-  }
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-  var msg='*Royal Games Booking*\n'+
-          'Name: '+name+'\n'+
-          'Phone: '+phone+'\n'+
-          'Console: '+consoleType+'\n';
-  if(requestedGame){ msg+='Requested Game: '+requestedGame+'\n'; }
-  msg+='Date: '+date;
+  // Calendar & Booking Logic
+  const calendar = document.getElementById("calendar");
+  let selectedDays = [];
+  let bookedDays = [];
 
-  openWA(msg);
-}
-
-// REVIEW
-function sendReview(){
-  var name=val('reviewName');
-  var rating=val('reviewRating');
-  var message=val('reviewMessage');
-  if(!name||!message){
-    alert('Please fill all fields!');
-    return;
-  }
-  var msg='*Royal Games Review*\n'+
-          'Name: '+name+'\n'+
-          'Rating: '+rating+'⭐\n'+
-          'Message: '+message;
-  openWA(msg);
-}
-
-// ASK DOUBT
-function sendDoubt(){
-  var name=val('doubtName');
-  var message=val('doubtMessage');
-  if(!name||!message){
-    alert('Please fill all fields!');
-    return;
-  }
-  var msg='*Royal Games Question*\n'+
-          'Name: '+name+'\n'+
-          'Question: '+message;
-  openWA(msg);
-}
-  // Example: Pre-booked days (1 = booked, 0 = available)
-const bookedDays = [0, 1, 0, 0, 1, 0, 0]; // 7 days example, modify as needed
-
-const calendar = document.getElementById("calendar");
-
-let selectedDays = [];
-
-// Generate calendar
-for (let i = 1; i <= 7; i++) {
-  const day = document.createElement("div");
-  day.innerText = `Day ${i}`;
-  day.classList.add("calendar-day");
-
-  if (bookedDays[i - 1] === 1) {
-    day.classList.add("booked");
-  } else {
-    day.classList.add("available");
-    day.addEventListener("click", () => {
-      if (selectedDays.includes(i)) {
-        selectedDays = selectedDays.filter(d => d !== i);
-        day.classList.remove("selected");
-      } else {
-        selectedDays.push(i);
-        day.classList.add("selected");
-      }
+  async function loadBookings() {
+    bookedDays = [];
+    const querySnapshot = await getDocs(collection(db, "bookings"));
+    querySnapshot.forEach((doc) => {
+      doc.data().days.forEach(day => {
+        if(!bookedDays.includes(day)) bookedDays.push(day);
+      });
     });
+    renderCalendar();
   }
 
-  calendar.appendChild(day);
-}
-
-// Update WhatsApp function
-function sendToWhatsApp() {
-  const name = document.getElementById("name").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const consoleType = document.getElementById("console").value;
-  const requestedGame = document.getElementById("requestedGame").value.trim();
-
-  if (!name || !phone || selectedDays.length === 0) {
-    alert("Please fill all required fields and select at least one day!");
-    return;
-  }
-
-  const daysText = selectedDays.map(d => `Day ${d}`).join(", ");
-
-  const message = `Booking Details:
-Name: ${name}
-Phone: ${phone}
-Console: ${consoleType}
-Selected Days: ${daysText}
-Requested Game: ${requestedGame || "N/A"}`;
-
-  const whatsappNumber = "919303088645"; // Your WhatsApp number
-  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-  window.open(url, "_blank");
+  function renderCalendar(){
+    calendar.innerHTML='';
+    for(let i=1;i<=7;i++){
+      const day=document.createElement('div');
+      day.innerText=`Day ${i}`;
+      day.classList.add('calendar-day');
+      if(bookedDays.includes(i)){
+        day.classList.add('booked');
+      } else {
+        day.classList.add('available');
+        day.addEventListener('click',()=>{
+          if(selectedDays.includes(i)){
+            selectedDays=selectedDays.filter(d=>d!==i);
+            day.classList.remove('selected');
+          } else {
+            selectedDays.push(i);
+            day.classList.add('selected');
+          }
+        });
+      }
+      calendar.appendChild(day);
     }
-  
+  }
+
+  loadBookings();
+
+  function val(id){return (document.getElementById(id).value||'').trim();}
+  function validPhone(p){return /^[0-9]{10}$/.test(p);}
+
+  async function sendToWhatsApp(){
+    const name=val('name');
+    const phone=val('phone');
+    const consoleType=val('console');
+    const requestedGame=val('requestedGame');
+
+    if(!name||!phone||selectedDays.length===0){
+      alert('Please fill all required fields and select at least one day!');
+      return;
+    }
+    if(!validPhone(phone)){alert('Enter valid 10 digit mobile number'); return;}
+
+    const daysText=selectedDays.map(d=>`Day ${d}`).join(', ');
+
+    // Send to WhatsApp
+    const msg=`Booking Details:\nName: ${name}\nPhone: ${phone}\nConsole: ${consoleType}\nSelected Days: ${daysText}\nRequested Game: ${requestedGame||'N/A'}`;
+    window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
+
+    // Save to Firebase
+    try {
+      await addDoc(collection(db,"bookings"),{
+        name,
+        phone,
+        consoleType,
+        requestedGame,
+        days:selectedDays,
+        timestamp:new Date(),
+        status:'booked'
+      });
+      alert('Booking saved!');
+      selectedDays=[];
+      loadBookings();
+    } catch(e){console.error('Error saving booking',e);}
+  }
+
+  function sendReview(){
+    const name=val('reviewName');
+    const rating=val('reviewRating');
+    const message=val('reviewMessage');
+    if(!name||!message){alert('Please fill all fields!');return;}
+    const msg=`*Royal Games Review*\nName: ${name}\nRating: ${rating}⭐\nMessage: ${message}`;
+    window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
+  }
+
+  function sendDoubt(){
+    const name=val('doubtName');
+    const message=val('doubtMessage');
+    if(!name||!message){alert('Please fill all fields!');return;}
+    const msg=`*Royal Games Question*\nName: ${name}\nQuestion: ${message}`;
+    window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
+  }
 </script>
-
-
 
 <!-- Review Gallery Section -->
 <section id="reviews" style="padding:20px;">
@@ -329,24 +317,6 @@ Requested Game: ${requestedGame || "N/A"}`;
   </div>
 </section>
 
-<style>
-.review-gallery{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-  margin-top:12px;
-}
-.review-gallery img{
-  width:100%;
-  border-radius:12px;
-  box-shadow:0 4px 14px rgba(0,0,0,0.4);
-}
-@media(min-width:700px){
-  .review-gallery{grid-template-columns:repeat(4,1fr);} 
-}
-</style>
-
 </body>
-</html>
-
-
+    </html>
+  
