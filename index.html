@@ -32,7 +32,36 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 .footer{background:black;padding:18px;text-align:center;margin-top:25px;color:#9ca3af}
 .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .gallery img{width:100%;border-radius:12px}
+#calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin-top: 10px;
+}
 
+.calendar-day {
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.calendar-day.available {
+  background-color: #4caf50; /* Green for available */
+  color: white;
+}
+
+.calendar-day.booked {
+  background-color: #f44336; /* Red for booked */
+  color: white;
+  cursor: not-allowed;
+}
+
+.calendar-day.selected {
+  border: 2px solid yellow;
+}
+    
 /* Floating Call Button */
 .floating-call{position:fixed;bottom:22px;right:20px;width:65px;height:65px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:white;text-decoration:none;box-shadow:0 10px 25px rgba(0,0,0,0.5);z-index:9999;animation:pulse 2s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.7);}70%{box-shadow:0 0 0 18px rgba(34,197,94,0);}100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}}
