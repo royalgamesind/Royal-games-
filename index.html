@@ -128,10 +128,16 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
   </select>
 
   <!-- Calendar -->
-  <div id="calendar-container">
-    <h3>Select Dates</h3>
-    <div id="calendar"></div>
+    <div id="calendar-container">
+  <h3>Select Dates</h3>
+  <div id="calendar-controls" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+    <button id="prevMonth" style="padding:6px 12px;cursor:pointer;border-radius:8px;border:none;background:#0ea5e9;color:#fff">◀ Prev</button>
+    <span id="monthYear" style="font-weight:bold;"></span>
+    <button id="nextMonth" style="padding:6px 12px;cursor:pointer;border-radius:8px;border:none;background:#0ea5e9;color:#fff">Next ▶</button>
   </div>
+  <div id="calendar"></div>
+    </div>
+    
 
   <input type="text" id="requestedGame" placeholder="Request a game (optional)">
   <button onclick="sendToWhatsApp()">Book on WhatsApp</button>
