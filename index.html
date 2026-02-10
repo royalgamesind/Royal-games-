@@ -32,9 +32,6 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 .footer{background:black;padding:18px;text-align:center;margin-top:25px;color:#9ca3af}
 .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .gallery img{width:100%;border-radius:12px}
-#calendar {display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:10px}
-.calendar-day {padding:12px;text-align:center;border-radius:5px;cursor:pointer;background:#1f2937;color:#fff;user-select:none;}
-.calendar-day.selected {border:2px solid yellow;font-weight:bold;}
 .floating-call{position:fixed;bottom:22px;right:20px;width:65px;height:65px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:white;text-decoration:none;box-shadow:0 10px 25px rgba(0,0,0,0.5);z-index:9999;animation:pulse 2s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.7);}70%{box-shadow:0 0 0 18px rgba(34,197,94,0);}100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}}
 .floating-call:hover{transform:scale(1.1)}
@@ -127,17 +124,13 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
     <option>Xbox One</option>
   </select>
 
-  <!-- Calendar -->
-    <div id="calendar-container">
-  <h3>Select Dates</h3>
-  <div id="calendar-controls" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-    <button id="prevMonth" style="padding:6px 12px;cursor:pointer;border-radius:8px;border:none;background:#0ea5e9;color:#fff">◀ Prev</button>
-    <span id="monthYear" style="font-weight:bold;"></span>
-    <button id="nextMonth" style="padding:6px 12px;cursor:pointer;border-radius:8px;border:none;background:#0ea5e9;color:#fff">Next ▶</button>
+  <!-- Simple Date Picker -->
+  <div id="calendar-container">
+    <h3>Select Booking Dates</h3>
+    <input type="date" id="startDate" style="width:95%;padding:14px;border-radius:12px;margin-top:10px;background:#1f2937;color:#fff;border:none;font-size:16px;">
+    <input type="date" id="endDate" style="width:95%;padding:14px;border-radius:12px;margin-top:10px;background:#1f2937;color:#fff;border:none;font-size:16px;">
+    <small style="color:#9ca3af;">Select start and end date of your rental</small>
   </div>
-  <div id="calendar"></div>
-    </div>
-    
 
   <input type="text" id="requestedGame" placeholder="Request a game (optional)">
   <button onclick="sendToWhatsApp()">Book on WhatsApp</button>
@@ -176,105 +169,39 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 <a href="tel:9303088645" class="floating-call">📞</a>
 
 <script>
-    window.addEventListener('DOMContentLoaded', () => {
-  const calendar = document.getElementById('calendar');
-  const monthYearLabel = document.getElementById('monthYear'); // new span showing month name
-  let selectedDates = [];
+window.sendToWhatsApp = function(){
+  const name=document.getElementById('name').value.trim();
+  const phone=document.getElementById('phone').value.trim();
+  const consoleType=document.getElementById('console').value;
+  const requestedGame=document.getElementById('requestedGame').value.trim();
+  const startDate=document.getElementById('startDate').value;
+  const endDate=document.getElementById('endDate').value;
 
-  let currentMonth = new Date().getMonth();
-  let currentYear = new Date().getFullYear();
-
-  // Update month-year label above calendar
-  function updateMonthYearLabel(){
-    const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-    monthYearLabel.innerText = monthNames[currentMonth] + ' ' + currentYear;
+  if(!name || !phone || !startDate || !endDate){
+    alert('Please fill all fields and select dates!');
+    return;
   }
 
-  // Render calendar for current month
-  function renderCalendar(month=currentMonth, year=currentYear){
-    calendar.innerHTML = '';
-    const firstDay = new Date(year, month, 1).getDay();
-    const lastDate = new Date(year, month + 1, 0).getDate();
+  const msg=`Booking Details:\nName: ${name}\nPhone: ${phone}\nConsole: ${consoleType}\nStart Date: ${startDate}\nEnd Date: ${endDate}\nRequested Game: ${requestedGame||'N/A'}`;
+  window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
+}
 
-    // Empty cells for first week
-    for(let i=0;i<firstDay;i++) calendar.appendChild(document.createElement('div'));
+window.sendReview = function(){
+  const name = document.getElementById('reviewName').value.trim();
+  const rating = document.getElementById('reviewRating').value;
+  const message = document.getElementById('reviewMessage').value.trim();
+  if(!name || !message){ alert('Fill all review fields!'); return; }
+  const msg = `*Royal Games Review*\nName: ${name}\nRating: ${rating}⭐\nMessage: ${message}`;
+  window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
+}
 
-    // Days
-    for(let d=1; d<=lastDate; d++){
-      const date = new Date(year, month, d);
-      const dateStr = date.toISOString().split('T')[0]; // YYYY-MM-DD
-      const dayDiv = document.createElement('div');
-      dayDiv.innerText = `${d}-${month+1}-${year}`;
-      dayDiv.classList.add('calendar-day');
-
-      dayDiv.addEventListener('click', ()=>{
-        if(selectedDates.includes(dateStr)){
-          selectedDates = selectedDates.filter(dt => dt!==dateStr);
-          dayDiv.classList.remove('selected');
-        } else {
-          selectedDates.push(dateStr);
-          dayDiv.classList.add('selected');
-        }
-      });
-
-      calendar.appendChild(dayDiv);
-    }
-  }
-
-  // Month navigation buttons
-  document.getElementById('prevMonth').addEventListener('click', ()=>{
-    currentMonth--;
-    if(currentMonth<0){ currentMonth=11; currentYear--; }
-    updateMonthYearLabel();
-    renderCalendar();
-  });
-
-  document.getElementById('nextMonth').addEventListener('click', ()=>{
-    currentMonth++;
-    if(currentMonth>11){ currentMonth=0; currentYear++; }
-    updateMonthYearLabel();
-    renderCalendar();
-  });
-
-  // Initialize
-  updateMonthYearLabel();
-  renderCalendar();
-
-  // WhatsApp Booking
-  window.sendToWhatsApp = function(){
-    const name=document.getElementById('name').value.trim();
-    const phone=document.getElementById('phone').value.trim();
-    const consoleType=document.getElementById('console').value;
-    const requestedGame=document.getElementById('requestedGame').value.trim();
-
-    if(!name || !phone || selectedDates.length===0){
-      alert('Fill all fields and select dates!');
-      return;
-    }
-
-    const msg=`Booking Details:\nName: ${name}\nPhone: ${phone}\nConsole: ${consoleType}\nSelected Dates: ${selectedDates.join(', ')}\nRequested Game: ${requestedGame||'N/A'}`;
-    window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
-  }
-});
-
-
-  window.sendReview = function(){
-    const name = document.getElementById('reviewName').value.trim();
-    const rating = document.getElementById('reviewRating').value;
-    const message = document.getElementById('reviewMessage').value.trim();
-    if(!name || !message){ alert('Fill all review fields!'); return; }
-    const msg = `*Royal Games Review*\nName: ${name}\nRating: ${rating}⭐\nMessage: ${message}`;
-    window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
-  }
-
-  window.sendDoubt = function(){
-    const name=document.getElementById('doubtName').value.trim();
-    const message=document.getElementById('doubtMessage').value.trim();
-    if(!name || !message){ alert('Fill all fields!'); return; }
-    const msg = `*Royal Games Question*\nName: ${name}\nQuestion: ${message}`;
-    window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
-  }
-});
+window.sendDoubt = function(){
+  const name=document.getElementById('doubtName').value.trim();
+  const message=document.getElementById('doubtMessage').value.trim();
+  if(!name || !message){ alert('Fill all fields!'); return; }
+  const msg = `*Royal Games Question*\nName: ${name}\nQuestion: ${message}`;
+  window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
+}
 </script>
 
 <!-- Review Gallery Section -->
@@ -293,5 +220,3 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 
 </body>
 </html>
-
-             
