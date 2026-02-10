@@ -282,7 +282,7 @@ function sendReview(){
 // Load reviews dynamically
 function loadReviews(){
   const reviewGallery=document.getElementById('reviewGallery');
-  db.ref('reviews').orderByChild('timestamp').limitToLast(5).on('value',snapshot=>{
+  db.ref('reviews').orderByChild('timestamp').limitToLast(6).on('value',snapshot=>{
     reviewGallery.innerHTML='';
     snapshot.forEach(child=>{
       const r=child.val();
