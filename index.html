@@ -170,8 +170,47 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 © 2026 Royal Games — Gaming Console Rentals
 </div>
 <a href="tel:9303088645" class="floating-call">📞</a>
-
 <script>
+
+function calculatePrice(){
+  const consoleType=document.getElementById('console').value;
+  const startDate=document.getElementById('startDate').value;
+  const endDate=document.getElementById('endDate').value;
+  const coupon=document.getElementById('coupon').value.trim().toUpperCase();
+
+  if(!startDate || !endDate) return;
+
+  const start=new Date(startDate);
+  const end=new Date(endDate);
+
+  let days=Math.ceil((end-start)/(1000*60*60*24))+1;
+  if(days<=0) return;
+
+  let pricePerDay=0;
+
+  if(consoleType==="PS5") pricePerDay=500;
+  if(consoleType==="Xbox One") pricePerDay=400;
+
+  let total=days*pricePerDay;
+  let discount=0;
+
+  // COUPONS
+  if(coupon==="RG100") discount=100;
+  if(coupon==="PS5OFF") if(consoleType==="PS5") discount=150;
+  if(coupon==="XBOX50") if(consoleType==="Xbox One") discount=50;
+
+  let final=total-discount;
+  if(final<0) final=0;
+
+  document.getElementById("finalPrice").innerText=
+  `Total Days: ${days} | Original: ₹${total} | Discount: ₹${discount} | Final Price: ₹${final}`;
+}
+
+document.getElementById("startDate").addEventListener("change",calculatePrice);
+document.getElementById("endDate").addEventListener("change",calculatePrice);
+document.getElementById("console").addEventListener("change",calculatePrice);
+document.getElementById("coupon").addEventListener("input",calculatePrice);
+
 window.sendToWhatsApp = function(){
   const name=document.getElementById('name').value.trim();
   const phone=document.getElementById('phone').value.trim();
@@ -179,13 +218,43 @@ window.sendToWhatsApp = function(){
   const requestedGame=document.getElementById('requestedGame').value.trim();
   const startDate=document.getElementById('startDate').value;
   const endDate=document.getElementById('endDate').value;
+  const coupon=document.getElementById('coupon').value.trim().toUpperCase();
 
   if(!name || !phone || !startDate || !endDate){
     alert('Please fill all fields and select dates!');
     return;
   }
 
-  const msg=`Booking Details:\nName: ${name}\nPhone: ${phone}\nConsole: ${consoleType}\nStart Date: ${startDate}\nEnd Date: ${endDate}\nRequested Game: ${requestedGame||'N/A'}`;
+  const start=new Date(startDate);
+  const end=new Date(endDate);
+  let days=Math.ceil((end-start)/(1000*60*60*24))+1;
+
+  let pricePerDay=(consoleType==="PS5")?500:400;
+  let total=days*pricePerDay;
+
+  let discount=0;
+  if(coupon==="RG100") discount=100;
+  if(coupon==="PS5OFF" && consoleType==="PS5") discount=150;
+  if(coupon==="XBOX50" && consoleType==="Xbox One") discount=50;
+
+  let final=total-discount;
+  if(final<0) final=0;
+
+  const msg=`🎮 *Royal Games Booking*
+Name: ${name}
+Phone: ${phone}
+Console: ${consoleType}
+Start Date: ${startDate}
+End Date: ${endDate}
+Total Days: ${days}
+
+Original Price: ₹${total}
+Coupon: ${coupon||'None'}
+Discount: ₹${discount}
+Final Price: ₹${final}
+
+Requested Game: ${requestedGame||'N/A'}`;
+
   window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
@@ -205,7 +274,10 @@ window.sendDoubt = function(){
   const msg = `*Royal Games Question*\nName: ${name}\nQuestion: ${message}`;
   window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
 }
+
 </script>
+    
+
 
 <!-- Review Gallery Section -->
 <section id="reviews" style="padding:20px;">
