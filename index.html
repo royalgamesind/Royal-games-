@@ -181,7 +181,7 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 </div>
 <a href="tel:9303088645" class="floating-call">📞</a>
 
-<!-- Firebase SDK -->
+<!-- Firebase SDK + Calendar Logic -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-firestore.js";
@@ -201,7 +201,6 @@ const db = getFirestore(app);
 function val(id){return (document.getElementById(id).value||'').trim();}
 function validPhone(p){return /^[0-9]{10}$/.test(p);}
 
-// Calendar
 const calendar = document.getElementById("calendar");
 let selectedDates = [];
 let bookedDates = [];
@@ -210,9 +209,7 @@ async function loadBookings() {
   bookedDates = [];
   const querySnapshot = await getDocs(collection(db, "bookings"));
   querySnapshot.forEach(doc => {
-    doc.data().days.forEach(day => {
-      bookedDates.push(day);
-    });
+    doc.data().days.forEach(day => bookedDates.push(day));
   });
   renderCalendar();
 }
@@ -255,60 +252,22 @@ function renderCalendar() {
 }
 
 async function sendToWhatsApp() {
-  const name = val('name');
-  const phone = val('phone');
-  const consoleType = val('console');
-  const requestedGame = val('requestedGame');
-
-  if (!name || !phone || selectedDates.length === 0) {
-    alert('Please fill all required fields and select at least one date!');
-    return;
-  }
-  if (!validPhone(phone)) { alert('Enter valid 10 digit mobile number'); return; }
-
-  const datesText = selectedDates.join(', ');
-  const msg = `Booking Details:\nName: ${name}\nPhone: ${phone}\nConsole: ${consoleType}\nSelected Dates: ${datesText}\nRequested Game: ${requestedGame||'N/A'}`;
+  const name=val('name'), phone=val('phone'), consoleType=val('console'), requestedGame=val('requestedGame');
+  if(!name||!phone||selectedDates.length===0){alert('Fill all fields + select dates!'); return;}
+  if(!validPhone(phone)){alert('Enter valid 10 digit number'); return;}
+  const msg=`Booking Details:\nName: ${name}\nPhone: ${phone}\nConsole: ${consoleType}\nSelected Dates: ${selectedDates.join(', ')}\nRequested Game: ${requestedGame||'N/A'}`;
   window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
-
-  try {
-    await addDoc(collection(db,"bookings"),{
-      name,
-      phone,
-      consoleType,
-      requestedGame,
-      days:selectedDates,
-      timestamp:new Date(),
-      status:'booked'
-    });
-    alert('Booking saved!');
-    selectedDates=[];
-    loadBookings();
-  } catch(e){console.error('Error saving booking',e);}
+  await addDoc(collection(db,"bookings"),{name,phone,consoleType,requestedGame,days:selectedDates,timestamp:new Date(),status:'booked'});
+  alert('Booking saved!'); selectedDates=[]; loadBookings();
 }
 
-// Reviews
-function sendReview(){
-  const name=val('reviewName');
-  const rating=val('reviewRating');
-  const message=val('reviewMessage');
-  if(!name||!message){alert('Please fill all fields!');return;}
-  const msg=`*Royal Games Review*\nName: ${name}\nRating: ${rating}⭐\nMessage: ${message}`;
-  window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
-}
-
-// Doubts
-function sendDoubt(){
-  const name=val('doubtName');
-  const message=val('doubtMessage');
-  if(!name||!message){alert('Please fill all fields!');return;}
-  const msg=`*Royal Games Question*\nName: ${name}\nQuestion: ${message}`;
-  window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
-}
+function sendReview(){const n=val('reviewName'),r=val('reviewRating'),m=val('reviewMessage'); if(!n||!m){alert('Fill all fields!'); return;} window.open(`https://wa.me/919303088645?text=${encodeURIComponent(`*Royal Games Review*\nName: ${n}\nRating: ${r}⭐\nMessage: ${m}`)}`,'_blank');}
+function sendDoubt(){const n=val('doubtName'),m=val('doubtMessage'); if(!n||!m){alert('Fill all fields!'); return;} window.open(`https://wa.me/919303088645?text=${encodeURIComponent(`*Royal Games Question*\nName: ${n}\nQuestion: ${m}`)}`,'_blank');}
 
 loadBookings();
 </script>
 
-<!-- Review Gallery Section -->
+<!-- Review Gallery -->
 <section id="reviews" style="padding:20px;">
   <div class="card">
     <h2>⭐ Customer Review Gallery</h2>
@@ -324,4 +283,4 @@ loadBookings();
 
 </body>
   </html>
-    
+  
