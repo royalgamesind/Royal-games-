@@ -170,44 +170,38 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 © 2026 Royal Games — Gaming Console Rentals
 </div>
 <a href="tel:9303088645" class="floating-call">📞</a>
-<script>
+
+
+
+  <script>
 
 function calculatePrice(){
   const consoleType=document.getElementById('console').value;
   const startDate=document.getElementById('startDate').value;
-  const endDate=document.getElementById('endDate').value;
+  const days=parseInt(document.getElementById('days').value);
   const coupon=document.getElementById('coupon').value.trim().toUpperCase();
 
-  if(!startDate || !endDate) return;
+  if(!startDate || !days) return;
 
-  const start=new Date(startDate);
-  const end=new Date(endDate);
-
-  let days=Math.ceil((end-start)/(1000*60*60*24))+1;
-  if(days<=0) return;
-
-  let pricePerDay=0;
-
-  if(consoleType==="PS5") pricePerDay=500;
-  if(consoleType==="Xbox One") pricePerDay=400;
-
+  let pricePerDay=(consoleType==="PS5")?500:400;
   let total=days*pricePerDay;
+
   let discount=0;
 
   // COUPONS
-  if(coupon==="RG10") discount=10;
-  if(coupon==="PS5OFF") if(consoleType==="PS5") discount=50;
-  if(coupon==="XBOX50") if(consoleType==="Xbox One") discount=50;
+  if(coupon==="RG100") discount=100;
+  if(coupon==="PS5OFF" && consoleType==="PS5") discount=150;
+  if(coupon==="XBOX50" && consoleType==="Xbox One") discount=50;
 
   let final=total-discount;
   if(final<0) final=0;
 
   document.getElementById("finalPrice").innerText=
-  `Total Days: ${days} | Original: ₹${total} | Discount: ₹${discount} | Final Price: ₹${final}`;
+  `Days: ${days} | Original: ₹${total} | Discount: ₹${discount} | Final Price: ₹${final}`;
 }
 
 document.getElementById("startDate").addEventListener("change",calculatePrice);
-document.getElementById("endDate").addEventListener("change",calculatePrice);
+document.getElementById("days").addEventListener("input",calculatePrice);
 document.getElementById("console").addEventListener("change",calculatePrice);
 document.getElementById("coupon").addEventListener("input",calculatePrice);
 
@@ -217,17 +211,13 @@ window.sendToWhatsApp = function(){
   const consoleType=document.getElementById('console').value;
   const requestedGame=document.getElementById('requestedGame').value.trim();
   const startDate=document.getElementById('startDate').value;
-  const endDate=document.getElementById('endDate').value;
+  const days=parseInt(document.getElementById('days').value);
   const coupon=document.getElementById('coupon').value.trim().toUpperCase();
 
-  if(!name || !phone || !startDate || !endDate){
-    alert('Please fill all fields and select dates!');
+  if(!name || !phone || !startDate || !days){
+    alert('Please fill all fields!');
     return;
   }
-
-  const start=new Date(startDate);
-  const end=new Date(endDate);
-  let days=Math.ceil((end-start)/(1000*60*60*24))+1;
 
   let pricePerDay=(consoleType==="PS5")?500:400;
   let total=days*pricePerDay;
@@ -244,9 +234,8 @@ window.sendToWhatsApp = function(){
 Name: ${name}
 Phone: ${phone}
 Console: ${consoleType}
-Start Date: ${startDate}
-End Date: ${endDate}
-Total Days: ${days}
+Booking Date: ${startDate}
+Rental Duration: ${days} day(s)
 
 Original Price: ₹${total}
 Coupon: ${coupon||'None'}
@@ -258,24 +247,7 @@ Requested Game: ${requestedGame||'N/A'}`;
   window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
-window.sendReview = function(){
-  const name = document.getElementById('reviewName').value.trim();
-  const rating = document.getElementById('reviewRating').value;
-  const message = document.getElementById('reviewMessage').value.trim();
-  if(!name || !message){ alert('Fill all review fields!'); return; }
-  const msg = `*Royal Games Review*\nName: ${name}\nRating: ${rating}⭐\nMessage: ${message}`;
-  window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
-}
-
-window.sendDoubt = function(){
-  const name=document.getElementById('doubtName').value.trim();
-  const message=document.getElementById('doubtMessage').value.trim();
-  if(!name || !message){ alert('Fill all fields!'); return; }
-  const msg = `*Royal Games Question*\nName: ${name}\nQuestion: ${message}`;
-  window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
-}
-
-</script>
+                                          </script>
     
 
 
