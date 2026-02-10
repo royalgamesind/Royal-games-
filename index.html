@@ -114,20 +114,22 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 </div>
 
 <!-- BOOKING FORM -->
-<div class="section">
 <div class="card booking">
-<h2>🎮 Book Your Console</h2>
-<input type="text" id="name" placeholder="Your Name" required>
-<input type="tel" id="phone" placeholder="Mobile Number" inputmode="numeric" pattern="[0-9]{10}" required>
-<input type="date" id="date" required>
-<select id="console" required>
-<option>PS5</option>
-<option>Xbox One</option>
-</select>
-<input type="text" id="requestedGame" placeholder="Request a game (optional)">
-<button type="button" onclick="sendToWhatsApp()">Book on WhatsApp</button>
+  <h2>🎮 Book Your Console</h2>
+  <input type="text" id="name" placeholder="Your Name">
+  <input type="tel" id="phone" placeholder="Mobile Number">
+  <select id="console">
+    <option>PS5</option>
+    <option>Xbox One</option>
+  </select>
+  <div id="calendar-container">
+    <h3>Select Days</h3>
+    <div id="calendar"></div>
+  </div>
+  <input type="text" id="requestedGame" placeholder="Request a game (optional)">
+  <button onclick="sendToWhatsApp()">Book on WhatsApp</button>
 </div>
-</div>
+    
 
 <!-- REVIEW FORM -->
 <div class="section">
