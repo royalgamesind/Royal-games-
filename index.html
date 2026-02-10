@@ -254,6 +254,63 @@ function sendDoubt(){
           'Question: '+message;
   openWA(msg);
 }
+  // Example: Pre-booked days (1 = booked, 0 = available)
+const bookedDays = [0, 1, 0, 0, 1, 0, 0]; // 7 days example, modify as needed
+
+const calendar = document.getElementById("calendar");
+
+let selectedDays = [];
+
+// Generate calendar
+for (let i = 1; i <= 7; i++) {
+  const day = document.createElement("div");
+  day.innerText = `Day ${i}`;
+  day.classList.add("calendar-day");
+
+  if (bookedDays[i - 1] === 1) {
+    day.classList.add("booked");
+  } else {
+    day.classList.add("available");
+    day.addEventListener("click", () => {
+      if (selectedDays.includes(i)) {
+        selectedDays = selectedDays.filter(d => d !== i);
+        day.classList.remove("selected");
+      } else {
+        selectedDays.push(i);
+        day.classList.add("selected");
+      }
+    });
+  }
+
+  calendar.appendChild(day);
+}
+
+// Update WhatsApp function
+function sendToWhatsApp() {
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const consoleType = document.getElementById("console").value;
+  const requestedGame = document.getElementById("requestedGame").value.trim();
+
+  if (!name || !phone || selectedDays.length === 0) {
+    alert("Please fill all required fields and select at least one day!");
+    return;
+  }
+
+  const daysText = selectedDays.map(d => `Day ${d}`).join(", ");
+
+  const message = `Booking Details:
+Name: ${name}
+Phone: ${phone}
+Console: ${consoleType}
+Selected Days: ${daysText}
+Requested Game: ${requestedGame || "N/A"}`;
+
+  const whatsappNumber = "919303088645"; // Your WhatsApp number
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+    }
+  
 </script>
 
 
