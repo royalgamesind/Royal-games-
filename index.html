@@ -39,24 +39,17 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
   margin-top: 10px;
 }
 .calendar-day {
-  padding: 10px;
+  padding: 12px;
   text-align: center;
   border-radius: 5px;
   cursor: pointer;
   user-select: none;
+  background: #1f2937;
+  color: #fff;
 }
-.calendar-day.available {
-  background-color: #4caf50;
-  color: white;
-}
-.calendar-day.booked {
-  background-color: #f44336;
-  color: white;
-  cursor: not-allowed;
-}
-.calendar-day.selected {
-  border: 2px solid yellow;
-}
+.calendar-day.available { background-color: #4caf50; }
+.calendar-day.booked { background-color: #f44336; cursor: not-allowed; }
+.calendar-day.selected { border: 2px solid yellow; font-weight: bold; }
 .floating-call{position:fixed;bottom:22px;right:20px;width:65px;height:65px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:white;text-decoration:none;box-shadow:0 10px 25px rgba(0,0,0,0.5);z-index:9999;animation:pulse 2s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.7);}70%{box-shadow:0 0 0 18px rgba(34,197,94,0);}100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}}
 .floating-call:hover{transform:scale(1.1)}
@@ -149,7 +142,7 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
     <option>Xbox One</option>
   </select>
   <div id="calendar-container">
-    <h3>Select Days</h3>
+    <h3>Select Dates</h3>
     <div id="calendar"></div>
   </div>
   <input type="text" id="requestedGame" placeholder="Request a game (optional)">
@@ -190,117 +183,129 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 
 <!-- Firebase SDK -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.6.1/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBRuy9084wz4HwBJbdNuleC4suYi0zycNA",
-    authDomain: "royalgamesproject.firebaseapp.com",
-    projectId: "royalgamesproject",
-    storageBucket: "royalgamesproject.firebasestorage.app",
-    messagingSenderId: "1008609758558",
-    appId: "1:1008609758558:web:7aa12cdef2b066ad7393cf"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyBRuy9084wz4HwBJbdNuleC4suYi0zycNA",
+  authDomain: "royalgamesproject.firebaseapp.com",
+  projectId: "royalgamesproject",
+  storageBucket: "royalgamesproject.firebasestorage.app",
+  messagingSenderId: "1008609758558",
+  appId: "1:1008609758558:web:7aa12cdef2b066ad7393cf"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-  // Calendar & Booking Logic
-  const calendar = document.getElementById("calendar");
-  let selectedDays = [];
-  let bookedDays = [];
+function val(id){return (document.getElementById(id).value||'').trim();}
+function validPhone(p){return /^[0-9]{10}$/.test(p);}
 
-  async function loadBookings() {
-    bookedDays = [];
-    const querySnapshot = await getDocs(collection(db, "bookings"));
-    querySnapshot.forEach((doc) => {
-      doc.data().days.forEach(day => {
-        if(!bookedDays.includes(day)) bookedDays.push(day);
-      });
+// Calendar
+const calendar = document.getElementById("calendar");
+let selectedDates = [];
+let bookedDates = [];
+
+async function loadBookings() {
+  bookedDates = [];
+  const querySnapshot = await getDocs(collection(db, "bookings"));
+  querySnapshot.forEach(doc => {
+    doc.data().days.forEach(day => {
+      bookedDates.push(day);
     });
-    renderCalendar();
-  }
+  });
+  renderCalendar();
+}
 
-  function renderCalendar(){
-    calendar.innerHTML='';
-    for(let i=1;i<=7;i++){
-      const day=document.createElement('div');
-      day.innerText=`Day ${i}`;
-      day.classList.add('calendar-day');
-      if(bookedDays.includes(i)){
-        day.classList.add('booked');
-      } else {
-        day.classList.add('available');
-        day.addEventListener('click',()=>{
-          if(selectedDays.includes(i)){
-            selectedDays=selectedDays.filter(d=>d!==i);
-            day.classList.remove('selected');
-          } else {
-            selectedDays.push(i);
-            day.classList.add('selected');
-          }
-        });
-      }
-      calendar.appendChild(day);
-    }
-  }
+function renderCalendar() {
+  calendar.innerHTML = '';
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+  const startWeekDay = firstDay.getDay();
+  const totalDays = lastDay.getDate();
 
-  loadBookings();
+  for (let i = 0; i < startWeekDay; i++) calendar.appendChild(document.createElement('div'));
 
-  function val(id){return (document.getElementById(id).value||'').trim();}
-  function validPhone(p){return /^[0-9]{10}$/.test(p);}
+  for (let d = 1; d <= totalDays; d++) {
+    const date = new Date(year, month, d);
+    const dateStr = date.toISOString().split('T')[0];
 
-  async function sendToWhatsApp(){
-    const name=val('name');
-    const phone=val('phone');
-    const consoleType=val('console');
-    const requestedGame=val('requestedGame');
+    const dayDiv = document.createElement('div');
+    dayDiv.innerText = d;
+    dayDiv.classList.add('calendar-day');
 
-    if(!name||!phone||selectedDays.length===0){
-      alert('Please fill all required fields and select at least one day!');
-      return;
-    }
-    if(!validPhone(phone)){alert('Enter valid 10 digit mobile number'); return;}
-
-    const daysText=selectedDays.map(d=>`Day ${d}`).join(', ');
-
-    // Send to WhatsApp
-    const msg=`Booking Details:\nName: ${name}\nPhone: ${phone}\nConsole: ${consoleType}\nSelected Days: ${daysText}\nRequested Game: ${requestedGame||'N/A'}`;
-    window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
-
-    // Save to Firebase
-    try {
-      await addDoc(collection(db,"bookings"),{
-        name,
-        phone,
-        consoleType,
-        requestedGame,
-        days:selectedDays,
-        timestamp:new Date(),
-        status:'booked'
+    if (bookedDates.includes(dateStr)) dayDiv.classList.add('booked');
+    else {
+      dayDiv.classList.add('available');
+      dayDiv.addEventListener('click', () => {
+        if (selectedDates.includes(dateStr)) {
+          selectedDates = selectedDates.filter(dt => dt !== dateStr);
+          dayDiv.classList.remove('selected');
+        } else {
+          selectedDates.push(dateStr);
+          dayDiv.classList.add('selected');
+        }
       });
-      alert('Booking saved!');
-      selectedDays=[];
-      loadBookings();
-    } catch(e){console.error('Error saving booking',e);}
+    }
+    calendar.appendChild(dayDiv);
   }
+}
 
-  function sendReview(){
-    const name=val('reviewName');
-    const rating=val('reviewRating');
-    const message=val('reviewMessage');
-    if(!name||!message){alert('Please fill all fields!');return;}
-    const msg=`*Royal Games Review*\nName: ${name}\nRating: ${rating}⭐\nMessage: ${message}`;
-    window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
-  }
+async function sendToWhatsApp() {
+  const name = val('name');
+  const phone = val('phone');
+  const consoleType = val('console');
+  const requestedGame = val('requestedGame');
 
-  function sendDoubt(){
-    const name=val('doubtName');
-    const message=val('doubtMessage');
-    if(!name||!message){alert('Please fill all fields!');return;}
-    const msg=`*Royal Games Question*\nName: ${name}\nQuestion: ${message}`;
-    window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
+  if (!name || !phone || selectedDates.length === 0) {
+    alert('Please fill all required fields and select at least one date!');
+    return;
   }
+  if (!validPhone(phone)) { alert('Enter valid 10 digit mobile number'); return; }
+
+  const datesText = selectedDates.join(', ');
+  const msg = `Booking Details:\nName: ${name}\nPhone: ${phone}\nConsole: ${consoleType}\nSelected Dates: ${datesText}\nRequested Game: ${requestedGame||'N/A'}`;
+  window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
+
+  try {
+    await addDoc(collection(db,"bookings"),{
+      name,
+      phone,
+      consoleType,
+      requestedGame,
+      days:selectedDates,
+      timestamp:new Date(),
+      status:'booked'
+    });
+    alert('Booking saved!');
+    selectedDates=[];
+    loadBookings();
+  } catch(e){console.error('Error saving booking',e);}
+}
+
+// Reviews
+function sendReview(){
+  const name=val('reviewName');
+  const rating=val('reviewRating');
+  const message=val('reviewMessage');
+  if(!name||!message){alert('Please fill all fields!');return;}
+  const msg=`*Royal Games Review*\nName: ${name}\nRating: ${rating}⭐\nMessage: ${message}`;
+  window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+// Doubts
+function sendDoubt(){
+  const name=val('doubtName');
+  const message=val('doubtMessage');
+  if(!name||!message){alert('Please fill all fields!');return;}
+  const msg=`*Royal Games Question*\nName: ${name}\nQuestion: ${message}`;
+  window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+loadBookings();
 </script>
 
 <!-- Review Gallery Section -->
@@ -318,5 +323,5 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 </section>
 
 </body>
-    </html>
-  
+  </html>
+    
