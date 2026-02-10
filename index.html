@@ -1,9 +1,12 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Royal Games Neemuch | PS5 & Xbox Rentals</title>
+<meta name="description" content="Royal Games provides PlayStation 5 and Xbox on rent in Neemuch, Madhya Pradesh. Affordable gaming rentals. Call or WhatsApp 9303088645 to book today.">
+<meta name="keywords" content="PS5 rent Neemuch, Xbox rent Neemuch, PlayStation rental Neemuch, gaming console rent Neemuch, Royal Games Neemuch">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto&display=swap" rel="stylesheet">
 
 <style>
@@ -15,21 +18,29 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 .card{background:#111827;border-radius:20px;padding:20px;margin:20px auto;max-width:520px;box-shadow:0 0 20px rgba(0,255,255,.1);transition:.3s}
 .card:hover{transform:translateY(-5px);box-shadow:0 0 25px rgba(0,255,255,.3)}
 .card img{width:100%;border-radius:15px;margin-bottom:15px}
-.game-list{background:#1f2937;padding:15px;border-radius:12px;margin-top:15px}
+.game-list{background:#1f2937;padding:15px;border-radius:12px;box-shadow:inset 0 0 10px rgba(255,255,255,.05);margin-top:15px}
 .game-list h3{color:#0ea5e9;margin-bottom:10px;font-family:'Orbitron',sans-serif}
 .game-list p{margin:5px 0;padding:5px;border-radius:8px;transition:.3s}
 .game-list p:hover{background:#0ea5e9;color:#0b0f1a;cursor:pointer;font-weight:bold}
 .price{font-size:20px;color:#22c55e;font-weight:bold;margin-top:10px}
+.btn,.booking button{display:block;width:100%;padding:16px;background:#25D366;color:#fff;text-decoration:none;border-radius:12px;font-weight:bold;font-size:18px;text-align:center;margin-top:12px;cursor:pointer;border:none}
+.btn:hover,.booking button:hover{background:#1ebe57}
 .booking input,.booking select,.booking textarea{width:95%;padding:14px;margin-top:10px;border-radius:12px;border:none;font-size:16px;background:#1f2937;color:#fff}
 .booking textarea{height:80px}
 .booking h2{color:#f87171;font-family:'Orbitron',sans-serif}
-#calendar-container{margin-top:15px}
-#calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:10px}
-.calendar-day{padding:12px;text-align:center;border-radius:5px;cursor:pointer;background:#1f2937;color:#fff;user-select:none}
-.calendar-day.selected{border:2px solid yellow;font-weight:bold}
+.rules{line-height:28px;font-size:16px}
+.footer{background:black;padding:18px;text-align:center;margin-top:25px;color:#9ca3af}
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.gallery img{width:100%;border-radius:12px}
+#calendar {display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:10px}
+.calendar-day {padding:12px;text-align:center;border-radius:5px;cursor:pointer;background:#1f2937;color:#fff;user-select:none;}
+.calendar-day.selected {border:2px solid yellow;font-weight:bold;}
 .floating-call{position:fixed;bottom:22px;right:20px;width:65px;height:65px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:white;text-decoration:none;box-shadow:0 10px 25px rgba(0,0,0,0.5);z-index:9999;animation:pulse 2s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.7);}70%{box-shadow:0 0 0 18px rgba(34,197,94,0);}100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}}
 .floating-call:hover{transform:scale(1.1)}
+.review-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+.review-gallery img{width:100%;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.4)}
+@media(min-width:700px){.review-gallery{grid-template-columns:repeat(4,1fr);}}
 </style>
 </head>
 <body>
@@ -86,6 +97,26 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 </div>
 </div>
 
+<!-- RULES -->
+<div class="section">
+<div class="card rules">
+<h2>Rules</h2>
+• Valid ID proof required<br>
+• Handle controller carefully<br>
+• Late return extra charge<br>
+• Damage charges applicable
+</div>
+</div>
+
+<!-- CONTACT -->
+<div class="section">
+<div class="card contact">
+<h2>Booking & Contact</h2>
+📍 Neemuch, Madhya Pradesh<br>
+📞 9303088645
+</div>
+</div>
+
 <!-- BOOKING FORM -->
 <div class="card booking">
   <h2>🎮 Book Your Console</h2>
@@ -103,7 +134,34 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
   </div>
 
   <input type="text" id="requestedGame" placeholder="Request a game (optional)">
-  <button onclick="submitBooking()">Book on WhatsApp</button>
+  <button onclick="sendToWhatsApp()">Book on WhatsApp</button>
+</div>
+
+<!-- REVIEW FORM -->
+<div class="section">
+<div class="card booking">
+<h2 style="color:#facc15;">📝 Give a Review</h2>
+<input type="text" id="reviewName" placeholder="Your Name" required>
+<select id="reviewRating">
+<option value="5">⭐⭐⭐⭐⭐</option>
+<option value="4">⭐⭐⭐⭐</option>
+<option value="3">⭐⭐⭐</option>
+<option value="2">⭐⭐</option>
+<option value="1">⭐</option>
+</select>
+<textarea id="reviewMessage" placeholder="Write your review" required></textarea>
+<button type="button" onclick="sendReview()">Send Review</button>
+</div>
+</div>
+
+<!-- ASK DOUBT FORM -->
+<div class="section">
+<div class="card booking">
+<h2 style="color:#38bdf8;">❓ Ask a Doubt / Question</h2>
+<input type="text" id="doubtName" placeholder="Your Name" required>
+<textarea id="doubtMessage" placeholder="Type your question" required></textarea>
+<button type="button" onclick="sendDoubt()">Send Question</button>
+</div>
 </div>
 
 <div class="footer">
@@ -117,29 +175,26 @@ window.addEventListener('DOMContentLoaded', () => {
   let selectedDates = [];
 
   const today = new Date();
-  let currentMonth = today.getMonth();
-  let currentYear = today.getFullYear();
+  const currentMonth = today.getMonth();
+  const currentYear = today.getFullYear();
 
-  function renderCalendar(month=currentMonth, year=currentYear) {
+  function renderCalendar(month=currentMonth, year=currentYear){
     calendar.innerHTML = '';
-
     const firstDay = new Date(year, month, 1).getDay();
-    const lastDay = new Date(year, month + 1, 0).getDate();
+    const lastDate = new Date(year, month + 1, 0).getDate();
 
-    // Empty cells for first week
     for(let i=0;i<firstDay;i++) calendar.appendChild(document.createElement('div'));
 
-    // Days
-    for(let d=1; d<=lastDay; d++){
+    for(let d=1; d<=lastDate; d++){
       const date = new Date(year, month, d);
       const dateStr = date.toISOString().split('T')[0];
       const dayDiv = document.createElement('div');
-      dayDiv.innerText = d;
+      dayDiv.innerText = `${d}-${month+1}-${year}`;
       dayDiv.classList.add('calendar-day');
 
-      dayDiv.addEventListener('click', () => {
+      dayDiv.addEventListener('click', ()=>{
         if(selectedDates.includes(dateStr)){
-          selectedDates = selectedDates.filter(dt => dt !== dateStr);
+          selectedDates = selectedDates.filter(dt => dt!==dateStr);
           dayDiv.classList.remove('selected');
         } else {
           selectedDates.push(dateStr);
@@ -153,25 +208,55 @@ window.addEventListener('DOMContentLoaded', () => {
 
   renderCalendar();
 
-  // WhatsApp Booking
-  window.submitBooking = function(){
-    const name = document.getElementById('name').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const consoleType = document.getElementById('console').value;
-    const requestedGame = document.getElementById('requestedGame').value.trim();
+  window.sendToWhatsApp = function(){
+    const name=document.getElementById('name').value.trim();
+    const phone=document.getElementById('phone').value.trim();
+    const consoleType=document.getElementById('console').value;
+    const requestedGame=document.getElementById('requestedGame').value.trim();
 
     if(!name || !phone || selectedDates.length===0){
-      alert('Please fill all fields and select dates!');
+      alert('Fill all fields and select dates!');
       return;
     }
 
-    const msg = `Booking Details:\nName: ${name}\nPhone: ${phone}\nConsole: ${consoleType}\nSelected Dates: ${selectedDates.join(', ')}\nRequested Game: ${requestedGame||'N/A'}`;
+    const msg=`Booking Details:\nName: ${name}\nPhone: ${phone}\nConsole: ${consoleType}\nSelected Dates: ${selectedDates.join(', ')}\nRequested Game: ${requestedGame||'N/A'}`;
+    window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
+  }
+
+  window.sendReview = function(){
+    const name = document.getElementById('reviewName').value.trim();
+    const rating = document.getElementById('reviewRating').value;
+    const message = document.getElementById('reviewMessage').value.trim();
+    if(!name || !message){ alert('Fill all review fields!'); return; }
+    const msg = `*Royal Games Review*\nName: ${name}\nRating: ${rating}⭐\nMessage: ${message}`;
+    window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
+  }
+
+  window.sendDoubt = function(){
+    const name=document.getElementById('doubtName').value.trim();
+    const message=document.getElementById('doubtMessage').value.trim();
+    if(!name || !message){ alert('Fill all fields!'); return; }
+    const msg = `*Royal Games Question*\nName: ${name}\nQuestion: ${message}`;
     window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`,'_blank');
   }
 });
 </script>
 
+<!-- Review Gallery Section -->
+<section id="reviews" style="padding:20px;">
+  <div class="card">
+    <h2>⭐ Customer Review Gallery</h2>
+    <p>Real WhatsApp feedback from customers</p>
+    <div class="review-gallery">
+      <img src="review1.jpg" alt="review 1">
+      <img src="reviews/review2.jpg" alt="review 2">
+      <img src="reviews/review3.jpg" alt="review 3">
+      <img src="reviews/review4.jpg" alt="review 4">
+    </div>
+  </div>
+</section>
+
 </body>
 </html>
 
-    
+             
