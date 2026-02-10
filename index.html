@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Royal Games Neemuch | PS5 & Xbox Rentals</title>
+<meta name="description" content="Royal Games provides PlayStation 5 and Xbox on rent in Neemuch, Madhya Pradesh. Affordable gaming rentals. Call or WhatsApp 9303088645 to book today.">
+<meta name="keywords" content="PS5 rent Neemuch, Xbox rent Neemuch, PlayStation rental Neemuch, gaming console rent Neemuch, Royal Games Neemuch">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto&display=swap" rel="stylesheet">
@@ -13,193 +15,286 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 .header h1{margin:0;font-family:'Orbitron',sans-serif;color:gold;font-size:36px;letter-spacing:3px}
 .tag{color:#cbd5e1;font-size:16px;margin-top:5px}
 .section{padding:30px 15px}
-.card{background:#111827;border-radius:20px;padding:20px;margin:20px auto;max-width:520px;box-shadow:0 0 20px rgba(0,255,255,.1)}
+.card{background:#111827;border-radius:20px;padding:20px;margin:20px auto;max-width:520px;box-shadow:0 0 20px rgba(0,255,255,.1);transition:.3s}
+.card:hover{transform:translateY(-5px);box-shadow:0 0 25px rgba(0,255,255,.3)}
 .card img{width:100%;border-radius:15px;margin-bottom:15px}
+.game-list{background:#1f2937;padding:15px;border-radius:12px;box-shadow:inset 0 0 10px rgba(255,255,255,.05);margin-top:15px}
+.game-list h3{color:#0ea5e9;margin-bottom:10px;font-family:'Orbitron',sans-serif}
+.game-list p{margin:5px 0;padding:5px;border-radius:8px;transition:.3s}
+.game-list p:hover{background:#0ea5e9;color:#0b0f1a;cursor:pointer;font-weight:bold}
 .price{font-size:20px;color:#22c55e;font-weight:bold;margin-top:10px}
 .btn,.booking button{display:block;width:100%;padding:16px;background:#25D366;color:#fff;text-decoration:none;border-radius:12px;font-weight:bold;font-size:18px;text-align:center;margin-top:12px;cursor:pointer;border:none}
-.booking input,.booking select{width:95%;padding:14px;margin-top:10px;border-radius:12px;border:none;font-size:16px;background:#1f2937;color:#fff}
+.btn:hover,.booking button:hover{background:#1ebe57}
+.booking input,.booking select,.booking textarea{width:95%;padding:14px;margin-top:10px;border-radius:12px;border:none;font-size:16px;background:#1f2937;color:#fff}
+.booking textarea{height:80px}
+.booking h2{color:#f87171;font-family:'Orbitron',sans-serif}
+.rules{line-height:28px;font-size:16px}
 .footer{background:black;padding:18px;text-align:center;margin-top:25px;color:#9ca3af}
-.floating-call{position:fixed;bottom:22px;right:20px;width:65px;height:65px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:white;text-decoration:none;box-shadow:0 10px 25px rgba(0,0,0,0.5);z-index:9999}
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.gallery img{width:100%;border-radius:12px}
+.floating-call{position:fixed;bottom:22px;right:20px;width:65px;height:65px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:white;text-decoration:none;box-shadow:0 10px 25px rgba(0,0,0,0.5);z-index:9999;animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.7);}70%{box-shadow:0 0 0 18px rgba(34,197,94,0);}100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}}
+.floating-call:hover{transform:scale(1.1)}
+.review-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+.review-gallery img{width:100%;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.4)}
+@media(min-width:700px){.review-gallery{grid-template-columns:repeat(4,1fr);}}
 </style>
 </head>
 <body>
 
 <div class="header">
-<h1>👑 ROYAL GAMES</h1>
-<div class="tag">PS5 & Xbox Console Rental Service — Neemuch (MP)</div>
+    <h1>👑 ROYAL GAMES</h1>
+    <div class="tag">PS5 & Xbox Console Rental Service — Neemuch (MP)</div>
 </div>
 
+<!-- PS5 SECTION -->
 <div class="section">
 <div class="card">
-<h2>PlayStation 5</h2>
-<img src="images.jpeg">
-<div class="price">₹500 / 1 Day</div>
-<div class="price">₹800 / 2 Days</div>
+    <h2>PlayStation 5</h2>
+    <img src="images.jpeg">
+    <div class="price">₹500 / 1 Day</div>
+    <div class="price">₹800 / 2 Days</div>
+
+    <div class="game-list">
+        <h3>Available PS5 Games 🎮</h3>
+        <p>• GTA V & GTA Online</p>
+        <p>• Black Myth Wukong</p>
+        <p>• Ghost of Yotei</p>
+        <p>• Ghost of Tsushima</p>
+        <p>• Roblox</p>
+        <p>• Spider-Man Remastered</p>
+        <p>• The Last of Us Part II</p>
+        <p>• God of War Ragnarök</p>
+        <p style="color:#facc15;font-weight:bold;">Want a game we don't have? Message us below!</p>
+    </div>
 </div>
 </div>
 
+<!-- Xbox SECTION -->
 <div class="section">
 <div class="card">
-<h2>Xbox One</h2>
-<img src="images (1).jpeg">
-<div class="price">₹400 / 1 Day</div>
-<div class="price">₹700 / 2 Days</div>
+    <h2>Xbox One</h2>
+    <img src="images (1).jpeg">
+    <div class="price">₹400 / 1 Day</div>
+    <div class="price">₹700 / 2 Days</div>
+
+    <div class="game-list">
+        <h3>Available Xbox Games 🕹️</h3>
+        <p>• GTA V & GTA Online</p>
+        <p>• Forza Horizon 5</p>
+        <p>• Minecraft</p>
+        <p>• Call of Duty: Modern Warfare 2</p>
+        <p>• Among Us</p>
+        <p>• Mortal Kombat 11</p>
+        <p>• F1 2024</p>
+        <p>• FIFA 25</p>
+        <p style="color:#facc15;font-weight:bold;">We also have a steering wheel for racing games!</p>
+        <p style="color:#facc15;font-weight:bold;">Want a game we don't have? Use the "Request Game" field in booking!</p>
+    </div>
 </div>
 </div>
 
+<!-- RULES -->
+<div class="section">
+<div class="card rules">
+<h2>Rules</h2>
+• Valid ID proof required<br>
+• Handle controller carefully<br>
+• Late return extra charge<br>
+• Damage charges applicable
+</div>
+</div>
+
+<!-- CONTACT -->
+<div class="section">
+<div class="card contact">
+<h2>Booking & Contact</h2>
+📍 Neemuch, Madhya Pradesh<br>
+📞 9303088645
+</div>
+</div>
+
+<!-- BOOKING FORM -->
 <div class="card booking">
-<h2>🎮 Book Your Console</h2>
+  <h2>🎮 Book Your Console</h2>
+  <input type="text" id="name" placeholder="Your Name">
+  <input type="tel" id="phone" placeholder="Mobile Number">
+  <select id="console">
+    <option>PS5</option>
+    <option>Xbox One</option>
+  </select>
 
-<input type="text" id="name" placeholder="Your Name">
-<input type="tel" id="phone" placeholder="Mobile Number">
+  <!-- Date Picker -->
+  <div id="calendar-container">
+  <h3>Select Booking</h3>
+  <input type="date" id="startDate" style="width:95%;padding:14px;border-radius:12px;margin-top:10px;background:#1f2937;color:#fff;border:none;font-size:16px;">
+  <select id="days" style="width:95%;padding:14px;border-radius:12px;margin-top:10px;background:#1f2937;color:#fff;border:none;font-size:16px;">
+    <option value="">Select Rental Duration</option>
+    <option value="1">1 Day</option>
+    <option value="2">2 Days</option>
+  </select>
+  <small style="color:#9ca3af;">Choose date and how many days you want the console</small>
+  </div>
 
-<select id="console">
-<option>PS5</option>
-<option>Xbox One</option>
-</select>
-
-<input type="date" id="startDate">
-
-<select id="days">
-<option value="">Select Rental Duration</option>
-<option value="1">1 Day</option>
-<option value="2">2 Days</option>
-</select>
-
-<input type="text" id="coupon" placeholder="Enter Coupon Code (optional)">
-<div id="finalPrice" style="margin-top:8px;color:#22c55e;font-weight:bold;"></div>
-
-<input type="text" id="requestedGame" placeholder="Request a game (optional)">
-
-<button onclick="sendToWhatsApp()">Book on WhatsApp</button>
+  <input type="text" id="coupon" placeholder="Enter Coupon Code (optional)">
+  <div id="finalPrice" style="margin-top:8px;color:#22c55e;font-weight:bold;"></div>
+  <input type="text" id="requestedGame" placeholder="Request a game (optional)">
+  <button onclick="sendToWhatsApp()">Book on WhatsApp</button>
 </div>
 
+<!-- REVIEW FORM -->
+<div class="section">
+<div class="card booking">
+<h2 style="color:#facc15;">📝 Give a Review</h2>
+<input type="text" id="reviewName" placeholder="Your Name" required>
+<select id="reviewRating">
+<option value="5">⭐⭐⭐⭐⭐</option>
+<option value="4">⭐⭐⭐⭐</option>
+<option value="3">⭐⭐⭐</option>
+<option value="2">⭐⭐</option>
+<option value="1">⭐</option>
+</select>
+<textarea id="reviewMessage" placeholder="Write your review" required></textarea>
+<button type="button" onclick="sendReview()">Send Review</button>
+</div>
+</div>
+
+<!-- ASK DOUBT FORM -->
+<div class="section">
+<div class="card booking">
+<h2 style="color:#38bdf8;">❓ Ask a Doubt / Question</h2>
+<input type="text" id="doubtName" placeholder="Your Name" required>
+<textarea id="doubtMessage" placeholder="Type your question" required></textarea>
+<button type="button" onclick="sendDoubt()">Send Question</button>
+</div>
+</div>
+
+<div class="footer">
+© 2026 Royal Games — Gaming Console Rentals
+</div>
 <a href="tel:9303088645" class="floating-call">📞</a>
 
-<!-- FIREBASE -->
-<script type="module">
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
+<script>
+// Firebase Config
 const firebaseConfig = {
-  apiKey: "AIzaSyCJpd0ChAzakB1_9j2mUXApzeijMlEu2f4",
-  authDomain: "royalgames-2e544.firebaseapp.com",
-  databaseURL: "https://royalgamesproject-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "royalgames-2e544",
-  storageBucket: "royalgames-2e544.firebasestorage.app",
-  messagingSenderId: "177777774192",
-  appId: "1:177777774192:web:8be5d2d7707ea0b0186eb5"
+  databaseURL: "https://royalgamesproject-default-rtdb.asia-southeast1.firebasedatabase.app"
 };
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+// Set today as min date
+document.getElementById("startDate").min = new Date().toISOString().split("T")[0];
 
-// PRICES
-function getPrice(consoleType,days){
-if(consoleType==="PS5"){
-if(days=="1") return 500;
-if(days=="2") return 800;
+// Price Calculation
+function calculatePrice(){
+  const consoleType=document.getElementById('console').value;
+  const days=document.getElementById('days').value;
+  const coupon=document.getElementById('coupon').value.trim().toUpperCase();
+  if(!days) return;
+
+  let total=0;
+  if(consoleType==="PS5") total = (days=="1")?500:800;
+  if(consoleType==="Xbox One") total = (days=="1")?400:700;
+
+  let discount=0;
+  if(coupon==="RG50") discount=50;
+  if(coupon==="PS5OFF" && consoleType==="PS5") discount=50;
+  if(coupon==="XBOX50" && consoleType==="Xbox One") discount=50;
+
+  let final = total - discount;
+  if(final<0) final=0;
+
+  document.getElementById("finalPrice").innerText=`Package Price: ₹${total} | Discount: ₹${discount} | Final Price: ₹${final}`;
 }
-if(consoleType==="Xbox One"){
-if(days=="1") return 400;
-if(days=="2") return 700;
-}
-return 0;
-}
-
-// COUPONS (you can edit anytime)
-const coupons={
-"RG100":100,
-"RG60":60,
-"RG50":50
-};
-
-// PRICE CALCULATION
-window.calculatePrice=function(){
-const consoleType=document.getElementById('console').value;
-const days=document.getElementById('days').value;
-const startDate=document.getElementById('startDate').value;
-let coupon=document.getElementById('coupon').value.trim().toUpperCase();
-
-if(!startDate||!days){document.getElementById("finalPrice").innerText="";return;}
-
-let total=getPrice(consoleType,days);
-let discount=0;
-let text="Invalid Coupon";
-
-if(coupon && coupons[coupon]){discount=coupons[coupon];text="Coupon Applied ✔";}
-if(!coupon) text="No Coupon";
-
-let final=total-discount;
-if(final<0) final=0;
-
-document.getElementById("finalPrice").innerText=
-`Package Price: ₹${total} | Discount: ₹${discount} | Final Price: ₹${final} (${text})`;
-}
-
-document.getElementById("startDate").addEventListener("change",calculatePrice);
 document.getElementById("days").addEventListener("change",calculatePrice);
 document.getElementById("console").addEventListener("change",calculatePrice);
 document.getElementById("coupon").addEventListener("input",calculatePrice);
 
-// BOOKING
-window.sendToWhatsApp=function(){
+// WhatsApp Booking + Firebase Save
+function sendToWhatsApp(){
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const consoleType = document.getElementById('console').value;
+  const requestedGame = document.getElementById('requestedGame').value.trim();
+  const startDate = document.getElementById('startDate').value;
+  const days = document.getElementById('days').value;
+  const coupon = document.getElementById('coupon').value.trim().toUpperCase();
 
-const name=document.getElementById('name').value.trim();
-const phone=document.getElementById('phone').value.trim();
-const consoleType=document.getElementById('console').value;
-const startDate=document.getElementById('startDate').value;
-const days=document.getElementById('days').value;
-const requestedGame=document.getElementById('requestedGame').value.trim();
-let coupon=document.getElementById('coupon').value.trim().toUpperCase();
+  if(!name || !phone || !startDate || !days){
+    alert('Please fill all fields!');
+    return;
+  }
 
-if(!name||!phone||!startDate||!days){
-alert("Please fill all details");
-return;
-}
+  // Calculate Price
+  let total=0;
+  if(consoleType==="PS5") total = (days=="1")?500:800;
+  if(consoleType==="Xbox One") total = (days=="1")?400:700;
 
-let total=getPrice(consoleType,days);
-let discount=0;
-if(coupon && coupons[coupon]){discount=coupons[coupon];}else{coupon="None";}
-let final=total-discount;
-if(final<0) final=0;
+  let discount=0;
+  if(coupon==="RG50") discount=50;
+  if(coupon==="PS5OFF" && consoleType==="PS5") discount=50;
+  if(coupon==="XBOX50" && consoleType==="Xbox One") discount=50;
 
-// CREATE BOOKING ID
-const bookingID="RG"+Math.floor(10000+Math.random()*90000);
+  let final = total - discount;
+  if(final<0) final=0;
 
-// SAVE TO FIREBASE
-set(ref(db,'bookings/'+bookingID),{
-name:name,
-phone:phone,
-console:consoleType,
-date:startDate,
-days:days,
-coupon:coupon,
-price:final,
-requestedGame:requestedGame
-});
+  // Generate Customer ID
+  const timestamp = Date.now();
+  const custID = 'RG' + timestamp.toString().slice(-4);
 
-// WHATSAPP MESSAGE
-const message=
-`🎮 Royal Games Booking
+  // Save to Firebase
+  db.ref('bookings/' + custID).set({
+    customerID: custID,
+    name: name,
+    phone: phone,
+    console: consoleType,
+    startDate: startDate,
+    days: days,
+    coupon: coupon || "None",
+    totalPrice: total,
+    discount: discount,
+    finalPrice: final,
+    requestedGame: requestedGame || "N/A",
+    timestamp: timestamp
+  }).then(()=>{
+    console.log('Booking saved with ID:', custID);
+  }).catch(err=>{
+    console.error('Firebase Error:', err);
+  });
 
-Booking ID: ${bookingID}
-
+  // WhatsApp Message
+  const msg=`🎮 *Royal Games Booking*
+Customer ID: ${custID}
 Name: ${name}
 Phone: ${phone}
 Console: ${consoleType}
-Date: ${startDate}
-Duration: ${days} Day
+Booking Date: ${startDate}
+Duration: ${days} Day(s)
+Package Price: ₹${total}
+Coupon: ${coupon||'None'}
+Discount: ₹${discount}
+Final Price: ₹${final}
+Requested Game: ${requestedGame||'N/A'}`;
 
-Final Price: ₹${final}`;
-
-const url="https://wa.me/919303088645?text="+encodeURIComponent(message);
-window.open(url,'_blank');
-
+  const url = "https://wa.me/919303088645?text=" + encodeURIComponent(msg);
+  window.open(url,'_blank');
 }
-</script>
 
+// Dummy Functions for Review / Doubt
+function sendReview(){alert("Review submitted!");}
+function sendDoubt(){alert("Question submitted!");}
+
+</script>
 </body>
 </html>
+
+
+
+
+  
+
 
