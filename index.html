@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-    
 <meta charset="UTF-8">
 <title>Royal Games Neemuch | PS5 & Xbox Rentals</title>
 <meta name="description" content="Royal Games provides PlayStation 5 and Xbox on rent in Neemuch, Madhya Pradesh. Affordable gaming rentals. Call or WhatsApp 9303088645 to book today.">
@@ -127,20 +124,17 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
     <option>Xbox One</option>
   </select>
 
-  <!-- Date Picker -->
-  <div id="calendar-container">
   <h3>Select Booking</h3>
-  <input type="date" id="startDate" style="width:95%;padding:14px;border-radius:12px;margin-top:10px;background:#1f2937;color:#fff;border:none;font-size:16px;">
-  <select id="days" style="width:95%;padding:14px;border-radius:12px;margin-top:10px;background:#1f2937;color:#fff;border:none;font-size:16px;">
+  <input type="date" id="startDate" placeholder="Select Date">
+  <select id="days">
     <option value="">Select Rental Duration</option>
     <option value="1">1 Day</option>
     <option value="2">2 Days</option>
   </select>
-  <small style="color:#9ca3af;">Choose date and how many days you want the console</small>
-  </div>
 
   <input type="text" id="coupon" placeholder="Enter Coupon Code (optional)">
   <div id="finalPrice" style="margin-top:8px;color:#22c55e;font-weight:bold;"></div>
+    
   <input type="text" id="requestedGame" placeholder="Request a game (optional)">
   <button onclick="sendToWhatsApp()">Book on WhatsApp</button>
 </div>
@@ -161,11 +155,14 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 <button type="button" onclick="sendReview()">Send Review</button>
 </div>
 </div>
-    <div class="card">
+
+<!-- REVIEW GALLERY -->
+<div class="section">
+<div class="card">
   <h2>⭐ Customer Review Gallery</h2>
   <div class="review-gallery" id="reviewGallery"></div>
-    </div>
-    
+</div>
+</div>
 
 <!-- ASK DOUBT FORM -->
 <div class="section">
@@ -182,99 +179,75 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 </div>
 <a href="tel:9303088645" class="floating-call">📞</a>
 
-<!-- Firebase -->
+<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
-// Firebase Config
+// Firebase config
 const firebaseConfig = {
   databaseURL: "https://royalgamesproject-default-rtdb.asia-southeast1.firebasedatabase.app"
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-// Set today as min date
-document.getElementById("startDate").min = new Date().toISOString().split("T")[0];
-
-// Price Calculation
+// Calculate price
 function calculatePrice(){
   const consoleType=document.getElementById('console').value;
+  const startDate=document.getElementById('startDate').value;
   const days=document.getElementById('days').value;
   const coupon=document.getElementById('coupon').value.trim().toUpperCase();
-  if(!days) return;
-
+  if(!startDate || !days) return;
   let total=0;
-  if(consoleType==="PS5") total = (days=="1")?500:800;
-  if(consoleType==="Xbox One") total = (days=="1")?400:700;
-
+  if(consoleType==="PS5"){ total = days=="1"?500:800; }
+  if(consoleType==="Xbox One"){ total = days=="1"?400:700; }
   let discount=0;
   if(coupon==="RG50") discount=50;
   if(coupon==="PS5OFF" && consoleType==="PS5") discount=50;
   if(coupon==="XBOX50" && consoleType==="Xbox One") discount=50;
-
-  let final = total - discount;
+  let final=total-discount;
   if(final<0) final=0;
-
-  document.getElementById("finalPrice").innerText=`Package Price: ₹${total} | Discount: ₹${discount} | Final Price: ₹${final}`;
+  document.getElementById("finalPrice").innerText=
+  `Package Price: ₹${total} | Discount: ₹${discount} | Final Price: ₹${final}`;
 }
-document.getElementById("days").addEventListener("change",calculatePrice);
-document.getElementById("console").addEventListener("change",calculatePrice);
-document.getElementById("coupon").addEventListener("input",calculatePrice);
+['startDate','days','console','coupon'].forEach(id=>{
+  document.getElementById(id).addEventListener('change',calculatePrice);
+  document.getElementById(id).addEventListener('input',calculatePrice);
+});
 
-// WhatsApp Booking + Firebase Save
+// Send Booking
 function sendToWhatsApp(){
-  const name = document.getElementById('name').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const consoleType = document.getElementById('console').value;
-  const requestedGame = document.getElementById('requestedGame').value.trim();
-  const startDate = document.getElementById('startDate').value;
-  const days = document.getElementById('days').value;
-  const coupon = document.getElementById('coupon').value.trim().toUpperCase();
+  const name=document.getElementById('name').value.trim();
+  const phone=document.getElementById('phone').value.trim();
+  const consoleType=document.getElementById('console').value;
+  const startDate=document.getElementById('startDate').value;
+  const days=document.getElementById('days').value;
+  const coupon=document.getElementById('coupon').value.trim().toUpperCase();
+  const requestedGame=document.getElementById('requestedGame').value.trim();
+  if(!name||!phone||!startDate||!days){ alert('Please fill all fields!'); return; }
 
-  if(!name || !phone || !startDate || !days){
-    alert('Please fill all fields!');
-    return;
-  }
-
-  // Calculate Price
-  let total=0;
-  if(consoleType==="PS5") total = (days=="1")?500:800;
-  if(consoleType==="Xbox One") total = (days=="1")?400:700;
-
+  // Price calculation
+  let total = consoleType==="PS5"? (days=="1"?500:800) : (days=="1"?400:700);
   let discount=0;
   if(coupon==="RG50") discount=50;
   if(coupon==="PS5OFF" && consoleType==="PS5") discount=50;
   if(coupon==="XBOX50" && consoleType==="Xbox One") discount=50;
-
-  let final = total - discount;
+  let final=total-discount;
   if(final<0) final=0;
 
   // Generate Customer ID
-  const timestamp = Date.now();
-  const custID = 'RG' + timestamp.toString().slice(-4);
+  let custID = 'RG'+Date.now();
 
   // Save to Firebase
-  db.ref('bookings/' + custID).set({
-    customerID: custID,
-    name: name,
-    phone: phone,
-    console: consoleType,
-    startDate: startDate,
-    days: days,
-    coupon: coupon || "None",
-    totalPrice: total,
-    discount: discount,
-    finalPrice: final,
-    requestedGame: requestedGame || "N/A",
-    timestamp: timestamp
+  db.ref('bookings/'+custID).set({
+    customerID:custID,name,phone,console:consoleType,startDate,days,
+    coupon:coupon||'None',totalPrice:total,discount,finalPrice:final,
+    requestedGame:requestedGame||'N/A',timestamp:Date.now()
   }).then(()=>{
-    console.log('Booking saved with ID:', custID);
-  }).catch(err=>{
-    console.error('Firebase Error:', err);
+    console.log('Booking saved:',custID);
   });
 
-  // WhatsApp Message
+  // WhatsApp message
   const msg=`🎮 *Royal Games Booking*
 Customer ID: ${custID}
 Name: ${name}
@@ -287,19 +260,54 @@ Coupon: ${coupon||'None'}
 Discount: ₹${discount}
 Final Price: ₹${final}
 Requested Game: ${requestedGame||'N/A'}`;
-
-  const url = "https://wa.me/919303088645?text=" + encodeURIComponent(msg);
+  
+  let url="https://wa.me/919303088645?text="+encodeURIComponent(msg);
   window.open(url,'_blank');
 }
 
-// Dummy Functions for Review / Doubt
-function sendReview(){alert("Review submitted!");}
-function sendDoubt(){alert("Question submitted!");}
+// Review submission
+function sendReview(){
+  const name=document.getElementById('reviewName').value.trim();
+  const rating=document.getElementById('reviewRating').value;
+  const message=document.getElementById('reviewMessage').value.trim();
+  if(!name||!message){ alert("Fill all fields!"); return; }
+  const newReviewRef=db.ref('reviews').push();
+  newReviewRef.set({name,rating,message,timestamp:Date.now()}).then(()=>{
+    alert("Review submitted!");
+    document.getElementById('reviewName').value='';
+    document.getElementById('reviewMessage').value='';
+  });
+}
 
+// Load reviews dynamically
+function loadReviews(){
+  const reviewGallery=document.getElementById('reviewGallery');
+  db.ref('reviews').orderByChild('timestamp').limitToLast(20).on('value',snapshot=>{
+    reviewGallery.innerHTML='';
+    snapshot.forEach(child=>{
+      const r=child.val();
+      const div=document.createElement('div');
+      div.style.background='#1f2937';
+      div.style.padding='12px';
+      div.style.marginBottom='12px';
+      div.style.borderRadius='12px';
+      div.style.boxShadow='0 4px 14px rgba(0,0,0,0.4)';
+      div.innerHTML=`<strong>${r.name}</strong> <span style="color:#facc15;">${'⭐'.repeat(r.rating)}</span>
+      <p>${r.message}</p>`;
+      reviewGallery.appendChild(div);
+    });
+  });
+}
+
+// Load reviews on page load
+window.onload=function(){ loadReviews(); };
 </script>
-</body>
-</html>
 
+</body>
+    </html>
+
+
+    
 
 
 
