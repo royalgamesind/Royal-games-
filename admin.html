@@ -1,0 +1,66 @@
+<!-- admin.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Income Tracker</title>
+</head>
+<body>
+<h2>Income Tracker (Private)</h2>
+
+<label>Password: </label>
+<input type="password" id="adminPassword" placeholder="Enter password">
+<button onclick="checkPassword()">Login</button>
+
+<div id="tracker" style="display:none;">
+    <h3>Add Income</h3>
+    <input type="date" id="incomeDate">
+    <input type="number" id="incomeAmount" placeholder="Amount">
+    <button onclick="addIncome()">Add</button>
+
+    <h3>Calculate Income</h3>
+    <input type="month" id="calcMonth">
+    <button onclick="calculateMonthlyIncome()">Calculate Month Income</button>
+
+    <h4 id="result"></h4>
+</div>
+
+<script>
+const password = "YUVRAJ0011"; // Change this to your secret password
+let incomes = []; // Will store income data
+
+function checkPassword() {
+    const input = document.getElementById('adminPassword').value;
+    if(input === password){
+        document.getElementById('tracker').style.display = 'block';
+        alert("Access granted!");
+    } else {
+        alert("Wrong password!");
+    }
+}
+
+function addIncome() {
+    const date = document.getElementById('incomeDate').value;
+    const amount = parseFloat(document.getElementById('incomeAmount').value);
+    if(date && amount){
+        incomes.push({date, amount});
+        alert("Income added!");
+    } else {
+        alert("Fill both fields");
+    }
+}
+
+function calculateMonthlyIncome() {
+    const selectedMonth = document.getElementById('calcMonth').value; // format YYYY-MM
+    let total = 0;
+    incomes.forEach(item => {
+        if(item.date.startsWith(selectedMonth)){
+            total += item.amount;
+        }
+    });
+    document.getElementById('result').innerText = "Total Income: ₹" + total;
+}
+</script>
+</body>
+                                       </html>
+                                       
