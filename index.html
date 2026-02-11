@@ -237,15 +237,26 @@ function sendToWhatsApp(){
 
   // Generate Customer ID
   let custID = 'RG'+Date.now();
+// Save to firebase
+db.ref('bookings/'+custID).set({
+  customerID: custID,
+  name,
+  phone,
+  console: consoleType,
+  startDate,
+  days,
+  coupon: coupon || 'None',
+  totalPrice: total,
+  discount,
+  finalPrice: final,
+  requestedGame: requestedGame || 'N/A',
+  status: "Active", // 👈 ADD THIS
+  timestamp: Date.now()
+})
+.then(()=>{
+  console.log('Booking saved:', custID);
+});
 
-  // Save to Firebase
-  db.ref('bookings/'+custID).set({
-    customerID:custID,name,phone,console:consoleType,startDate,days,
-    coupon:coupon||'None',totalPrice:total,discount,finalPrice:final,
-    requestedGame:requestedGame||'N/A',timestamp:Date.now()
-  }).then(()=>{
-    console.log('Booking saved:',custID);
-  });
 
   // WhatsApp message
   const msg=`🎮 *Royal Games Booking*
