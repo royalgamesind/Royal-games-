@@ -278,27 +278,32 @@ function sendReview(){
     document.getElementById('reviewMessage').value='';
   });
 }
-
-// Load reviews dynamically
+// Load reviews dynamically (rotating first 6)
 function loadReviews(){
-  const reviewGallery=document.getElementById('reviewGallery');
-  db.ref('reviews').orderByChild('timestamp').limitToLast(6).on('value',snapshot=>{
-    reviewGallery.innerHTML='';
-    snapshot.forEach(child=>{
-      const r=child.val();
-      const div=document.createElement('div');
-      div.style.background='#1f2937';
-      div.style.padding='12px';
-      div.style.marginBottom='12px';
-      div.style.borderRadius='12px';
-      div.style.boxShadow='0 4px 14px rgba(0,0,0,0.4)';
-      div.innerHTML=`<strong>${r.name}</strong> <span style="color:#facc15;">${'⭐'.repeat(r.rating)}</span>
+  const reviewGallery = document.getElementById('reviewGallery');
+  db.ref('reviews').orderByChild('timestamp').on('value', snapshot => {
+    const allReviews = [];
+    snapshot.forEach(child => {
+      allReviews.push(child.val());
+    });
+    
+    // Keep only the last 6 reviews
+    const lastSix = allReviews.slice(-6); // oldest first, newest last
+    reviewGallery.innerHTML = '';
+    
+    lastSix.forEach(r => {
+      const div = document.createElement('div');
+      div.style.background = '#1f2937';
+      div.style.padding = '12px';
+      div.style.marginBottom = '12px';
+      div.style.borderRadius = '12px';
+      div.style.boxShadow = '0 4px 14px rgba(0,0,0,0.4)';
+      div.innerHTML = `<strong>${r.name}</strong> <span style="color:#facc15;">${'⭐'.repeat(r.rating)}</span>
       <p>${r.message}</p>`;
       reviewGallery.appendChild(div);
     });
   });
-}
-
+    }
 // Load reviews on page load
 window.onload=function(){ loadReviews(); };
 </script>
