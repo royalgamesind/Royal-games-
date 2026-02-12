@@ -337,6 +337,8 @@ db.ref('bookings/'+custID).set({
     .then(()=>{
   console.log('Booking saved:', custID);
 
+  showPopup(); // 👈 ADDED POPUP
+
   generateInvoicePDF({
     customerID: custID,
     name,
