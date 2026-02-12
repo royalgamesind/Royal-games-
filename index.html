@@ -271,54 +271,54 @@ function sendToWhatsApp(){
   // Generate Customer ID
   let custID = 'RG'+Date.now();
 // Save to firebase
-    // Check if this phone already has ACTIVE booking
-db.ref('bookings')
-  .orderByChild('phone')
-  .equalTo(phone)
-  .once('value', snapshot => {
+    // Check if this console is already booked on the same date
+db.ref('bookings').once('value', snapshot => {
+  let conflict = false;
 
-    let hasActiveBooking = false;
-
-    snapshot.forEach(child => {
-      if (child.val().status === "Active") {
-        hasActiveBooking = true;
-      }
-    });
-
-    if (hasActiveBooking) {
-      alert("❌ You already have an active booking. Please return the console first.");
-      return;
+  snapshot.forEach(child => {
+    const b = child.val();
+    if (
+      b.console === consoleType && 
+      b.startDate === startDate && 
+      b.status === "Active"
+    ) {
+      conflict = true;
     }
+  });
 
-    // ✅ Save booking if no active booking found
-    db.ref('bookings/' + custID).set({
+  if (conflict) {
+    alert(`❌ ${consoleType} is already booked on ${startDate}. Please choose another date.`);
+    return;
+  }
+
+  // ✅ Save booking if no conflict
+  db.ref('bookings/' + custID).set({
+    customerID: custID,
+    name,
+    phone,
+    console: consoleType,
+    startDate,
+    days,
+    coupon: coupon || 'None',
+    totalPrice: total,
+    discount,
+    finalPrice: final,
+    requestedGame: requestedGame || 'N/A',
+    status: "Active",
+    timestamp: Date.now()
+  }).then(()=>{
+    generateInvoicePDF({
       customerID: custID,
       name,
       phone,
       console: consoleType,
       startDate,
       days,
-      coupon: coupon || 'None',
-      totalPrice: total,
-      discount,
-      finalPrice: final,
-      requestedGame: requestedGame || 'N/A',
-      status: "Active",
-      timestamp: Date.now()
-    }).then(()=>{
+      finalPrice: final
+    });
 
-      generateInvoicePDF({
-        customerID: custID,
-        name,
-        phone,
-        console: consoleType,
-        startDate,
-        days,
-        finalPrice: final
-      });
-
-      // WhatsApp message
-      const msg=`🎮 *Royal Games Booking*
+    // WhatsApp message
+    const msg=`🎮 *Royal Games Booking*
 Customer ID: ${custID}
 Name: ${name}
 Phone: ${phone}
@@ -331,12 +331,12 @@ Discount: ₹${discount}
 Final Price: ₹${final}
 Requested Game: ${requestedGame||'N/A'}`;
 
-      let url="https://wa.me/919303088645?text="+encodeURIComponent(msg);
-      window.open(url,'_blank');
-
-        });
-
+    let url="https://wa.me/919303088645?text="+encodeURIComponent(msg);
+    window.open(url,'_blank');
+  });
 });
+    
+     
 
 }
     
