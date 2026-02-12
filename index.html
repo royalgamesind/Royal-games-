@@ -215,7 +215,37 @@ function calculatePrice(){
   document.getElementById(id).addEventListener('change',calculatePrice);
   document.getElementById(id).addEventListener('input',calculatePrice);
 });
+// ===== PDF INVOICE FUNCTION =====
+function generateInvoicePDF(data){
 
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF();
+
+doc.setFontSize(18);
+doc.text("ROYAL GAMES 👑", 20, 20);
+
+doc.setFontSize(12);
+doc.text("Invoice", 20, 30);
+
+doc.line(20, 35, 190, 35);
+
+doc.text("Customer ID: " + data.customerID, 20, 45);
+doc.text("Name: " + data.name, 20, 55);
+doc.text("Phone: " + data.phone, 20, 65);
+doc.text("Console: " + data.console, 20, 75);
+doc.text("Start Date: " + data.startDate, 20, 85);
+doc.text("Duration: " + data.days + " Day(s)", 20, 95);
+doc.text("Final Amount: ₹" + data.finalPrice, 20, 105);
+
+doc.line(20, 115, 190, 115);
+doc.text("Thank you for choosing Royal Games 🎮", 20, 125);
+
+doc.save("RoyalGames_"+data.customerID+".pdf");
+}
+
+// Send Booking
+function sendToWhatsApp(){
+    
 // Send Booking
 function sendToWhatsApp(){
   const name=document.getElementById('name').value.trim();
