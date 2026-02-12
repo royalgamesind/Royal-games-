@@ -206,9 +206,9 @@ function calculatePrice(){
   if(consoleType==="PS5"){ total = days=="1"?500:800; }
   if(consoleType==="Xbox One"){ total = days=="1"?400:700; }
   let discount=0;
-  if(coupon==="RG50") discount=50;
-  if(coupon==="PS5OFF" && consoleType==="PS5") discount=50;
-  if(coupon==="XBOX50" && consoleType==="Xbox One") discount=50;
+  if(coupon==="CONGRATS100") discount=500;
+  if(coupon==="CONGRATS50" && consoleType==="PS5") discount=250;
+  if(coupon==="CONGRATS" && consoleType==="PS5") discount=200;
   let final=total-discount;
   if(final<0) final=0;
   document.getElementById("finalPrice").innerText=
