@@ -271,41 +271,54 @@ function sendToWhatsApp(){
   // Generate Customer ID
   let custID = 'RG'+Date.now();
 // Save to firebase
-db.ref('bookings/'+custID).set({
-  customerID: custID,
-  name,
-  phone,
-  console: consoleType,
-  startDate,
-  days,
-  coupon: coupon || 'None',
-  totalPrice: total,
-  discount,
-  finalPrice: final,
-  requestedGame: requestedGame || 'N/A',
-  status: "Active", // 👈 ADD THIS
-  timestamp: Date.now()
-})
-    .then(()=>{
-  console.log('Booking saved:', custID);
+    // Check if this phone already has ACTIVE booking
+db.ref('bookings')
+  .orderByChild('phone')
+  .equalTo(phone)
+  .once('value', snapshot => {
 
-  generateInvoicePDF({
-    customerID: custID,
-    name,
-    phone,
-    console: consoleType,
-    startDate,
-    days,
-    finalPrice: final
-  });
+    let hasActiveBooking = false;
 
-});
-    
+    snapshot.forEach(child => {
+      if (child.val().status === "Active") {
+        hasActiveBooking = true;
+      }
+    });
 
+    if (hasActiveBooking) {
+      alert("❌ You already have an active booking. Please return the console first.");
+      return;
+    }
 
+    // ✅ Save booking if no active booking found
+    db.ref('bookings/' + custID).set({
+      customerID: custID,
+      name,
+      phone,
+      console: consoleType,
+      startDate,
+      days,
+      coupon: coupon || 'None',
+      totalPrice: total,
+      discount,
+      finalPrice: final,
+      requestedGame: requestedGame || 'N/A',
+      status: "Active",
+      timestamp: Date.now()
+    }).then(()=>{
 
-  // WhatsApp message
-  const msg=`🎮 *Royal Games Booking*
+      generateInvoicePDF({
+        customerID: custID,
+        name,
+        phone,
+        console: consoleType,
+        startDate,
+        days,
+        finalPrice: final
+      });
+
+      // WhatsApp message
+      const msg=`🎮 *Royal Games Booking*
 Customer ID: ${custID}
 Name: ${name}
 Phone: ${phone}
@@ -317,11 +330,13 @@ Coupon: ${coupon||'None'}
 Discount: ₹${discount}
 Final Price: ₹${final}
 Requested Game: ${requestedGame||'N/A'}`;
-  
-  let url="https://wa.me/919303088645?text="+encodeURIComponent(msg);
-  window.open(url,'_blank');
-}
 
+      let url="https://wa.me/919303088645?text="+encodeURIComponent(msg);
+      window.open(url,'_blank');
+
+    });
+
+});
 // Review submission
 function sendReview(){
   const name=document.getElementById('reviewName').value.trim();
