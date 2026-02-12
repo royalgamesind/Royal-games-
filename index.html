@@ -284,9 +284,22 @@ db.ref('bookings/'+custID).set({
   status: "Active", // 👈 ADD THIS
   timestamp: Date.now()
 })
-.then(()=>{
+    .then(()=>{
   console.log('Booking saved:', custID);
+
+  generateInvoicePDF({
+    customerID: custID,
+    name,
+    phone,
+    console: consoleType,
+    startDate,
+    days,
+    finalPrice: final
+  });
+
 });
+    
+
 
 
   // WhatsApp message
