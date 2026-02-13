@@ -139,7 +139,7 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
   <div id="finalPrice" style="margin-top:8px;color:#22c55e;font-weight:bold;"></div>
     
   <input type="text" id="requestedGame" placeholder="Request a game (optional)">
-  <button onclick="sendToWhatsApp()">Book on WhatsApp</button>
+  <button onclick="sendToWhatsApp(event)">Book on WhatsApp</button>
 </div>
 
 <!-- REVIEW FORM -->
@@ -188,6 +188,24 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
+function showPopup(message){
+  const popup = document.createElement("div");
+  popup.style.position="fixed";
+  popup.style.top="50%";
+  popup.style.left="50%";
+  popup.style.transform="translate(-50%,-50%)";
+  popup.style.background="#111827";
+  popup.style.color="#fff";
+  popup.style.padding="20px 25px";
+  popup.style.borderRadius="14px";
+  popup.style.zIndex="10000";
+  popup.style.textAlign="center";
+  popup.style.boxShadow="0 0 30px rgba(0,0,0,0.5)";
+  popup.innerHTML=`<div style="font-weight:bold;margin-bottom:10px;">${message}</div>
+  <button onclick="this.parentElement.remove()" style="margin-top:8px;background:#22c55e;border:none;color:white;padding:8px 16px;border-radius:8px;">OK</button>`;
+  document.body.appendChild(popup);
+}
+
 // Firebase config
 const firebaseConfig = {
   databaseURL: "https://royalgamesproject-default-rtdb.asia-southeast1.firebasedatabase.app"
@@ -265,16 +283,12 @@ function getPriceDetails(){
   return {total,discount,final};
 }
 
-
-    
 // Send Booking
-function sendToWhatsApp(){
-    const btn = document.querySelector('.booking button');
-btn.disabled = true;
-btn.innerText = "Processing...";
-    // Pre-open WhatsApp window (prevents popup block)
-let waWindow = window.open("about:blank","_blank");
-    
+function sendToWhatsApp(event){
+    const btn = event.target;
+    btn.disabled = true;
+    btn.innerText = "Processing...";
+
   const name=document.getElementById('name').value.trim();
   const phone=document.getElementById('phone').value.trim();
   const consoleType=document.getElementById('console').value;
@@ -286,25 +300,34 @@ let waWindow = window.open("about:blank","_blank");
 alert('Please fill all fields!');
 btn.disabled = false;
 btn.innerText = "Book on WhatsApp";
-if(waWindow) waWindow.close();
 return;
     }
-                                       
-  
 
   // Price calculation
-  
-    const price = getPriceDetails();
-let total = price.total;
-let discount = price.discount;
-let final = price.final;
-     
+  const price = getPriceDetails();
+  let total = price.total;
+  let discount = price.discount;
+  let final = price.final;
 
   // Generate Customer ID
   let custID = 'RG'+Date.now();
-// Save to firebase
-    // Check if this console is already booked on the same date
+
+// Check if this console is already booked on the same date
 db.ref('bookings').once('value', snapshot => {
+  // Check if same phone already has active booking
+  let hasActive = false;
+  snapshot.forEach(child => {
+    const b = child.val();
+    if(b.phone === phone && b.status === "Active"){
+      hasActive = true;
+    }
+  });
+  if(hasActive){
+    showPopup("You already have an active booking. Please return the console first.");
+    btn.disabled = false;
+    btn.innerText = "Book on WhatsApp";
+    return;
+  }
   let conflict = false;
 
   snapshot.forEach(child => {
@@ -318,12 +341,10 @@ db.ref('bookings').once('value', snapshot => {
     }
   });
 
-      
   if (conflict) {
     alert(`❌ ${consoleType} is already booked on ${startDate}. Please choose another date.`);
    btn.disabled = false;
 btn.innerText = "Book on WhatsApp";
-if(waWindow) waWindow.close();
       return;
   }
 
@@ -343,6 +364,8 @@ if(waWindow) waWindow.close();
     status: "Active",
     timestamp: Date.now()
   }).then(()=>{
+    let waWindow = window.open("", "_blank");
+
     generateInvoicePDF({
       customerID: custID,
       name,
@@ -369,17 +392,13 @@ Discount: ₹${discount}
 Final Price: ₹${final}
 Requested Game: ${requestedGame||'N/A'}`;
 
-    let url="https://wa.me/919303088645?text="+encodeURIComponent(msg);
-      let url="https://wa.me/919303088645?text="+encodeURIComponent(msg);
-waWindow.location.href = url;
+    const whatsappURL = "https://wa.me/919303088645?text=" + encodeURIComponent(msg);
+    waWindow.location.href = whatsappURL;
       btn.disabled = false;
 btn.innerText = "Book on WhatsApp";
-    
+
   });
 });
-    
-     
-
 }
     
 // Review submission
@@ -426,13 +445,9 @@ window.onload=function(){ loadReviews(); };
 </script>
 
 </body>
-    </html>
+</html>
+
 
 
     
-
-
-
-  
-
-
+    
