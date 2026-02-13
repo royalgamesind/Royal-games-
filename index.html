@@ -344,7 +344,9 @@ Console: ${consoleType}
 Booking Date: ${startDate}
 Duration: ${days} Day(s)
 Package Price: ₹${total}
-Coupon: ${coupon||'None'}
+
+Coupon: ${discount>0 ? coupon : 'None'}
+    
 Discount: ₹${discount}
 Final Price: ₹${final}
 Requested Game: ${requestedGame||'N/A'}`;
