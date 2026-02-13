@@ -296,6 +296,13 @@ function sendToWhatsApp(event){
   const days=document.getElementById('days').value;
   const coupon=document.getElementById('coupon').value.trim().toUpperCase();
   const requestedGame=document.getElementById('requestedGame').value.trim();
+    /* Check if this customer was marked as bargainer before */
+firebase.database().ref('customerNotes/'+phone).once('value').then(snap=>{
+  if(snap.exists()){
+    sendOwnerAlert(phone);
+  }
+});
+    
     if(!name||!phone||!startDate||!days){
 alert('Please fill all fields!');
 btn.disabled = false;
