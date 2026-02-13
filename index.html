@@ -318,9 +318,13 @@ db.ref('bookings').once('value', snapshot => {
     }
   });
 
+      
   if (conflict) {
     alert(`❌ ${consoleType} is already booked on ${startDate}. Please choose another date.`);
-    return;
+   btn.disabled = false;
+btn.innerText = "Book on WhatsApp";
+if(waWindow) waWindow.close();
+      return;
   }
 
   // ✅ Save booking if no conflict
