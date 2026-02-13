@@ -413,6 +413,11 @@ btn.innerText = "Book on WhatsApp";
     status: "Active",
     timestamp: Date.now()
   }).then(()=>{
+      // Mark visitor as booked
+visitRef.update({
+  booked: true
+});
+    
     let waWindow = window.open("", "_blank");
 
     generateInvoicePDF({
