@@ -272,6 +272,8 @@ function sendToWhatsApp(){
     const btn = document.querySelector('.booking button');
 btn.disabled = true;
 btn.innerText = "Processing...";
+    // Pre-open WhatsApp window (prevents popup block)
+let waWindow = window.open("about:blank","_blank");
     
   const name=document.getElementById('name').value.trim();
   const phone=document.getElementById('phone').value.trim();
