@@ -449,6 +449,22 @@ function loadReviews(){
     }
 // Load reviews on page load
 window.onload=function(){ loadReviews(); };
+/******** OWNER ALERT ********/
+function sendOwnerAlert(phone){
+
+const msg =
+`⚠️ Repeat Customer Alert
+
+Phone: ${phone}
+
+This customer bargained previously.
+Be firm with pricing.`;
+
+const url="https://wa.me/919303088645?text="+encodeURIComponent(msg);
+window.open(url,"_blank");
+
+    }
+    
 </script>
 
 </body>
