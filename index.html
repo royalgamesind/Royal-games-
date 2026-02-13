@@ -282,7 +282,15 @@ let waWindow = window.open("about:blank","_blank");
   const days=document.getElementById('days').value;
   const coupon=document.getElementById('coupon').value.trim().toUpperCase();
   const requestedGame=document.getElementById('requestedGame').value.trim();
-  if(!name||!phone||!startDate||!days){ alert('Please fill all fields!'); return; }
+    if(!name||!phone||!startDate||!days){
+alert('Please fill all fields!');
+btn.disabled = false;
+btn.innerText = "Book on WhatsApp";
+if(waWindow) waWindow.close();
+return;
+    }
+                                       
+  
 
   // Price calculation
   
