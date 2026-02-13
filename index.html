@@ -269,6 +269,10 @@ function getPriceDetails(){
     
 // Send Booking
 function sendToWhatsApp(){
+    const btn = document.querySelector('.booking button');
+btn.disabled = true;
+btn.innerText = "Processing...";
+    
   const name=document.getElementById('name').value.trim();
   const phone=document.getElementById('phone').value.trim();
   const consoleType=document.getElementById('console').value;
