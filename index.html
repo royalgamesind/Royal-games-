@@ -212,6 +212,48 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
+    /******** BEHAVIOUR TRACKING SYSTEM ********/
+
+function getVisitorID() {
+  let id = localStorage.getItem("royalVisitorID");
+  if (!id) {
+    id = "VIS-" + Date.now() + "-" + Math.floor(Math.random()*1000);
+    localStorage.setItem("royalVisitorID", id);
+  }
+  return id;
+}
+
+const visitorID = getVisitorID();
+const todayKey = new Date().toISOString().split("T")[0];
+
+const visitRef = firebase.database().ref("dailyVisitors/" + todayKey + "/" + visitorID);
+
+// Track visit count
+visitRef.transaction(data => {
+  if (data === null) {
+    return {
+      firstVisit: Date.now(),
+      visits: 1,
+      totalTime: 0,
+      booked: false
+    };
+  } else {
+    data.visits += 1;
+    return data;
+  }
+});
+
+// Track time spent
+let startTime = Date.now();
+
+window.addEventListener("beforeunload", function() {
+  let timeSpent = Date.now() - startTime;
+
+  visitRef.child("totalTime").transaction(current => {
+    return (current || 0) + timeSpent;
+  });
+});
+    
 
 // Calculate price
 function calculatePrice(){
