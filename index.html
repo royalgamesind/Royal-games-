@@ -44,6 +44,96 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
     box-shadow: 0 0 20px rgba(255,215,0,0.4); animation: slideIn 0.5s;
 }
 @keyframes slideIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+    <style>
+/* Existing styles... */
+#loyaltyStatus { margin-top: 10px; font-weight: bold; font-size: 14px; display: none; padding: 8px; border-radius: 8px; }
+.silver-bg { background: #94a3b8; color: #000; }
+.gold-bg { background: #fbbf24; color: #000; }
+.platinum-bg { background: #38bdf8; color: #000; box-shadow: 0 0 15px rgba(56, 189, 248, 0.5); }
+</style>
+
+<div class="card booking">
+  <h2>🎮 Book Your Console</h2>
+  <div id="loyaltyStatus"></div> <input type="text" id="name" placeholder="Your Name">
+  <input type="tel" id="phone" placeholder="Mobile Number" oninput="checkLoyaltyStatus()"> ...
+</div>
+
+<script>
+// Global variable to store detected level
+let userLoyaltyLevel = "Bronze";
+
+// NEW FUNCTION: Check loyalty when phone is entered
+function checkLoyaltyStatus() {
+    const phone = document.getElementById('phone').value.trim();
+    const statusDiv = document.getElementById('loyaltyStatus');
+    
+    if (phone.length < 10) {
+        statusDiv.style.display = "none";
+        userLoyaltyLevel = "Bronze";
+        calculatePrice();
+        return;
+    }
+
+    db.ref('customerStats/' + phone).once('value', snap => {
+        const stats = snap.val();
+        if (stats && stats.level) {
+            userLoyaltyLevel = stats.level;
+            statusDiv.style.display = "block";
+            statusDiv.className = ""; // clear classes
+            
+            if (userLoyaltyLevel === "Silver") {
+                statusDiv.innerText = "🥈 Silver Member: 5% Auto-Discount Applied";
+                statusDiv.classList.add("silver-bg");
+            } else if (userLoyaltyLevel === "Gold") {
+                statusDiv.innerText = "👑 Gold Member: 10% Auto-Discount Applied";
+                statusDiv.classList.add("gold-bg");
+            } else if (userLoyaltyLevel === "Platinum") {
+                statusDiv.innerText = "💎 Platinum Member: 15% Auto-Discount Applied";
+                statusDiv.classList.add("platinum-bg");
+            } else {
+                statusDiv.style.display = "none";
+            }
+        } else {
+            userLoyaltyLevel = "Bronze";
+            statusDiv.style.display = "none";
+        }
+        calculatePrice(); // Recalculate with new discount
+    });
+}
+
+// UPDATED PRICE CALCULATION: Includes Loyalty Discounts
+function calculatePrice() {
+    const consoleType = document.getElementById('console').value;
+    const days = document.getElementById('days').value;
+    const coupon = document.getElementById('coupon').value.trim().toUpperCase();
+    if (!days) return;
+
+    let total = 0;
+    if (consoleType === "PS5") { total = days == "1" ? 500 : 800; }
+    if (consoleType === "Xbox One") { total = days == "1" ? 400 : 700; }
+
+    // 1. Apply Coupon Discount
+    let couponDiscount = 0;
+    if (coupon === "CONGRATS100") couponDiscount = 100;
+    // ... add other coupons ...
+
+    // 2. Apply Loyalty Discount (NEW)
+    let loyaltyPercent = 0;
+    if (userLoyaltyLevel === "Silver") loyaltyPercent = 0.05;
+    if (userLoyaltyLevel === "Gold") loyaltyPercent = 0.10;
+    if (userLoyaltyLevel === "Platinum") loyaltyPercent = 0.15;
+
+    let loyaltyDiscount = Math.round(total * loyaltyPercent);
+    let final = total - couponDiscount - loyaltyDiscount;
+    if (final < 0) final = 0;
+
+    document.getElementById("finalPrice").innerHTML = `
+        Base: ₹${total} <br>
+        Coupon: -₹${couponDiscount} | Loyalty: -₹${loyaltyDiscount} <br>
+        <span style="font-size:22px">Final: ₹${final}</span>
+    `;
+}
+</script>
 </style>
 </head>
 <body>
