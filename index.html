@@ -184,8 +184,34 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
     
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<div class="section card" style="border: 2px solid #38bdf8;">
+    <h3>👑 Force Customer Level</h3>
+    <p>Use this to manually make someone Platinum.</p>
+    <input type="text" id="manualPhone" placeholder="Phone Number">
+    <select id="manualLevel">
+        <option value="Bronze">Bronze</option>
+        <option value="Silver">Silver</option>
+        <option value="Gold">Gold</option>
+        <option value="Platinum">Platinum</option>
+    </select>
+    <button onclick="setManualLevel()">Update Member Level</button>
+</div>
 
 <script>
+function setManualLevel() {
+    const phone = document.getElementById('manualPhone').value.trim();
+    const level = document.getElementById('manualLevel').value;
+    if(!phone) return alert("Enter Phone");
+
+    db.ref('customerStats/' + phone).update({
+        level: level,
+        manualOverride: true,
+        updatedAt: Date.now()
+    }).then(() => {
+        alert("Success! " + phone + " is now " + level);
+    });
+}
+
 // Firebase config
 const firebaseConfig = {
   databaseURL: "https://royalgamesproject-default-rtdb.asia-southeast1.firebasedatabase.app"
