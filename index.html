@@ -3,140 +3,68 @@
 <head>
 <meta charset="UTF-8">
 <title>Royal Games Neemuch | PS5 & Xbox Rentals</title>
-<meta name="description" content="Royal Games provides PlayStation 5 and Xbox on rent in Neemuch, Madhya Pradesh.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto&display=swap" rel="stylesheet">
 
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <style>
-body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
-.header{background:linear-gradient(90deg,#111827,#1e293b);padding:25px 15px;text-align:center;border-bottom:4px solid gold}
-.header h1{margin:0;font-family:'Orbitron',sans-serif;color:gold;font-size:36px;letter-spacing:3px}
+/* --- THEME VARIABLES --- */
+:root {
+    --bg-color: #0b0f1a;
+    --card-bg: #111827;
+    --accent: gold;
+    --btn: #25D366;
+    --text: #fff;
+    --glow: rgba(255, 215, 0, 0.1);
+}
+
+/* GOLD THEME (For Gold Members) */
+body.gold-theme {
+    --accent: #fbbf24;
+    --glow: rgba(251, 191, 36, 0.4);
+}
+body.gold-theme .header { background: linear-gradient(90deg, #1e293b, #fbbf24); border-bottom: 4px solid #fbbf24; }
+body.gold-theme .header h1 { color: #000; }
+
+/* PLATINUM THEME (For Platinum Members) */
+body.platinum-theme {
+    --accent: #38bdf8;
+    --btn: #0ea5e9;
+    --glow: rgba(56, 189, 248, 0.5);
+}
+body.platinum-theme .header { background: linear-gradient(90deg, #0f172a, #38bdf8); border-bottom: 4px solid #38bdf8; }
+body.platinum-theme .header h1 { color: #fff; text-shadow: 0 0 15px #38bdf8; }
+body.platinum-theme .card { border: 1px solid #38bdf8; }
+
+/* STANDARD CSS */
+body{margin:0;font-family:'Roboto',sans-serif;background:var(--bg-color);color:var(--text);transition: 0.5s;}
+.header{background:linear-gradient(90deg,#111827,#1e293b);padding:25px 15px;text-align:center;border-bottom:4px solid var(--accent);transition: 0.5s;}
+.header h1{margin:0;font-family:'Orbitron',sans-serif;color:var(--accent);font-size:36px;letter-spacing:3px}
 .tag{color:#cbd5e1;font-size:16px;margin-top:5px}
 .section{padding:30px 15px}
-.card{background:#111827;border-radius:20px;padding:20px;margin:20px auto;max-width:520px;box-shadow:0 0 20px rgba(0,255,255,.1);transition:.3s}
-.card:hover{transform:translateY(-5px);box-shadow:0 0 25px rgba(0,255,255,.3)}
+.card{background:var(--card-bg);border-radius:20px;padding:20px;margin:20px auto;max-width:520px;box-shadow:0 0 20px var(--glow);transition:.3s}
 .card img{width:100%;border-radius:15px;margin-bottom:15px}
-.game-list{background:#1f2937;padding:15px;border-radius:12px;box-shadow:inset 0 0 10px rgba(255,255,255,.05);margin-top:15px}
-.game-list h3{color:#0ea5e9;margin-bottom:10px;font-family:'Orbitron',sans-serif}
-.game-list p{margin:5px 0;padding:5px;border-radius:8px;transition:.3s}
-.game-list p:hover{background:#0ea5e9;color:#0b0f1a;cursor:pointer;font-weight:bold}
 .price{font-size:20px;color:#22c55e;font-weight:bold;margin-top:10px}
-.btn,.booking button{display:block;width:100%;padding:16px;background:#25D366;color:#fff;text-decoration:none;border-radius:12px;font-weight:bold;font-size:18px;text-align:center;margin-top:12px;cursor:pointer;border:none}
-.btn:hover,.booking button:hover{background:#1ebe57}
-.btn:disabled,.booking button:disabled {background:#374151; color:#9ca3af; cursor:not-allowed;}
-.booking input,.booking select,.booking textarea{width:95%;padding:14px;margin-top:10px;border-radius:12px;border:none;font-size:16px;background:#1f2937;color:#fff}
+.btn, .booking-btn{display:block;width:100%;padding:16px;background:var(--btn);color:#fff;border-radius:12px;font-weight:bold;font-size:18px;text-align:center;margin-top:12px;cursor:pointer;border:none}
+.btn:hover{filter:brightness(1.1)}
+.booking input, .booking select, .booking textarea{width:95%;padding:14px;margin-top:10px;border-radius:12px;border:none;background:#1f2937;color:#fff}
 .booking textarea{height:80px}
-.booking h2{color:#f87171;font-family:'Orbitron',sans-serif}
-.rules{line-height:28px;font-size:16px}
-.footer{background:black;padding:18px;text-align:center;margin-top:25px;color:#9ca3af}
-.floating-call{position:fixed;bottom:22px;right:20px;width:65px;height:65px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:white;text-decoration:none;box-shadow:0 10px 25px rgba(0,0,0,0.5);z-index:9999;animation:pulse 2s infinite}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.7);}70%{box-shadow:0 0 0 18px rgba(34,197,94,0);}100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}}
-.floating-call:hover{transform:scale(1.1)}
+.game-list{background:#1f2937;padding:15px;border-radius:12px;margin-top:15px}
+.game-list p{margin:5px 0;padding:5px;}
+
+/* DYNAMIC ELEMENTS */
+#loyaltyStatus { margin-top: 10px; font-weight: bold; padding: 10px; border-radius: 10px; display: none; text-align: center; color: #000; }
+#ghostAlert { position: fixed; bottom: 20px; left: 20px; background: var(--accent); color: #000; padding: 15px; border-radius: 12px; font-weight: bold; display: none; z-index: 1000; animation: slideIn 0.5s; }
+.floating-call{position:fixed;bottom:22px;right:20px;width:65px;height:65px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:white;text-decoration:none;z-index:9999;box-shadow:0 10px 25px rgba(0,0,0,0.5);}
 .review-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
-.review-gallery img{width:100%;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.4)}
-@media(min-width:700px){.review-gallery{grid-template-columns:repeat(4,1fr);}}
-
-/* GHOST ALERT */
-#ghostAlert {
-    position: fixed; bottom: 20px; left: 20px; background: gold; color: #000; 
-    padding: 15px; border-radius: 12px; font-weight: bold; display: none; z-index: 1000;
-    box-shadow: 0 0 20px rgba(255,215,0,0.4); animation: slideIn 0.5s;
-}
+@media(max-width:600px){.review-gallery{grid-template-columns:1fr;}}
 @keyframes slideIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
-    <style>
-/* Existing styles... */
-#loyaltyStatus { margin-top: 10px; font-weight: bold; font-size: 14px; display: none; padding: 8px; border-radius: 8px; }
-.silver-bg { background: #94a3b8; color: #000; }
-.gold-bg { background: #fbbf24; color: #000; }
-.platinum-bg { background: #38bdf8; color: #000; box-shadow: 0 0 15px rgba(56, 189, 248, 0.5); }
-</style>
-
-<div class="card booking">
-  <h2>🎮 Book Your Console</h2>
-  <div id="loyaltyStatus"></div> <input type="text" id="name" placeholder="Your Name">
-  <input type="tel" id="phone" placeholder="Mobile Number" oninput="checkLoyaltyStatus()"> ...
-</div>
-
-<script>
-// Global variable to store detected level
-let userLoyaltyLevel = "Bronze";
-
-// NEW FUNCTION: Check loyalty when phone is entered
-function checkLoyaltyStatus() {
-    const phone = document.getElementById('phone').value.trim();
-    const statusDiv = document.getElementById('loyaltyStatus');
-    
-    if (phone.length < 10) {
-        statusDiv.style.display = "none";
-        userLoyaltyLevel = "Bronze";
-        calculatePrice();
-        return;
-    }
-
-    db.ref('customerStats/' + phone).once('value', snap => {
-        const stats = snap.val();
-        if (stats && stats.level) {
-            userLoyaltyLevel = stats.level;
-            statusDiv.style.display = "block";
-            statusDiv.className = ""; // clear classes
-            
-            if (userLoyaltyLevel === "Silver") {
-                statusDiv.innerText = "🥈 Silver Member: 5% Auto-Discount Applied";
-                statusDiv.classList.add("silver-bg");
-            } else if (userLoyaltyLevel === "Gold") {
-                statusDiv.innerText = "👑 Gold Member: 10% Auto-Discount Applied";
-                statusDiv.classList.add("gold-bg");
-            } else if (userLoyaltyLevel === "Platinum") {
-                statusDiv.innerText = "💎 Platinum Member: 15% Auto-Discount Applied";
-                statusDiv.classList.add("platinum-bg");
-            } else {
-                statusDiv.style.display = "none";
-            }
-        } else {
-            userLoyaltyLevel = "Bronze";
-            statusDiv.style.display = "none";
-        }
-        calculatePrice(); // Recalculate with new discount
-    });
-}
-
-// UPDATED PRICE CALCULATION: Includes Loyalty Discounts
-function calculatePrice() {
-    const consoleType = document.getElementById('console').value;
-    const days = document.getElementById('days').value;
-    const coupon = document.getElementById('coupon').value.trim().toUpperCase();
-    if (!days) return;
-
-    let total = 0;
-    if (consoleType === "PS5") { total = days == "1" ? 500 : 800; }
-    if (consoleType === "Xbox One") { total = days == "1" ? 400 : 700; }
-
-    // 1. Apply Coupon Discount
-    let couponDiscount = 0;
-    if (coupon === "CONGRATS100") couponDiscount = 100;
-    // ... add other coupons ...
-
-    // 2. Apply Loyalty Discount (NEW)
-    let loyaltyPercent = 0;
-    if (userLoyaltyLevel === "Silver") loyaltyPercent = 0.05;
-    if (userLoyaltyLevel === "Gold") loyaltyPercent = 0.10;
-    if (userLoyaltyLevel === "Platinum") loyaltyPercent = 0.15;
-
-    let loyaltyDiscount = Math.round(total * loyaltyPercent);
-    let final = total - couponDiscount - loyaltyDiscount;
-    if (final < 0) final = 0;
-
-    document.getElementById("finalPrice").innerHTML = `
-        Base: ₹${total} <br>
-        Coupon: -₹${couponDiscount} | Loyalty: -₹${loyaltyDiscount} <br>
-        <span style="font-size:22px">Final: ₹${final}</span>
-    `;
-}
-</script>
 </style>
 </head>
-<body>
+<body id="mainBody">
 
 <div id="ghostAlert"></div>
 
@@ -146,528 +74,295 @@ function calculatePrice() {
 </div>
 
 <div class="section">
-<div class="card">
-    <h2>PlayStation 5</h2>
-    <img src="images.jpeg">
-    <div class="price">₹<span id="ps5Price1">500</span> / 1 Day</div>
-    <div class="price">₹<span id="ps5Price2">800</span> / 2 Days</div>
-
-    <div class="game-list">
-        <h3>Available PS5 Games 🎮</h3>
-        <p>• GTA V & GTA Online</p>
-        <p>• Black Myth Wukong</p>
-        <p>• Ghost of Yotei</p>
-        <p>• Ghost of Tsushima</p>
-        <p>• Roblox</p>
-        <p>• Spider-Man Remastered</p>
-        <p>• The Last of Us Part II</p>
-        <p>• God of War Ragnarök</p>
-        <p style="color:#facc15;font-weight:bold;">Want a game we don't have? Message us below!</p>
+    <div class="card">
+        <h2>PlayStation 5</h2>
+        <img src="https://i.imgur.com/ToKqE13.jpeg" alt="PS5" onerror="this.style.display='none'">
+        <div class="price">₹<span id="ps5Price1">500</span> / 1 Day</div>
+        <div class="price">₹<span id="ps5Price2">800</span> / 2 Days</div>
+        <div class="game-list">
+            <h3>Available Games 🎮</h3>
+            <p>• GTA V, Ghost of Tsushima, Spider-Man, God of War Ragnarök</p>
+        </div>
     </div>
 </div>
-</div>
 
 <div class="section">
-<div class="card">
-    <h2>Xbox One</h2>
-    <img src="images (1).jpeg">
-    <div class="price">₹<span id="xboxPrice1">400</span> / 1 Day</div>
-    <div class="price">₹<span id="xboxPrice2">700</span> / 2 Days</div>
-
-    <div class="game-list">
-        <h3>Available Xbox Games 🕹️</h3>
-        <p>• GTA V & GTA Online</p>
-        <p>• Forza Horizon 5</p>
-        <p>• Minecraft</p>
-        <p>• Call of Duty: Modern Warfare 2</p>
-        <p>• Among Us</p>
-        <p>• Mortal Kombat 11</p>
-        <p>• F1 2024</p>
-        <p>• FIFA 25</p>
-        <p style="color:#facc15;font-weight:bold;">We also have a steering wheel for racing games!</p>
+    <div class="card">
+        <h2>Xbox One</h2>
+        <img src="https://i.imgur.com/w9F111d.jpeg" alt="Xbox" onerror="this.style.display='none'">
+        <div class="price">₹<span id="xboxPrice1">400</span> / 1 Day</div>
+        <div class="price">₹<span id="xboxPrice2">700</span> / 2 Days</div>
+        <div class="game-list">
+            <h3>Available Games 🕹️</h3>
+            <p>• GTA V, Forza Horizon 5, FIFA 25, Minecraft</p>
+        </div>
     </div>
 </div>
+
+<div class="section">
+    <div style="text-align:center; color:gold; font-weight:bold; margin-bottom:10px;">⚠️ Do not edit the WhatsApp message!</div>
+    <div class="card booking">
+      <h2>🎮 Book Your Console</h2>
+      <div id="loyaltyStatus"></div>
+      
+      <input type="tel" id="phone" placeholder="Mobile Number (Enter to Check VIP Level)" oninput="checkLoyaltyStatus()">
+      <input type="text" id="name" placeholder="Your Name">
+      
+      <select id="console">
+        <option>PS5</option>
+        <option>Xbox One</option>
+      </select>
+      
+      <input type="date" id="startDate">
+      <select id="days">
+        <option value="1">1 Day</option>
+        <option value="2">2 Days</option>
+      </select>
+      
+      <input type="text" id="coupon" placeholder="Coupon Code (Optional)">
+      <div id="finalPrice" style="margin-top:10px;color:#22c55e;font-weight:bold;"></div>
+      
+      <button class="booking-btn" id="bookBtn" onclick="sendToWhatsApp(event)">Book on WhatsApp</button>
+    </div>
 </div>
 
 <div class="section">
-<div class="card rules">
-<h2>Rules</h2>
-• Valid ID proof required<br>
-• Handle controller carefully<br>
-• Late return extra charge<br>
-• Damage charges applicable
-</div>
-</div>
-
-<div class="section">
-<div class="card contact">
-<h2>Booking & Contact</h2>
-📍 Neemuch, Madhya Pradesh<br>
-📞 9303088645
-</div>
-</div>
-
-<div style="text-align:center; margin:20px; color:#facc15; font-weight:bold;">
-⚠️ Please do not edit the WhatsApp message. Edited bookings will not be considered valid.
-</div>
-<div class="card booking">
-  <h2>🎮 Book Your Console</h2>
-  <input type="text" id="name" placeholder="Your Name">
-  <input type="tel" id="phone" placeholder="Mobile Number">
-  <select id="console">
-    <option>PS5</option>
-    <option>Xbox One</option>
-  </select>
-
-  <h3>Select Booking</h3>
-  <input type="date" id="startDate" placeholder="Select Date">
-  <select id="days">
-    <option value="">Select Rental Duration</option>
-    <option value="1">1 Day</option>
-    <option value="2">2 Days</option>
-  </select>
-
-  <input type="text" id="coupon" placeholder="Enter Coupon Code (optional)">
-  <div id="finalPrice" style="margin-top:8px;color:#22c55e;font-weight:bold;"></div>
-    
-  <input type="text" id="requestedGame" placeholder="Request a game (optional)">
-  <button id="bookBtn" onclick="sendToWhatsApp(event)">Book on WhatsApp</button>
+    <div class="card booking">
+        <h2 style="color:gold;">📝 Write a Review</h2>
+        <input type="text" id="reviewName" placeholder="Your Name">
+        <select id="reviewRating">
+            <option value="5">⭐⭐⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+        </select>
+        <textarea id="reviewMessage" placeholder="Your experience..."></textarea>
+        <button class="booking-btn" onclick="sendReview()">Submit Review</button>
+    </div>
 </div>
 
 <div class="section">
-<div class="card booking">
-<h2 style="color:#facc15;">📝 Give a Review</h2>
-<input type="text" id="reviewName" placeholder="Your Name" required>
-<select id="reviewRating">
-<option value="5">⭐⭐⭐⭐⭐</option>
-<option value="4">⭐⭐⭐⭐</option>
-<option value="3">⭐⭐⭐</option>
-<option value="2">⭐⭐</option>
-<option value="1">⭐</option>
-</select>
-<textarea id="reviewMessage" placeholder="Write your review" required></textarea>
-<button type="button" onclick="sendReview()">Send Review</button>
-</div>
+    <div class="card">
+      <h2>⭐ Customer Reviews</h2>
+      <div class="review-gallery" id="reviewGallery">Loading reviews...</div>
+    </div>
 </div>
 
-<div class="section">
-<div class="card">
-  <h2>⭐ Customer Review Gallery</h2>
-  <div class="review-gallery" id="reviewGallery"></div>
-</div>
-</div>
-
-<div class="section">
-<div class="card booking">
-<h2 style="color:#38bdf8;">❓ Ask a Doubt / Question</h2>
-<input type="text" id="doubtName" placeholder="Your Name" required>
-<textarea id="doubtMessage" placeholder="Type your question" required></textarea>
-<button type="button" onclick="sendDoubt()">Send Question</button>
-</div>
-</div>
-
-<div class="footer">
-© 2026 Royal Games — Gaming Console Rentals
-</div>
+<div class="footer">© 2026 Royal Games — Gaming Console Rentals</div>
 <a href="tel:9303088645" class="floating-call">📞</a>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-<div class="section card" style="border: 2px solid #38bdf8;">
-    <h3>👑 Force Customer Level</h3>
-    <p>Use this to manually make someone Platinum.</p>
-    <input type="text" id="manualPhone" placeholder="Phone Number">
-    <select id="manualLevel">
-        <option value="Bronze">Bronze</option>
-        <option value="Silver">Silver</option>
-        <option value="Gold">Gold</option>
-        <option value="Platinum">Platinum</option>
-    </select>
-    <button onclick="setManualLevel()">Update Member Level</button>
-</div>
 
 <script>
-function setManualLevel() {
-    const phone = document.getElementById('manualPhone').value.trim();
-    const level = document.getElementById('manualLevel').value;
-    if(!phone) return alert("Enter Phone");
-
-    db.ref('customerStats/' + phone).update({
-        level: level,
-        manualOverride: true,
-        updatedAt: Date.now()
-    }).then(() => {
-        alert("Success! " + phone + " is now " + level);
-    });
-}
-
-// Firebase config
+// --- FIREBASE SETUP ---
 const firebaseConfig = {
   databaseURL: "https://royalgamesproject-default-rtdb.asia-southeast1.firebasedatabase.app"
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
+let userLoyaltyLevel = "Bronze";
 let currentSurge = 1.0;
 let basePrices = { ps5_1: 500, ps5_2: 800, xbox_1: 400, xbox_2: 700 };
 
-// --- NEW: GOD MODE LISTENER ---
+// 1. LOYALTY & THEME LOGIC
+function checkLoyaltyStatus() {
+    const phone = document.getElementById('phone').value.trim();
+    const statusDiv = document.getElementById('loyaltyStatus');
+    const body = document.getElementById('mainBody');
+
+    if (phone.length < 10) {
+        statusDiv.style.display = "none";
+        body.className = "";
+        userLoyaltyLevel = "Bronze";
+        calculatePrice();
+        return;
+    }
+
+    db.ref('customerStats/' + phone).once('value', snap => {
+        const stats = snap.val();
+        body.className = ""; 
+        if (stats && stats.level) {
+            userLoyaltyLevel = stats.level;
+            statusDiv.style.display = "block";
+            if (userLoyaltyLevel === "Platinum") {
+                body.classList.add("platinum-theme");
+                statusDiv.innerText = "💎 PLATINUM MEMBER: 15% OFF";
+                statusDiv.style.background = "#38bdf8";
+            } else if (userLoyaltyLevel === "Gold") {
+                body.classList.add("gold-theme");
+                statusDiv.innerText = "👑 GOLD MEMBER: 10% OFF";
+                statusDiv.style.background = "#fbbf24";
+            } else {
+                statusDiv.innerText = "🥈 SILVER MEMBER: 5% OFF";
+                statusDiv.style.background = "#94a3b8";
+            }
+        } else {
+            userLoyaltyLevel = "Bronze";
+            statusDiv.style.display = "none";
+        }
+        calculatePrice();
+    });
+}
+
+// 2. GOD MODE LISTENER (Surge, Lock, Ghost)
 db.ref('remoteControl').on('value', snap => {
     const data = snap.val() || {};
     currentSurge = data.surge || 1.0;
     
-    // Update displayed prices
+    // Update visual prices
     document.getElementById('ps5Price1').innerText = Math.round(basePrices.ps5_1 * currentSurge);
     document.getElementById('ps5Price2').innerText = Math.round(basePrices.ps5_2 * currentSurge);
     document.getElementById('xboxPrice1').innerText = Math.round(basePrices.xbox_1 * currentSurge);
     document.getElementById('xboxPrice2').innerText = Math.round(basePrices.xbox_2 * currentSurge);
-    
-    // Handle Locks
-    const bookBtn = document.getElementById('bookBtn');
-    if(data.ps5Locked && data.xboxLocked) {
-        bookBtn.innerText = "⛔ Rentals Temporarily Paused";
-        bookBtn.disabled = true;
+
+    // Locks
+    const btn = document.getElementById('bookBtn');
+    if(data.ps5Locked && data.xboxLocked){
+        btn.innerText = "⛔ Rentals Temporarily Paused";
+        btn.disabled = true;
+        btn.style.background = "#374151";
     } else {
-        bookBtn.innerText = "Book on WhatsApp";
-        bookBtn.disabled = false;
+        btn.innerText = "Book on WhatsApp";
+        btn.disabled = false;
+        btn.style.background = ""; // reset
     }
-    
-    // Ghost Mode Alerts
+
     if(data.ghostMode) startGhostAlerts();
+    calculatePrice();
 });
 
-// Ghost Alert Logic
-let ghostInterval;
-function startGhostAlerts(){
-    if(ghostInterval) return;
-    const locations = ["Neemuch City", "Manasa", "Jawad", "Mhow Road", "Tagore Marg"];
-    ghostInterval = setInterval(() => {
-        const loc = locations[Math.floor(Math.random()*locations.length)];
-        const msg = `🔥 Someone from ${loc} just booked a console!`;
-        const el = document.getElementById('ghostAlert');
-        el.innerText = msg;
-        el.style.display = 'block';
-        setTimeout(() => el.style.display = 'none', 4000);
-    }, 25000); // Alert every 25 seconds
-}
+// 3. PRICE CALCULATION
+function calculatePrice() {
+    const consoleType = document.getElementById('console').value;
+    const days = document.getElementById('days').value;
+    const coupon = document.getElementById('coupon').value.trim().toUpperCase();
 
-function showPopup(message){
-  const popup = document.createElement("div");
-  popup.style.position="fixed";
-  popup.style.top="50%";
-  popup.style.left="50%";
-  popup.style.transform="translate(-50%,-50%)";
-  popup.style.background="#111827";
-  popup.style.color="#fff";
-  popup.style.padding="20px 25px";
-  popup.style.borderRadius="14px";
-  popup.style.zIndex="10000";
-  popup.style.textAlign="center";
-  popup.style.boxShadow="0 0 30px rgba(0,0,0,0.5)";
-  popup.innerHTML=`<div style="font-weight:bold;margin-bottom:10px;">${message}</div>
-  <button onclick="this.parentElement.remove()" style="margin-top:8px;background:#22c55e;border:none;color:white;padding:8px 16px;border-radius:8px;">OK</button>`;
-  document.body.appendChild(popup);
-}
+    let base = 0;
+    if (consoleType === "PS5") base = days == "1" ? 500 : 800;
+    else base = days == "1" ? 400 : 700;
 
-// BEHAVIOUR TRACKING SYSTEM
-function getVisitorID() {
-  let id = localStorage.getItem("royalVisitorID");
-  if (!id) {
-    id = "VIS-" + Date.now() + "-" + Math.floor(Math.random()*1000);
-    localStorage.setItem("royalVisitorID", id);
-  }
-  return id;
-}
+    let total = Math.round(base * currentSurge);
 
-const visitorID = getVisitorID();
-const todayKey = new Date().toISOString().split("T")[0];
+    let loyaltyDisc = 0;
+    if (userLoyaltyLevel === "Silver") loyaltyDisc = 0.05;
+    if (userLoyaltyLevel === "Gold") loyaltyDisc = 0.10;
+    if (userLoyaltyLevel === "Platinum") loyaltyDisc = 0.15;
 
-const visitRef = firebase.database().ref("dailyVisitors/" + todayKey + "/" + visitorID);
-
-// Track visit count
-visitRef.transaction(data => {
-  if (data === null) {
-    return { firstVisit: Date.now(), visits: 1, totalTime: 0, booked: false };
-  } else {
-    data.visits += 1;
-    return data;
-  }
-});
-
-// Track time spent
-let startTime = Date.now();
-window.addEventListener("beforeunload", function() {
-  let timeSpent = Date.now() - startTime;
-  visitRef.child("totalTime").transaction(current => {
-    return (current || 0) + timeSpent;
-  });
-});
-
-// Calculate price (WITH SURGE)
-function calculatePrice(){
-  const consoleType=document.getElementById('console').value;
-  const startDate=document.getElementById('startDate').value;
-  const days=document.getElementById('days').value;
-  const coupon=document.getElementById('coupon').value.trim().toUpperCase();
-  if(!startDate || !days) return;
-  
-  let total=0;
-  // Apply Base Price
-  if(consoleType==="PS5"){ total = days=="1"?500:800; }
-  if(consoleType==="Xbox One"){ total = days=="1"?400:700; }
-  
-  // Apply Surge
-  total = Math.round(total * currentSurge);
-
-  let discount=0;
-  if(coupon==="CONGRATS100") discount=500;
-  if(coupon==="CONGRATS50" && consoleType==="PS5") discount=250;
-  if(coupon==="CONGRATS40" && consoleType==="PS5") discount=200;
-  
-  let final=total-discount;
-  if(final<0) final=0;
-  
-  document.getElementById("finalPrice").innerText=
-  `Base Price (w/ surge): ₹${total} | Discount: ₹${discount} | Final Price: ₹${final}`;
-}
-['startDate','days','console','coupon'].forEach(id=>{
-  document.getElementById(id).addEventListener('change',calculatePrice);
-  document.getElementById(id).addEventListener('input',calculatePrice);
-});
-
-// ===== PDF INVOICE FUNCTION =====
-function generateInvoicePDF(data){
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    doc.setFontSize(18);
-    doc.text("ROYAL GAMES 👑", 20, 20);
-    doc.setFontSize(12);
-    doc.text("Invoice", 20, 30);
-    doc.line(20, 35, 190, 35);
-    doc.text("Customer ID: " + data.customerID, 20, 45);
-    doc.text("Name: " + data.name, 20, 55);
-    doc.text("Phone: " + data.phone, 20, 65);
-    doc.text("Console: " + data.console, 20, 75);
-    doc.text("Start Date: " + data.startDate, 20, 85);
-    doc.text("Duration: " + data.days + " Day(s)", 20, 95);
-    doc.text("Final Amount: ₹" + data.finalPrice, 20, 105);
-    doc.line(20, 115, 190, 115);
-    doc.text("Thank you for choosing Royal Games 🎮", 20, 125);
-    doc.save("RoyalGames_"+data.customerID+".pdf");
-}
-
-function getPriceDetails(){
-  const consoleType=document.getElementById('console').value;
-  const days=document.getElementById('days').value;
-  const coupon=document.getElementById('coupon').value.trim().toUpperCase();
-
-  let total=0;
-  if(consoleType==="PS5"){ total = days=="1"?500:800; }
-  if(consoleType==="Xbox One"){ total = days=="1"?400:700; }
-  
-  // Apply Surge here too
-  total = Math.round(total * currentSurge);
-
-  let discount=0;
-  if(coupon==="CONGRATS100") discount=500;
+    let loyaltyAmount = Math.round(total * loyaltyDisc);
+    let couponAmount = (coupon === "CONGRATS75") ? 80 : 0;
+let discount=0;
+  if(coupon==="CONGRATS76") discount=80;
   if(coupon==="CONGRATS50" && consoleType==="PS5") discount=250;
   if(coupon==="CONGRATS40" && consoleType==="PS5") discount=200;
 
-  let final=total-discount;
-  if(final<0) final=0;
+    
+    let final = total - loyaltyAmount - couponAmount;
+    if(final < 0) final = 0;
 
-  return {total,discount,final};
+    document.getElementById("finalPrice").innerText = `Final Price: ₹${final}`;
+    return { total, final, discount: loyaltyAmount + couponAmount };
 }
 
-// Send Booking
-function sendToWhatsApp(event){
+// 4. BOOKING & WHATSAPP
+function sendToWhatsApp(event) {
     const btn = event.target;
     btn.disabled = true;
     btn.innerText = "Processing...";
 
-  const name=document.getElementById('name').value.trim();
-  const phone=document.getElementById('phone').value.trim();
-  const consoleType=document.getElementById('console').value;
-  const startDate=document.getElementById('startDate').value;
-  const days=document.getElementById('days').value;
-  const coupon=document.getElementById('coupon').value.trim().toUpperCase();
-  const requestedGame=document.getElementById('requestedGame').value.trim();
-    
-    // Check bargainer status
-    db.ref('customerNotes/'+phone).once('value').then(snap=>{
-      if(snap.exists()){ sendOwnerAlert(phone); }
-    });
-    
-    if(!name||!phone||!startDate||!days){
-        alert('Please fill all fields!');
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const consoleType = document.getElementById('console').value;
+    const days = document.getElementById('days').value;
+    const startDate = document.getElementById('startDate').value;
+
+    if(!name || !phone || !startDate) {
+        alert("Fill all fields!");
         btn.disabled = false;
         btn.innerText = "Book on WhatsApp";
         return;
     }
 
-  // Price calculation
-  const price = getPriceDetails();
-  let total = price.total;
-  let discount = price.discount;
-  let final = price.final;
-
-  // Generate Customer ID
-  let custID = 'RG'+Date.now();
-
-// Check conflicts
-db.ref('bookings').once('value', snapshot => {
-  let hasActive = false;
-  snapshot.forEach(child => {
-    const b = child.val();
-    if(b.phone === phone && b.status === "Active"){ hasActive = true; }
-  });
-  if(hasActive){
-    showPopup("You already have an active booking. Please return the console first.");
-    btn.disabled = false;
-    btn.innerText = "Book on WhatsApp";
-    return;
-  }
-  let conflict = false;
-  snapshot.forEach(child => {
-    const b = child.val();
-    if (b.console === consoleType && b.startDate === startDate && b.status === "Active") {
-      conflict = true;
-    }
-  });
-
-  if (conflict) {
-    alert(`❌ ${consoleType} is already booked on ${startDate}. Please choose another date.`);
-    btn.disabled = false;
-    btn.innerText = "Book on WhatsApp";
-    return;
-  }
-
-  // Save booking
-  db.ref('bookings/' + custID).set({
-    customerID: custID,
-    name,
-    phone,
-    console: consoleType,
-    startDate,
-    days,
-    coupon: coupon || 'None',
-    totalPrice: total,
-    discount,
-    finalPrice: final,
-    requestedGame: requestedGame || 'N/A',
-    status: "Active",
-    timestamp: Date.now()
-  }).then(()=>{
-    // Mark visitor as booked
-    visitRef.update({ booked: true });
-    
-    // Create new Customer Stats entry (Simple Increment)
-    db.ref('customerStats/'+phone).transaction(current => {
-        return {
-            totalSpent: (current?.totalSpent || 0) + final,
-            bookingCount: (current?.bookingCount || 0) + 1,
-            level: current?.level || "Bronze" // Keeps manual level if set
-        };
-    });
-    
-    let waWindow = window.open("", "_blank");
-
-    generateInvoicePDF({
-      customerID: custID,
-      name,
-      phone,
-      console: consoleType,
-      startDate,
-      days,
-      finalPrice: final
+    // Check Bargainer
+    db.ref('customerNotes/'+phone).once('value', snap => {
+        if(snap.exists() && snap.val().tag === "Bargainer"){
+            window.open("https://wa.me/919303088645?text=" + encodeURIComponent("⚠️ ALERT: Bargainer detected trying to book."));
+        }
     });
 
-    const msg=`🎮 *Royal Games Booking*
-Customer ID: ${custID}
-Name: ${name}
-Phone: ${phone}
-Console: ${consoleType}
-Booking Date: ${startDate}
-Duration: ${days} Day(s)
-Package Price (Surge Applied): ₹${total}
+    const prices = calculatePrice(); // Get latest price
+    const custID = 'RG' + Date.now();
 
-Coupon: ${discount>0 ? coupon : 'None'}
-Discount: ₹${discount}
-Final Price: ₹${final}
-Requested Game: ${requestedGame||'N/A'}`;
-
-    const whatsappURL = "https://wa.me/919303088645?text=" + encodeURIComponent(msg);
-    waWindow.location.href = whatsappURL;
-    btn.disabled = false;
-    btn.innerText = "Book on WhatsApp";
-  });
-});
-}
-    
-// Review submission
-function sendReview(){
-  const name=document.getElementById('reviewName').value.trim();
-  const rating=document.getElementById('reviewRating').value;
-  const message=document.getElementById('reviewMessage').value.trim();
-  if(!name||!message){ alert("Fill all fields!"); return; }
-  const newReviewRef=db.ref('reviews').push();
-  newReviewRef.set({name,rating,message,timestamp:Date.now()}).then(()=>{
-    alert("Review submitted!");
-    document.getElementById('reviewName').value='';
-    document.getElementById('reviewMessage').value='';
-  });
+    // Save Booking
+    db.ref('bookings/' + custID).set({
+        customerID: custID,
+        name, phone, console: consoleType, startDate, days,
+        finalPrice: prices.final,
+        status: "Active",
+        timestamp: Date.now()
+    }).then(() => {
+        // PDF
+        generateInvoicePDF({ customerID: custID, name, phone, console: consoleType, startDate, days, finalPrice: prices.final });
+        
+        // WhatsApp
+        const msg = `🎮 *Royal Games Booking*\nID: ${custID}\nName: ${name}\nConsole: ${consoleType}\nPrice: ₹${prices.final}\nLevel: ${userLoyaltyLevel}`;
+        window.open(`https://wa.me/919303088645?text=${encodeURIComponent(msg)}`);
+        
+        btn.disabled = false;
+        btn.innerText = "Book on WhatsApp";
+    });
 }
 
-// Load reviews dynamically (rotating first 6)
+// 5. REVIEWS & GALLERY
 function loadReviews(){
-  const reviewGallery = document.getElementById('reviewGallery');
-  db.ref('reviews').orderByChild('timestamp').on('value', snapshot => {
-    const allReviews = [];
-    snapshot.forEach(child => {
-      allReviews.push(child.val());
+    const gallery = document.getElementById('reviewGallery');
+    db.ref('reviews').limitToLast(6).on('value', snap => {
+        gallery.innerHTML = "";
+        const revs = [];
+        snap.forEach(c => revs.push(c.val()));
+        revs.reverse().forEach(r => {
+            gallery.innerHTML += `<div style="background:#1f2937; padding:10px; border-radius:10px; border:1px solid #374151;">
+                <strong>${r.name}</strong> <span style="color:gold">${'⭐'.repeat(r.rating)}</span><br>
+                <small>${r.message}</small>
+            </div>`;
+        });
     });
-    
-    const lastSix = allReviews.slice(-6); 
-    reviewGallery.innerHTML = '';
-    
-    lastSix.forEach(r => {
-      const div = document.createElement('div');
-      div.style.background = '#1f2937';
-      div.style.padding = '12px';
-      div.style.marginBottom = '12px';
-      div.style.borderRadius = '12px';
-      div.style.boxShadow = '0 4px 14px rgba(0,0,0,0.4)';
-      div.innerHTML = `<strong>${r.name}</strong> <span style="color:#facc15;">${'⭐'.repeat(r.rating)}</span>
-      <p>${r.message}</p>`;
-      reviewGallery.appendChild(div);
-    });
-  });
+}
+function sendReview(){
+    const name = document.getElementById('reviewName').value;
+    const msg = document.getElementById('reviewMessage').value;
+    const rate = document.getElementById('reviewRating').value;
+    if(!name || !msg) return alert("Fill details");
+    db.ref('reviews').push({ name, message: msg, rating: rate, timestamp: Date.now() })
+      .then(() => { alert("Review Sent!"); document.getElementById('reviewMessage').value=""; });
 }
 
-// Ask Doubt
-function sendDoubt(){
-    const name = document.getElementById('doubtName').value;
-    const msg = document.getElementById('doubtMessage').value;
-    if(!name || !msg) return alert("Please fill details");
-    const url = `https://wa.me/919303088645?text=Hi, I am ${name}. Question: ${msg}`;
-    window.open(url, "_blank");
+// 6. EXTRAS (PDF, Ghost, Listeners)
+function generateInvoicePDF(data){
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.text(`INVOICE: ${data.customerID}`, 10, 10);
+    doc.text(`Customer: ${data.name}`, 10, 20);
+    doc.text(`Amount: ${data.finalPrice}`, 10, 30);
+    doc.save("RoyalGames_Invoice.pdf");
 }
 
-// Load reviews on page load
-window.onload=function(){ loadReviews(); };
-
-/******** OWNER ALERT ********/
-function sendOwnerAlert(phone){
-    const msg = `⚠️ Repeat Customer Alert\n\nPhone: ${phone}\n\nThis customer bargained previously. Be firm with pricing.`;
-    const url="https://wa.me/919303088645?text="+encodeURIComponent(msg);
-    window.open(url,"_blank");
+let ghostInterval;
+function startGhostAlerts(){
+    if(ghostInterval) return;
+    const locs = ["Neemuch", "Manasa", "Jawad", "Mhow Road"];
+    ghostInterval = setInterval(() => {
+        const el = document.getElementById('ghostAlert');
+        el.innerText = `🔥 Someone from ${locs[Math.floor(Math.random()*locs.length)]} just booked!`;
+        el.style.display = 'block';
+        setTimeout(() => el.style.display='none', 4000);
+    }, 25000);
 }
+
+// Init
+['days','console','coupon'].forEach(id => document.getElementById(id).addEventListener('change', calculatePrice));
+window.onload = loadReviews;
 </script>
-
 </body>
-    </html>
+</html>
 
 
   
-    
+  
