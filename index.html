@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Royal Games Neemuch | PS5 & Xbox Rentals</title>
-<meta name="description" content="Royal Games provides PlayStation 5 and Xbox on rent in Neemuch, Madhya Pradesh. Affordable gaming rentals. Call or WhatsApp 9303088645 to book today.">
-<meta name="keywords" content="PS5 rent Neemuch, Xbox rent Neemuch, PlayStation rental Neemuch, gaming console rent Neemuch, Royal Games Neemuch">
+<meta name="description" content="Royal Games provides PlayStation 5 and Xbox on rent in Neemuch, Madhya Pradesh.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto&display=swap" rel="stylesheet">
@@ -25,35 +24,43 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 .price{font-size:20px;color:#22c55e;font-weight:bold;margin-top:10px}
 .btn,.booking button{display:block;width:100%;padding:16px;background:#25D366;color:#fff;text-decoration:none;border-radius:12px;font-weight:bold;font-size:18px;text-align:center;margin-top:12px;cursor:pointer;border:none}
 .btn:hover,.booking button:hover{background:#1ebe57}
+.btn:disabled,.booking button:disabled {background:#374151; color:#9ca3af; cursor:not-allowed;}
 .booking input,.booking select,.booking textarea{width:95%;padding:14px;margin-top:10px;border-radius:12px;border:none;font-size:16px;background:#1f2937;color:#fff}
 .booking textarea{height:80px}
 .booking h2{color:#f87171;font-family:'Orbitron',sans-serif}
 .rules{line-height:28px;font-size:16px}
 .footer{background:black;padding:18px;text-align:center;margin-top:25px;color:#9ca3af}
-.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.gallery img{width:100%;border-radius:12px}
 .floating-call{position:fixed;bottom:22px;right:20px;width:65px;height:65px;background:linear-gradient(135deg,#22c55e,#15803d);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;color:white;text-decoration:none;box-shadow:0 10px 25px rgba(0,0,0,0.5);z-index:9999;animation:pulse 2s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.7);}70%{box-shadow:0 0 0 18px rgba(34,197,94,0);}100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}}
 .floating-call:hover{transform:scale(1.1)}
 .review-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
 .review-gallery img{width:100%;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.4)}
 @media(min-width:700px){.review-gallery{grid-template-columns:repeat(4,1fr);}}
+
+/* GHOST ALERT */
+#ghostAlert {
+    position: fixed; bottom: 20px; left: 20px; background: gold; color: #000; 
+    padding: 15px; border-radius: 12px; font-weight: bold; display: none; z-index: 1000;
+    box-shadow: 0 0 20px rgba(255,215,0,0.4); animation: slideIn 0.5s;
+}
+@keyframes slideIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
 </style>
 </head>
 <body>
+
+<div id="ghostAlert"></div>
 
 <div class="header">
     <h1>👑 ROYAL GAMES</h1>
     <div class="tag">PS5 & Xbox Console Rental Service — Neemuch (MP)</div>
 </div>
 
-<!-- PS5 SECTION -->
 <div class="section">
 <div class="card">
     <h2>PlayStation 5</h2>
     <img src="images.jpeg">
-    <div class="price">₹500 / 1 Day</div>
-    <div class="price">₹800 / 2 Days</div>
+    <div class="price">₹<span id="ps5Price1">500</span> / 1 Day</div>
+    <div class="price">₹<span id="ps5Price2">800</span> / 2 Days</div>
 
     <div class="game-list">
         <h3>Available PS5 Games 🎮</h3>
@@ -70,13 +77,12 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 </div>
 </div>
 
-<!-- Xbox SECTION -->
 <div class="section">
 <div class="card">
     <h2>Xbox One</h2>
     <img src="images (1).jpeg">
-    <div class="price">₹400 / 1 Day</div>
-    <div class="price">₹700 / 2 Days</div>
+    <div class="price">₹<span id="xboxPrice1">400</span> / 1 Day</div>
+    <div class="price">₹<span id="xboxPrice2">700</span> / 2 Days</div>
 
     <div class="game-list">
         <h3>Available Xbox Games 🕹️</h3>
@@ -89,12 +95,10 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
         <p>• F1 2024</p>
         <p>• FIFA 25</p>
         <p style="color:#facc15;font-weight:bold;">We also have a steering wheel for racing games!</p>
-        <p style="color:#facc15;font-weight:bold;">Want a game we don't have? Use the "Request Game" field in booking!</p>
     </div>
 </div>
 </div>
 
-<!-- RULES -->
 <div class="section">
 <div class="card rules">
 <h2>Rules</h2>
@@ -105,7 +109,6 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 </div>
 </div>
 
-<!-- CONTACT -->
 <div class="section">
 <div class="card contact">
 <h2>Booking & Contact</h2>
@@ -114,7 +117,6 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 </div>
 </div>
 
-<!-- BOOKING FORM -->
 <div style="text-align:center; margin:20px; color:#facc15; font-weight:bold;">
 ⚠️ Please do not edit the WhatsApp message. Edited bookings will not be considered valid.
 </div>
@@ -139,10 +141,9 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
   <div id="finalPrice" style="margin-top:8px;color:#22c55e;font-weight:bold;"></div>
     
   <input type="text" id="requestedGame" placeholder="Request a game (optional)">
-  <button onclick="sendToWhatsApp(event)">Book on WhatsApp</button>
+  <button id="bookBtn" onclick="sendToWhatsApp(event)">Book on WhatsApp</button>
 </div>
 
-<!-- REVIEW FORM -->
 <div class="section">
 <div class="card booking">
 <h2 style="color:#facc15;">📝 Give a Review</h2>
@@ -159,7 +160,6 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 </div>
 </div>
 
-<!-- REVIEW GALLERY -->
 <div class="section">
 <div class="card">
   <h2>⭐ Customer Review Gallery</h2>
@@ -167,7 +167,6 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 </div>
 </div>
 
-<!-- ASK DOUBT FORM -->
 <div class="section">
 <div class="card booking">
 <h2 style="color:#38bdf8;">❓ Ask a Doubt / Question</h2>
@@ -183,11 +182,60 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 <a href="tel:9303088645" class="floating-call">📞</a>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
-<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
+// Firebase config
+const firebaseConfig = {
+  databaseURL: "https://royalgamesproject-default-rtdb.asia-southeast1.firebasedatabase.app"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+let currentSurge = 1.0;
+let basePrices = { ps5_1: 500, ps5_2: 800, xbox_1: 400, xbox_2: 700 };
+
+// --- NEW: GOD MODE LISTENER ---
+db.ref('remoteControl').on('value', snap => {
+    const data = snap.val() || {};
+    currentSurge = data.surge || 1.0;
+    
+    // Update displayed prices
+    document.getElementById('ps5Price1').innerText = Math.round(basePrices.ps5_1 * currentSurge);
+    document.getElementById('ps5Price2').innerText = Math.round(basePrices.ps5_2 * currentSurge);
+    document.getElementById('xboxPrice1').innerText = Math.round(basePrices.xbox_1 * currentSurge);
+    document.getElementById('xboxPrice2').innerText = Math.round(basePrices.xbox_2 * currentSurge);
+    
+    // Handle Locks
+    const bookBtn = document.getElementById('bookBtn');
+    if(data.ps5Locked && data.xboxLocked) {
+        bookBtn.innerText = "⛔ Rentals Temporarily Paused";
+        bookBtn.disabled = true;
+    } else {
+        bookBtn.innerText = "Book on WhatsApp";
+        bookBtn.disabled = false;
+    }
+    
+    // Ghost Mode Alerts
+    if(data.ghostMode) startGhostAlerts();
+});
+
+// Ghost Alert Logic
+let ghostInterval;
+function startGhostAlerts(){
+    if(ghostInterval) return;
+    const locations = ["Neemuch City", "Manasa", "Jawad", "Mhow Road", "Tagore Marg"];
+    ghostInterval = setInterval(() => {
+        const loc = locations[Math.floor(Math.random()*locations.length)];
+        const msg = `🔥 Someone from ${loc} just booked a console!`;
+        const el = document.getElementById('ghostAlert');
+        el.innerText = msg;
+        el.style.display = 'block';
+        setTimeout(() => el.style.display = 'none', 4000);
+    }, 25000); // Alert every 25 seconds
+}
+
 function showPopup(message){
   const popup = document.createElement("div");
   popup.style.position="fixed";
@@ -206,14 +254,7 @@ function showPopup(message){
   document.body.appendChild(popup);
 }
 
-// Firebase config
-const firebaseConfig = {
-  databaseURL: "https://royalgamesproject-default-rtdb.asia-southeast1.firebasedatabase.app"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-    /******** BEHAVIOUR TRACKING SYSTEM ********/
-
+// BEHAVIOUR TRACKING SYSTEM
 function getVisitorID() {
   let id = localStorage.getItem("royalVisitorID");
   if (!id) {
@@ -231,12 +272,7 @@ const visitRef = firebase.database().ref("dailyVisitors/" + todayKey + "/" + vis
 // Track visit count
 visitRef.transaction(data => {
   if (data === null) {
-    return {
-      firstVisit: Date.now(),
-      visits: 1,
-      totalTime: 0,
-      booked: false
-    };
+    return { firstVisit: Date.now(), visits: 1, totalTime: 0, booked: false };
   } else {
     data.visits += 1;
     return data;
@@ -245,66 +281,66 @@ visitRef.transaction(data => {
 
 // Track time spent
 let startTime = Date.now();
-
 window.addEventListener("beforeunload", function() {
   let timeSpent = Date.now() - startTime;
-
   visitRef.child("totalTime").transaction(current => {
     return (current || 0) + timeSpent;
   });
 });
-    
 
-// Calculate price
+// Calculate price (WITH SURGE)
 function calculatePrice(){
   const consoleType=document.getElementById('console').value;
   const startDate=document.getElementById('startDate').value;
   const days=document.getElementById('days').value;
   const coupon=document.getElementById('coupon').value.trim().toUpperCase();
   if(!startDate || !days) return;
+  
   let total=0;
+  // Apply Base Price
   if(consoleType==="PS5"){ total = days=="1"?500:800; }
   if(consoleType==="Xbox One"){ total = days=="1"?400:700; }
+  
+  // Apply Surge
+  total = Math.round(total * currentSurge);
+
   let discount=0;
   if(coupon==="CONGRATS100") discount=500;
   if(coupon==="CONGRATS50" && consoleType==="PS5") discount=250;
   if(coupon==="CONGRATS40" && consoleType==="PS5") discount=200;
+  
   let final=total-discount;
   if(final<0) final=0;
+  
   document.getElementById("finalPrice").innerText=
-  `Package Price: ₹${total} | Discount: ₹${discount} | Final Price: ₹${final}`;
+  `Base Price (w/ surge): ₹${total} | Discount: ₹${discount} | Final Price: ₹${final}`;
 }
 ['startDate','days','console','coupon'].forEach(id=>{
   document.getElementById(id).addEventListener('change',calculatePrice);
   document.getElementById(id).addEventListener('input',calculatePrice);
 });
+
 // ===== PDF INVOICE FUNCTION =====
 function generateInvoicePDF(data){
-
-const { jsPDF } = window.jspdf;
-const doc = new jsPDF();
-
-doc.setFontSize(18);
-doc.text("ROYAL GAMES 👑", 20, 20);
-
-doc.setFontSize(12);
-doc.text("Invoice", 20, 30);
-
-doc.line(20, 35, 190, 35);
-
-doc.text("Customer ID: " + data.customerID, 20, 45);
-doc.text("Name: " + data.name, 20, 55);
-doc.text("Phone: " + data.phone, 20, 65);
-doc.text("Console: " + data.console, 20, 75);
-doc.text("Start Date: " + data.startDate, 20, 85);
-doc.text("Duration: " + data.days + " Day(s)", 20, 95);
-doc.text("Final Amount: ₹" + data.finalPrice, 20, 105);
-
-doc.line(20, 115, 190, 115);
-doc.text("Thank you for choosing Royal Games 🎮", 20, 125);
-
-doc.save("RoyalGames_"+data.customerID+".pdf");
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text("ROYAL GAMES 👑", 20, 20);
+    doc.setFontSize(12);
+    doc.text("Invoice", 20, 30);
+    doc.line(20, 35, 190, 35);
+    doc.text("Customer ID: " + data.customerID, 20, 45);
+    doc.text("Name: " + data.name, 20, 55);
+    doc.text("Phone: " + data.phone, 20, 65);
+    doc.text("Console: " + data.console, 20, 75);
+    doc.text("Start Date: " + data.startDate, 20, 85);
+    doc.text("Duration: " + data.days + " Day(s)", 20, 95);
+    doc.text("Final Amount: ₹" + data.finalPrice, 20, 105);
+    doc.line(20, 115, 190, 115);
+    doc.text("Thank you for choosing Royal Games 🎮", 20, 125);
+    doc.save("RoyalGames_"+data.customerID+".pdf");
 }
+
 function getPriceDetails(){
   const consoleType=document.getElementById('console').value;
   const days=document.getElementById('days').value;
@@ -313,6 +349,9 @@ function getPriceDetails(){
   let total=0;
   if(consoleType==="PS5"){ total = days=="1"?500:800; }
   if(consoleType==="Xbox One"){ total = days=="1"?400:700; }
+  
+  // Apply Surge here too
+  total = Math.round(total * currentSurge);
 
   let discount=0;
   if(coupon==="CONGRATS100") discount=500;
@@ -338,18 +377,17 @@ function sendToWhatsApp(event){
   const days=document.getElementById('days').value;
   const coupon=document.getElementById('coupon').value.trim().toUpperCase();
   const requestedGame=document.getElementById('requestedGame').value.trim();
-    /* Check if this customer was marked as bargainer before */
-firebase.database().ref('customerNotes/'+phone).once('value').then(snap=>{
-  if(snap.exists()){
-    sendOwnerAlert(phone);
-  }
-});
+    
+    // Check bargainer status
+    db.ref('customerNotes/'+phone).once('value').then(snap=>{
+      if(snap.exists()){ sendOwnerAlert(phone); }
+    });
     
     if(!name||!phone||!startDate||!days){
-alert('Please fill all fields!');
-btn.disabled = false;
-btn.innerText = "Book on WhatsApp";
-return;
+        alert('Please fill all fields!');
+        btn.disabled = false;
+        btn.innerText = "Book on WhatsApp";
+        return;
     }
 
   // Price calculation
@@ -361,15 +399,12 @@ return;
   // Generate Customer ID
   let custID = 'RG'+Date.now();
 
-// Check if this console is already booked on the same date
+// Check conflicts
 db.ref('bookings').once('value', snapshot => {
-  // Check if same phone already has active booking
   let hasActive = false;
   snapshot.forEach(child => {
     const b = child.val();
-    if(b.phone === phone && b.status === "Active"){
-      hasActive = true;
-    }
+    if(b.phone === phone && b.status === "Active"){ hasActive = true; }
   });
   if(hasActive){
     showPopup("You already have an active booking. Please return the console first.");
@@ -378,26 +413,21 @@ db.ref('bookings').once('value', snapshot => {
     return;
   }
   let conflict = false;
-
   snapshot.forEach(child => {
     const b = child.val();
-    if (
-      b.console === consoleType && 
-      b.startDate === startDate && 
-      b.status === "Active"
-    ) {
+    if (b.console === consoleType && b.startDate === startDate && b.status === "Active") {
       conflict = true;
     }
   });
 
   if (conflict) {
     alert(`❌ ${consoleType} is already booked on ${startDate}. Please choose another date.`);
-   btn.disabled = false;
-btn.innerText = "Book on WhatsApp";
-      return;
+    btn.disabled = false;
+    btn.innerText = "Book on WhatsApp";
+    return;
   }
 
-  // ✅ Save booking if no conflict
+  // Save booking
   db.ref('bookings/' + custID).set({
     customerID: custID,
     name,
@@ -413,10 +443,17 @@ btn.innerText = "Book on WhatsApp";
     status: "Active",
     timestamp: Date.now()
   }).then(()=>{
-      // Mark visitor as booked
-visitRef.update({
-  booked: true
-});
+    // Mark visitor as booked
+    visitRef.update({ booked: true });
+    
+    // Create new Customer Stats entry (Simple Increment)
+    db.ref('customerStats/'+phone).transaction(current => {
+        return {
+            totalSpent: (current?.totalSpent || 0) + final,
+            bookingCount: (current?.bookingCount || 0) + 1,
+            level: current?.level || "Bronze" // Keeps manual level if set
+        };
+    });
     
     let waWindow = window.open("", "_blank");
 
@@ -430,7 +467,6 @@ visitRef.update({
       finalPrice: final
     });
 
-    // WhatsApp message
     const msg=`🎮 *Royal Games Booking*
 Customer ID: ${custID}
 Name: ${name}
@@ -438,19 +474,17 @@ Phone: ${phone}
 Console: ${consoleType}
 Booking Date: ${startDate}
 Duration: ${days} Day(s)
-Package Price: ₹${total}
+Package Price (Surge Applied): ₹${total}
 
 Coupon: ${discount>0 ? coupon : 'None'}
-    
 Discount: ₹${discount}
 Final Price: ₹${final}
 Requested Game: ${requestedGame||'N/A'}`;
 
     const whatsappURL = "https://wa.me/919303088645?text=" + encodeURIComponent(msg);
     waWindow.location.href = whatsappURL;
-      btn.disabled = false;
-btn.innerText = "Book on WhatsApp";
-
+    btn.disabled = false;
+    btn.innerText = "Book on WhatsApp";
   });
 });
 }
@@ -468,6 +502,7 @@ function sendReview(){
     document.getElementById('reviewMessage').value='';
   });
 }
+
 // Load reviews dynamically (rotating first 6)
 function loadReviews(){
   const reviewGallery = document.getElementById('reviewGallery');
@@ -477,8 +512,7 @@ function loadReviews(){
       allReviews.push(child.val());
     });
     
-    // Keep only the last 6 reviews
-    const lastSix = allReviews.slice(-6); // oldest first, newest last
+    const lastSix = allReviews.slice(-6); 
     reviewGallery.innerHTML = '';
     
     lastSix.forEach(r => {
@@ -493,31 +527,31 @@ function loadReviews(){
       reviewGallery.appendChild(div);
     });
   });
-    }
+}
+
+// Ask Doubt
+function sendDoubt(){
+    const name = document.getElementById('doubtName').value;
+    const msg = document.getElementById('doubtMessage').value;
+    if(!name || !msg) return alert("Please fill details");
+    const url = `https://wa.me/919303088645?text=Hi, I am ${name}. Question: ${msg}`;
+    window.open(url, "_blank");
+}
+
 // Load reviews on page load
 window.onload=function(){ loadReviews(); };
+
 /******** OWNER ALERT ********/
 function sendOwnerAlert(phone){
-
-const msg =
-`⚠️ Repeat Customer Alert
-
-Phone: ${phone}
-
-This customer bargained previously.
-Be firm with pricing.`;
-
-const url="https://wa.me/919303088645?text="+encodeURIComponent(msg);
-window.open(url,"_blank");
-
-    }
-    
+    const msg = `⚠️ Repeat Customer Alert\n\nPhone: ${phone}\n\nThis customer bargained previously. Be firm with pricing.`;
+    const url="https://wa.me/919303088645?text="+encodeURIComponent(msg);
+    window.open(url,"_blank");
+}
 </script>
 
 </body>
-</html>
+    </html>
 
 
-
-    
+  
     
