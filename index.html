@@ -39,6 +39,30 @@ body{margin:0;font-family:'Roboto',sans-serif;background:#0b0f1a;color:#fff}
 .review-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
 .review-gallery img{width:100%;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.4)}
 @media(min-width:700px){.review-gallery{grid-template-columns:repeat(4,1fr);}}
+
+.hero-3d{
+  text-align:center;
+  padding:40px 0;
+  position:relative;
+}
+
+.controller-wrapper{
+  perspective:1200px;
+  display:inline-block;
+}
+
+.floating-controller{
+  width:280px;
+  animation: float 4s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+/* Floating up-down */
+@keyframes float{
+  0%{ transform: translateY(0px) rotateX(10deg); }
+  50%{ transform: translateY(-20px) rotateX(-10deg); }
+  100%{ transform: translateY(0px) rotateX(10deg); }
+}
 </style>
 </head>
 <body>
