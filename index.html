@@ -373,28 +373,33 @@ doc.text("Thank you for choosing Royal Games 🎮", 20, 125);
 
 doc.save("RoyalGames_"+data.customerID+".pdf");
 }
-function getPriceDetails(){
+    function getPriceDetails(){
   const consoleType=document.getElementById('console').value;
   const days=document.getElementById('days').value;
   const coupon=document.getElementById('coupon').value.trim().toUpperCase();
+  const controllers=document.getElementById('controllers').value;
 
   let total=0;
+
   if(consoleType==="PS5"){ total = days=="1"?500:800; }
   if(consoleType==="Xbox One"){ total = days=="1"?400:700; }
 
+  // Add ₹200 if 2 controllers selected (only for PS5)
+  if(consoleType==="PS5" && controllers==="2"){
+    total += 200;
+  }
+
   let discount=0;
+
   if(coupon==="CONGRATS100") discount=500;
   if(coupon==="CONGRATS50" && consoleType==="PS5") discount=250;
   if(coupon==="CONGRATS40" && consoleType==="PS5") discount=200;
-      if(controllers === 2){
-    total += 200; // extra charge
-  }
 
   let final=total-discount;
   if(final<0) final=0;
 
   return {total,discount,final};
-}
+    }
 
 // Send Booking
 function sendToWhatsApp(event){
