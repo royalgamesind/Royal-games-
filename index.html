@@ -363,6 +363,9 @@ function getPriceDetails(){
   if(coupon==="CONGRATS100") discount=500;
   if(coupon==="CONGRATS50" && consoleType==="PS5") discount=250;
   if(coupon==="CONGRATS40" && consoleType==="PS5") discount=200;
+      if(controllers === 2){
+    total += 200; // extra charge
+  }
 
   let final=total-discount;
   if(final<0) final=0;
