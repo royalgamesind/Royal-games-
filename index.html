@@ -627,6 +627,49 @@ particlesJS("particles-js", {
   },
   retina_detect: true
 });
+        const auth = firebase.auth();
+let currentUser = null;
+
+// Signup
+function signup(){
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  auth.createUserWithEmailAndPassword(email,password)
+  .then(user=>{
+    alert("Account Created ✅");
+  })
+  .catch(err=>alert(err.message));
+}
+
+// Login
+function login(){
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  auth.signInWithEmailAndPassword(email,password)
+  .then(user=>{
+    alert("Login Successful 👑");
+  })
+  .catch(err=>alert(err.message));
+}
+
+// Google login
+function googleLogin(){
+  const provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider);
+}
+
+// Detect user
+auth.onAuthStateChanged(user=>{
+  if(user){
+    currentUser = user;
+    document.getElementById("authBox").style.display="none";
+  }else{
+    currentUser = null;
+    document.getElementById("authBox").style.display="block";
+  }
+});
     </script>
     
 
