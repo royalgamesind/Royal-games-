@@ -334,6 +334,9 @@ function calculatePrice(){
   let total=0;
   if(consoleType==="PS5"){ total = days=="1"?500:800; }
   if(consoleType==="Xbox One"){ total = days=="1"?400:700; }
+    if(consoleType==="PS5" && controllers==="2"){
+  total += 200;
+    }
   let discount=0;
   if(coupon==="CONGRATS100") discount=500;
   if(coupon==="CONGRATS50" && consoleType==="PS5") discount=250;
