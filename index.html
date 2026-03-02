@@ -329,6 +329,7 @@ function calculatePrice(){
   const startDate=document.getElementById('startDate').value;
   const days=document.getElementById('days').value;
   const coupon=document.getElementById('coupon').value.trim().toUpperCase();
+    const controllers=document.getElementById('controllers').value;
   if(!startDate || !days) return;
   let total=0;
   if(consoleType==="PS5"){ total = days=="1"?500:800; }
