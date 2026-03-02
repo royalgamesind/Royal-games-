@@ -722,6 +722,9 @@ auth.onAuthStateChanged(user=>{
         function toggleMenu(){
   document.getElementById("sideMenu").classList.toggle("open");
         }
+        function logout(){
+  auth.signOut();
+      }
     </script>
     
 
