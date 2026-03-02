@@ -346,7 +346,8 @@ function calculatePrice(){
   document.getElementById("finalPrice").innerText=
   `Package Price: ₹${total} | Discount: ₹${discount} | Final Price: ₹${final}`;
 }
-['startDate','days','console','coupon'].forEach(id=>{
+    ['startDate','days','console','coupon','controllers'].forEach(id=>{
+
   document.getElementById(id).addEventListener('change',calculatePrice);
   document.getElementById(id).addEventListener('input',calculatePrice);
 });
