@@ -200,7 +200,7 @@ background:radial-gradient(circle at center,#0b0f1a 0%,#05070d 80%);
 <div class="section">
 <div class="card rules">
 <h2>Rules</h2>
-• Valid ID proof required<br>
+• V11 wealid ID proof required<br>
 • Handle controller carefully<br>
 • Late return extra charge<br>
 • Damage charges applicable
@@ -311,9 +311,16 @@ function showPopup(message){
 }
 
 // Firebase config
-const firebaseConfig = {
-  databaseURL: "https://royalgamesproject-default-rtdb.asia-southeast1.firebasedatabase.app"
+    const firebaseConfig = {
+  apiKey: "AIzaSyBRuy9084wz4HwBJbdNuleC4suYi0zycNA",
+  authDomain: "royalgamesproject.firebaseapp.com",
+  databaseURL: "https://royalgamesproject-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "royalgamesproject",
+  storageBucket: "royalgamesproject.firebasestorage.app",
+  messagingSenderId: "1008609758558",
+  appId: "1:1008609758558:web:7aa12cdef2b066ad7393cf"
 };
+
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
     /******** BEHAVIOUR TRACKING SYSTEM ********/
