@@ -441,10 +441,7 @@ db.ref('bookings').once('value', snapshot => {
 btn.innerText = "Book on WhatsApp";
       return;
   }
-if(!currentUser){
-  alert("Please login before booking!");
-  return;
-}
+
 
 db.ref('users/' + currentUser.uid + '/bookings/' + custID).set({
   customerID: custID,
