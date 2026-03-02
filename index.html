@@ -717,6 +717,22 @@ function googleLogin(){
   const provider = new firebase.auth.GoogleAuthProvider();
   auth.signInWithPopup(provider);
 }
+        auth.onAuthStateChanged(user=>{
+  const profileIcon = document.getElementById("profileIcon");
+
+  if(user){
+    currentUser = user;
+
+    // Show Google profile picture
+    profileIcon.src = user.photoURL;
+    
+  }else{
+    currentUser = null;
+
+    // Show plus icon if not logged in
+    profileIcon.src = "https://cdn-icons-png.flaticon.com/512/1828/1828817.png";
+  }
+});
 
 // Detect user
 auth.onAuthStateChanged(user=>{
