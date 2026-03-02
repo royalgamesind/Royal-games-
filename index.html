@@ -448,6 +448,10 @@ firebase.database().ref('customerNotes/'+phone).once('value').then(snap=>{
     sendOwnerAlert(phone);
   }
 });
+    if(!currentUser){
+  alert("⚠️ Please login first to book a console.");
+  return;
+    }
     
     if(!name||!phone||!startDate||!days){
 alert('Please fill all fields!');
@@ -455,6 +459,7 @@ btn.disabled = false;
 btn.innerText = "Book on WhatsApp";
 return;
     }
+    
 
   // Price calculation
   const price = getPriceDetails();
