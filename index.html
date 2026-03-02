@@ -442,8 +442,8 @@ btn.innerText = "Book on WhatsApp";
       return;
   }
 
+db.ref('bookings/' + custID).set({
 
-db.ref('users/' + currentUser.uid + '/bookings/' + custID).set({
   customerID: custID,
   name,
   phone,
