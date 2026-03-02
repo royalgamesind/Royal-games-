@@ -684,17 +684,6 @@ particlesJS("particles-js", {
         const auth = firebase.auth();
 let currentUser = null;
 
-// Signup
-function signup(){
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-
-  auth.createUserWithEmailAndPassword(email,password)
-  .then(user=>{
-    alert("Account Created ✅");
-  })
-  .catch(err=>alert(err.message));
-}
 
 // Login
 function login(){
@@ -730,9 +719,33 @@ auth.onAuthStateChanged(user=>{
         function logout(){
   auth.signOut();
       }
-    </script>
     
+    function showSection(section){
 
+  if(!currentUser){
+    alert("⚠️ Please login first.");
+    return;
+  }
+
+  if(section === "profile"){
+    alert("Email: " + currentUser.email);
+  }
+
+  if(section === "bookings"){
+    db.ref('users/' + currentUser.uid + '/bookings')
+    .once('value')
+    .then(snapshot=>{
+      let data = "Your Bookings:\n";
+      snapshot.forEach(child=>{
+        let b = child.val();
+        data += b.console + " - " + b.startDate + " - " + b.status + "\n";
+      });
+      alert(data);
+    });
+  }
+
+}
+</script>
 </body>
 </html>
 
